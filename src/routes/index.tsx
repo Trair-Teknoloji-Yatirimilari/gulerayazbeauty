@@ -493,6 +493,33 @@ function DetailDialog({
               {detail.closing}
             </p>
 
+            {detail.faqs?.length > 0 && (
+              <div className="mt-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-px w-8 bg-primary" />
+                  <span className="text-[10px] uppercase tracking-[0.4em] text-primary">
+                    Sık Sorulan Sorular
+                  </span>
+                </div>
+                <Accordion type="single" collapsible className="w-full">
+                  {detail.faqs.map((f, idx) => (
+                    <AccordionItem
+                      key={f.q}
+                      value={`faq-${idx}`}
+                      className="border-b border-border/60"
+                    >
+                      <AccordionTrigger className="text-left text-sm font-normal text-foreground/90 hover:text-primary hover:no-underline py-3">
+                        {f.q}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-foreground/70 leading-relaxed pb-4">
+                        {f.a}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            )}
+
             <div className="mt-7 flex items-center gap-3">
               <a
                 href="#iletisim"
