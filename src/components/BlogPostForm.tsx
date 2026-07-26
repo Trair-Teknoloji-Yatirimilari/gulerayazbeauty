@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Loader2, Save } from "lucide-react";
 import { upsertPost, type BlogPostInput } from "@/lib/blog.functions";
 import { RichTextEditor } from "@/components/RichTextEditor";
+import { useT } from "@/i18n/context";
 
 interface Props {
   initial?: Partial<BlogPostInput> & { id?: string };
@@ -24,6 +25,8 @@ function slugify(s: string) {
 }
 
 export function BlogPostForm({ initial }: Props) {
+  const { t } = useT();
+  const f = t.blogForm;
   const navigate = useNavigate();
   const qc = useQueryClient();
   const upsertFn = useServerFn(upsertPost);
@@ -43,12 +46,12 @@ export function BlogPostForm({ initial }: Props) {
   const mut = useMutation({
     mutationFn: (payload: BlogPostInput) => upsertFn({ data: payload }),
     onSuccess: () => {
-      toast.success(initial?.id ? "Yazı güncellendi." : "Yazı kaydedildi.");
+      toast.success(initial?.id ? f.updated : f.saved);
       qc.invalidateQueries({ queryKey: ["admin", "blog"] });
       qc.invalidateQueries({ queryKey: ["blog"] });
       navigate({ to: "/_authenticated/admin/blog" });
     },
-    onError: (e) => toast.error(e instanceof Error ? e.message : "Kaydedilemedi"),
+    onError: (e) => toast.error(e instanceof Error ? e.message : f.saveError),
   });
 
   const onSubmit = (e: FormEvent) => {
@@ -61,7 +64,7 @@ export function BlogPostForm({ initial }: Props) {
       content,
       cover_image_url: cover.trim(),
       category: category.trim(),
-      tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
+      tags: tags.split(",").map((s) => s.trim()).filter(Boolean),
       seo_title: seoTitle.trim(),
       seo_description: seoDesc.trim(),
       status,
@@ -76,7 +79,7 @@ export function BlogPostForm({ initial }: Props) {
     <form onSubmit={onSubmit} className="grid lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-5">
         <div>
-          <label className={label}>Başlık *</label>
+          <label className={label}>{f.titleLabel}</label>
           <input
             required
             value={title}
@@ -89,32 +92,32 @@ export function BlogPostForm({ initial }: Props) {
         </div>
 
         <div>
-          <label className={label}>Slug (URL) *</label>
+          <label className={label}>{f.slugLabel}</label>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-foreground/50">/blog/</span>
+            <span className="text-xs text-foreground/50">{f.slugPrefix}</span>
             <input
               required
               value={slug}
               onChange={(e) => { setSlug(e.target.value); setSlugTouched(true); }}
               className={input}
-              placeholder="ornek-yazi-basligi"
+              placeholder={f.slugPh}
             />
           </div>
         </div>
 
         <div>
-          <label className={label}>Özet</label>
+          <label className={label}>{f.excerpt}</label>
           <textarea
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
             rows={2}
             className={input}
-            placeholder="Yazının kısa özeti (kart görünümünde çıkar)"
+            placeholder={f.excerptPh}
           />
         </div>
 
         <div>
-          <label className={label}>İçerik *</label>
+          <label className={label}>{f.content}</label>
           <RichTextEditor value={content} onChange={setContent} />
         </div>
       </div>
@@ -122,7 +125,7 @@ export function BlogPostForm({ initial }: Props) {
       <div className="space-y-5">
         <div className="rounded-2xl border border-border/40 bg-card/40 p-5 space-y-4">
           <div>
-            <label className={label}>Durum</label>
+            <label className={label}>{f.statusLabel}</label>
             <div className="flex gap-2">
               {(["draft", "published"] as const).map((s) => (
                 <button
@@ -131,7 +134,7 @@ export function BlogPostForm({ initial }: Props) {
                   onClick={() => setStatus(s)}
                   className={`flex-1 py-2 rounded-md text-xs uppercase tracking-wider border transition ${status === s ? "border-primary bg-primary/10 text-primary" : "border-border/40 text-foreground/60 hover:border-primary/40"}`}
                 >
-                  {s === "draft" ? "Taslak" : "Yayında"}
+                  {s === "draft" ? f.draft : f.published}
                 </button>
               ))}
             </div>
@@ -143,36 +146,36 @@ export function BlogPostForm({ initial }: Props) {
             className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground py-2.5 text-sm hover:bg-primary/90 transition disabled:opacity-50"
           >
             {mut.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            Kaydet
+            {f.save}
           </button>
         </div>
 
         <div className="rounded-2xl border border-border/40 bg-card/40 p-5 space-y-4">
           <div>
-            <label className={label}>Kategori</label>
-            <input value={category} onChange={(e) => setCategory(e.target.value)} className={input} placeholder="ör. Botoks" />
+            <label className={label}>{f.category}</label>
+            <input value={category} onChange={(e) => setCategory(e.target.value)} className={input} placeholder={f.categoryPh} />
           </div>
           <div>
-            <label className={label}>Etiketler (virgülle)</label>
-            <input value={tags} onChange={(e) => setTags(e.target.value)} className={input} placeholder="botoks, kırışıklık" />
+            <label className={label}>{f.tags}</label>
+            <input value={tags} onChange={(e) => setTags(e.target.value)} className={input} placeholder={f.tagsPh} />
           </div>
           <div>
-            <label className={label}>Kapak Görseli URL</label>
+            <label className={label}>{f.cover}</label>
             <input value={cover} onChange={(e) => setCover(e.target.value)} className={input} placeholder="https://..." />
             {cover && (
-              <img src={cover} alt="kapak" className="mt-3 rounded-md w-full aspect-video object-cover border border-border/40" />
+              <img src={cover} alt={f.coverAlt} className="mt-3 rounded-md w-full aspect-video object-cover border border-border/40" />
             )}
           </div>
         </div>
 
         <div className="rounded-2xl border border-border/40 bg-card/40 p-5 space-y-4">
-          <p className="text-xs uppercase tracking-widest text-primary/70">SEO</p>
+          <p className="text-xs uppercase tracking-widest text-primary/70">{f.seo}</p>
           <div>
-            <label className={label}>SEO Başlığı</label>
+            <label className={label}>{f.seoTitle}</label>
             <input value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} className={input} />
           </div>
           <div>
-            <label className={label}>SEO Açıklaması</label>
+            <label className={label}>{f.seoDesc}</label>
             <textarea value={seoDesc} onChange={(e) => setSeoDesc(e.target.value)} rows={3} className={input} />
           </div>
         </div>

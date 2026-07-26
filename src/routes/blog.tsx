@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "motion/react";
 import { ArrowUpRight, Calendar, Loader2 } from "lucide-react";
 import { listPublishedPosts } from "@/lib/blog.functions";
+import { useT } from "@/i18n/context";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogListPage() {
+  const { t } = useT();
   const listFn = useServerFn(listPublishedPosts);
   const { data: posts, isLoading, error } = useQuery({
     queryKey: ["blog", "published"],
@@ -35,17 +37,16 @@ function BlogListPage() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <p className="text-xs uppercase tracking-[0.4em] text-primary/70 mb-4">Bilgi & İçgörü</p>
-          <h1 className="font-display text-4xl md:text-6xl text-gold-gradient mb-6">Blog</h1>
+          <p className="text-xs uppercase tracking-[0.4em] text-primary/70 mb-4">{t.blog.badge}</p>
+          <h1 className="font-display text-4xl md:text-6xl text-gold-gradient mb-6">{t.blog.title}</h1>
           <p className="max-w-2xl mx-auto text-foreground/70 leading-relaxed">
-            Medikal estetik, cilt sağlığı ve modern anti-aging yaklaşımları üzerine
-            Dr. Gökhan Değirmencioğlu tarafından hazırlanan uzman içerikler.
+            {t.blog.subtitle}
           </p>
           <Link
             to="/"
             className="inline-flex items-center gap-2 mt-6 text-xs uppercase tracking-widest text-primary/80 hover:text-primary transition"
           >
-            ← Ana Sayfa
+            {t.blog.backHome}
           </Link>
         </motion.div>
 
@@ -53,10 +54,10 @@ function BlogListPage() {
           <div className="flex justify-center py-24"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>
         )}
         {error && (
-          <div className="text-center text-rose-400 py-12">Yazılar yüklenemedi.</div>
+          <div className="text-center text-rose-400 py-12">{t.blog.loadError}</div>
         )}
         {posts && posts.length === 0 && (
-          <div className="text-center text-foreground/60 py-24">Henüz yayınlanmış bir yazı yok.</div>
+          <div className="text-center text-foreground/60 py-24">{t.blog.empty}</div>
         )}
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -105,10 +106,10 @@ function BlogListPage() {
                   <div className="flex items-center justify-between pt-3 border-t border-border/30 mt-2">
                     <span className="flex items-center gap-1.5 text-xs text-foreground/50">
                       <Calendar className="w-3.5 h-3.5" />
-                      {post.published_at ? new Date(post.published_at).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" }) : ""}
+                      {post.published_at ? new Date(post.published_at).toLocaleDateString(t.blog.dateLocale, { day: "numeric", month: "long", year: "numeric" }) : ""}
                     </span>
                     <span className="inline-flex items-center gap-1 text-xs uppercase tracking-widest text-primary">
-                      Oku <ArrowUpRight className="w-3.5 h-3.5" />
+                      {t.blog.read} <ArrowUpRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
                 </div>

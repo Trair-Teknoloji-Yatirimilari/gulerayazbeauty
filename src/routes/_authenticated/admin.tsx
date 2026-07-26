@@ -10,6 +10,7 @@ import {
 import { toast } from "sonner";
 import { useMemo, useState } from "react";
 import { Loader2, LogOut, Trash2, Phone, Mail, Calendar, MessageSquare, ShieldCheck } from "lucide-react";
+import { useT } from "@/i18n/context";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -23,13 +24,6 @@ export const Route = createFileRoute("/_authenticated/admin")({
 
 type Status = "pending" | "confirmed" | "completed" | "cancelled";
 
-const statusLabels: Record<Status, string> = {
-  pending: "Bekliyor",
-  confirmed: "Onaylandı",
-  completed: "Tamamlandı",
-  cancelled: "İptal",
-};
-
 const statusStyles: Record<Status, string> = {
   pending: "bg-amber-500/15 text-amber-400 border-amber-500/30",
   confirmed: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
@@ -38,6 +32,8 @@ const statusStyles: Record<Status, string> = {
 };
 
 function AdminPage() {
+  const { t } = useT();
+  const statusLabels = t.admin.status;
   const navigate = useNavigate();
   const qc = useQueryClient();
   const listFn = useServerFn(listAppointments);
@@ -53,19 +49,19 @@ function AdminPage() {
   const updateMut = useMutation({
     mutationFn: (v: { id: string; status: Status }) => updateFn({ data: v }),
     onSuccess: () => {
-      toast.success("Durum güncellendi.");
+      toast.success(t.admin.updated);
       qc.invalidateQueries({ queryKey: ["appointments"] });
     },
-    onError: (e) => toast.error(e instanceof Error ? e.message : "Hata"),
+    onError: (e) => toast.error(e instanceof Error ? e.message : t.admin.errorGeneric),
   });
 
   const deleteMut = useMutation({
     mutationFn: (id: string) => deleteFn({ data: { id } }),
     onSuccess: () => {
-      toast.success("Silindi.");
+      toast.success(t.admin.deleted);
       qc.invalidateQueries({ queryKey: ["appointments"] });
     },
-    onError: (e) => toast.error(e instanceof Error ? e.message : "Hata"),
+    onError: (e) => toast.error(e instanceof Error ? e.message : t.admin.errorGeneric),
   });
 
   const filtered = useMemo(() => {
@@ -93,10 +89,10 @@ function AdminPage() {
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <div>
             <Link to="/" className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground hover:text-primary">
-              ← Siteye dön
+              {t.admin.backSite}
             </Link>
             <h1 className="font-display text-xl md:text-2xl text-gold-gradient mt-1">
-              Randevu Paneli
+              {t.admin.title}
             </h1>
           </div>
           <div className="flex items-center gap-4">
@@ -104,16 +100,15 @@ function AdminPage() {
               to="/_authenticated/admin/blog"
               className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
             >
-              Blog Yönetimi
+              {t.admin.blogManagement}
             </Link>
             <button
               onClick={signOut}
               className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
             >
-              <LogOut className="w-4 h-4" /> Çıkış
+              <LogOut className="w-4 h-4" /> {t.admin.signOut}
             </button>
           </div>
-
         </div>
       </header>
 
@@ -129,30 +124,29 @@ function AdminPage() {
                   : "border-border/60 text-muted-foreground hover:border-primary/50 hover:text-primary"
               }`}
             >
-              {f === "all" ? "Tümü" : statusLabels[f]} ({counts[f] ?? 0})
+              {f === "all" ? t.admin.filterAll : statusLabels[f]} ({counts[f] ?? 0})
             </button>
           ))}
         </div>
 
         {isLoading && (
           <div className="flex items-center justify-center py-20 text-muted-foreground">
-            <Loader2 className="w-6 h-6 animate-spin mr-3" /> Yükleniyor...
+            <Loader2 className="w-6 h-6 animate-spin mr-3" /> {t.admin.loading}
           </div>
         )}
 
         {error && (
           <div className="p-6 border border-destructive/40 bg-destructive/10 rounded-sm text-sm text-destructive">
-            {error instanceof Error ? error.message : "Yüklenemedi."}
+            {error instanceof Error ? error.message : t.admin.loadError}
             <div className="mt-3 text-xs text-muted-foreground">
-              Bu hesap yönetici değilse yönetici paneline erişemez. Yalnızca
-              info@drgokhandegirmencioglu.com adresiyle kaydolan hesap admin olur.
+              {t.admin.accessNotice}
             </div>
           </div>
         )}
 
         {!isLoading && filtered.length === 0 && !error && (
           <div className="text-center py-20 text-muted-foreground">
-            Bu filtrede randevu talebi bulunmuyor.
+            {t.admin.empty}
           </div>
         )}
 
@@ -166,7 +160,7 @@ function AdminPage() {
                 <div>
                   <h3 className="font-display text-lg md:text-xl text-foreground">{a.full_name}</h3>
                   <div className="text-xs text-muted-foreground mt-1">
-                    {new Date(a.created_at).toLocaleString("tr-TR")}
+                    {new Date(a.created_at).toLocaleString(t.blog.dateLocale)}
                   </div>
                 </div>
                 <span
@@ -188,22 +182,22 @@ function AdminPage() {
                 {a.preferred_date && (
                   <div className="flex items-center gap-2 text-foreground/80">
                     <Calendar className="w-4 h-4 text-primary" />
-                    {new Date(a.preferred_date).toLocaleDateString("tr-TR")}
+                    {new Date(a.preferred_date).toLocaleDateString(t.blog.dateLocale)}
                   </div>
                 )}
                 {a.service && (
                   <div className="flex items-center gap-2 text-foreground/80">
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Hizmet:</span>
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{t.admin.service}</span>
                     {a.service}
                   </div>
                 )}
                 <div className="flex items-center gap-2 text-foreground/80">
                   <ShieldCheck className="w-4 h-4 text-primary" />
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mr-1">KVKK Onayı:</span>
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mr-1">{t.admin.kvkkConsent}</span>
                   {a.consent_given ? (
-                    <span className="text-emerald-400 text-xs">Onaylandı</span>
+                    <span className="text-emerald-400 text-xs">{t.admin.consentApproved}</span>
                   ) : (
-                    <span className="text-amber-400 text-xs">Bekliyor</span>
+                    <span className="text-amber-400 text-xs">{t.admin.consentPending}</span>
                   )}
                 </div>
               </div>
@@ -217,7 +211,7 @@ function AdminPage() {
 
               <div className="mt-5 flex flex-wrap items-center gap-2 pt-4 border-t border-border/40">
                 <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mr-2">
-                  Durum:
+                  {t.admin.statusLabel}
                 </span>
                 {(["pending", "confirmed", "completed", "cancelled"] as Status[]).map((s) => (
                   <button
@@ -235,13 +229,13 @@ function AdminPage() {
                 ))}
                 <button
                   onClick={() => {
-                    if (confirm("Bu randevu talebini silmek istediğinize emin misiniz?")) {
+                    if (confirm(t.admin.deleteConfirm)) {
                       deleteMut.mutate(a.id);
                     }
                   }}
                   className="ml-auto inline-flex items-center gap-1 text-[11px] uppercase tracking-widest text-rose-400 hover:text-rose-300"
                 >
-                  <Trash2 className="w-3.5 h-3.5" /> Sil
+                  <Trash2 className="w-3.5 h-3.5" /> {t.admin.delete}
                 </button>
               </div>
             </article>
