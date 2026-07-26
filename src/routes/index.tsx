@@ -98,6 +98,7 @@ function Nav() {
     { href: "#uygulamalar", label: "Uygulamalar" },
     { href: "#cihazlar", label: "Teknoloji" },
     { href: "#surec", label: "Süreç" },
+    { href: "#sss", label: "SSS" },
     { href: "#iletisim", label: "İletişim" },
   ];
   return (
