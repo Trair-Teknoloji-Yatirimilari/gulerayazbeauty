@@ -42,6 +42,7 @@ import serviceMeso from "@/assets/service-meso.jpg";
 import serviceGold from "@/assets/service-goldneedle.jpg";
 import serviceLaser from "@/assets/service-laser.jpg";
 import serviceHifu from "@/assets/service-hifu.jpg";
+import { AppointmentForm } from "@/components/AppointmentForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -1054,7 +1055,7 @@ function Contact() {
             >
               <c.icon className="w-8 h-8 text-primary mb-6" strokeWidth={1} />
               <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">{c.label}</div>
-              <div className="font-display text-xl mt-2 text-foreground/90 group-hover:text-primary transition-colors">
+              <div className="font-display text-lg mt-2 text-foreground/90 group-hover:text-primary transition-colors break-words">
                 {c.value}
               </div>
               <ArrowUpRight className="absolute top-6 right-6 w-4 h-4 text-primary/50 group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
@@ -1062,14 +1063,18 @@ function Contact() {
           ))}
         </motion.div>
 
-        <motion.div {...fadeUp} className="mt-12 text-center">
-          <a
-            href="mailto:info@drgokhandegirmencioglu.com"
-            className="inline-flex items-center gap-3 rounded-full bg-primary px-10 py-4 text-sm uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all glow-gold"
-          >
-            Randevu Talep Et
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
+        <motion.div {...fadeUp} className="mt-16 max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-px w-8 bg-primary/60" />
+              <span className="text-[10px] uppercase tracking-[0.4em] text-primary/80">Randevu Formu</span>
+              <div className="h-px w-8 bg-primary/60" />
+            </div>
+            <h3 className="font-display text-2xl md:text-3xl text-foreground">
+              Talebinizi <span className="italic text-gold-gradient">bize bırakın</span>
+            </h3>
+          </div>
+          <AppointmentForm />
         </motion.div>
       </div>
     </section>
