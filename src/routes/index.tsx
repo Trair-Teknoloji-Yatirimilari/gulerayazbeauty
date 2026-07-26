@@ -43,7 +43,7 @@ import {
 } from "@/components/ui/accordion";
 
 import heroClinic from "@/assets/hero-clinic.jpg";
-import beautyPortrait from "@/assets/beauty-portrait.jpg";
+import drPortrait from "@/assets/dr-portrait.jpg.asset.json";
 import serviceBotox from "@/assets/service-botox.jpg";
 import serviceFiller from "@/assets/service-filler.jpg";
 import serviceMeso from "@/assets/service-meso.jpg";
