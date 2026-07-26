@@ -188,6 +188,15 @@ function AdminPage() {
                     {a.service}
                   </div>
                 )}
+                <div className="flex items-center gap-2 text-foreground/80">
+                  <ShieldCheck className="w-4 h-4 text-primary" />
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mr-1">KVKK Onayı:</span>
+                  {a.consent_given ? (
+                    <span className="text-emerald-400 text-xs">Onaylandı</span>
+                  ) : (
+                    <span className="text-amber-400 text-xs">Bekliyor</span>
+                  )}
+                </div>
               </div>
 
               {a.message && (
