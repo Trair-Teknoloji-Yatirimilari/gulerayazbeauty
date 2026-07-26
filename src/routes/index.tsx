@@ -163,11 +163,18 @@ function Nav() {
       {open && (
         <div className="md:hidden border-t border-border/40 bg-background/95">
           <div className="px-6 py-4 flex flex-col gap-4">
-            {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">
-                {l.label}
-              </a>
-            ))}
+            {links.map((l) =>
+              l.route ? (
+                <Link key={l.href} to={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">
+                  {l.label}
+                </Link>
+              ) : (
+                <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">
+                  {l.label}
+                </a>
+              ),
+            )}
+
           </div>
         </div>
       )}
