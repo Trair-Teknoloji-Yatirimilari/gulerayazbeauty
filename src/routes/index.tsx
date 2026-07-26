@@ -1443,6 +1443,10 @@ function Footer() {
             © {new Date().getFullYear()} Dr. Gökhan Değirmencioğlu. Tüm hakları saklıdır.
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/60">
+            <Link to="/blog" className="hover:text-primary transition-colors underline underline-offset-2">
+              Blog
+            </Link>
+            <span className="hidden sm:inline">·</span>
             <Link
               to="/kvkk"
               className="hover:text-primary transition-colors underline underline-offset-2"
@@ -1450,6 +1454,7 @@ function Footer() {
               KVKK Aydınlatma Metni
             </Link>
             <span className="hidden sm:inline">·</span>
+
             <span>Bu sitedeki bilgiler tanıtım amaçlıdır ve hekim muayenesi yerine geçmez.</span>
           </div>
           <p className="mt-2 text-[10px] text-muted-foreground/60 text-center max-w-3xl mx-auto leading-relaxed">
