@@ -1212,13 +1212,20 @@ function Contact() {
 
         <motion.div {...fadeUp} className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: Phone, label: "Telefon", value: "+90 (___) ___ __ __", href: "tel:" },
+            { icon: Phone, label: "Telefon", value: "+90 545 450 88 34", href: "tel:+905454508834" },
             { icon: Mail, label: "E-posta", value: "info@drgokhandegirmencioglu.com", href: "mailto:info@drgokhandegirmencioglu.com" },
-            { icon: MapPin, label: "Klinik", value: "İstanbul, Türkiye", href: "#" },
+            {
+              icon: MapPin,
+              label: "Klinik",
+              value: "Skyland Ofis B Blok Kat:6 Daire:99, Sarıyer / İstanbul",
+              href: "https://www.google.com/maps/search/?api=1&query=Huzur+Mahallesi+Azerbaycan+Caddesi+No:4+Skyland+Ofis+B+Blok+Kat:6+Daire:99+Sarıyer+İstanbul",
+            },
           ].map((c) => (
             <a
               key={c.label}
               href={c.href}
+              target={c.href.startsWith("http") ? "_blank" : undefined}
+              rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
               className="group relative bg-card/60 backdrop-blur border border-border/60 hover:border-primary/60 rounded-sm p-8 transition-all duration-500"
             >
               <c.icon className="w-8 h-8 text-primary mb-6" strokeWidth={1} />
