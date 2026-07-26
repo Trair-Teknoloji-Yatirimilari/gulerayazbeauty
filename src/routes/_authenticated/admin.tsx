@@ -9,7 +9,7 @@ import {
 } from "@/lib/appointments.functions";
 import { toast } from "sonner";
 import { useMemo, useState } from "react";
-import { Loader2, LogOut, Trash2, Phone, Mail, Calendar, MessageSquare } from "lucide-react";
+import { Loader2, LogOut, Trash2, Phone, Mail, Calendar, MessageSquare, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
