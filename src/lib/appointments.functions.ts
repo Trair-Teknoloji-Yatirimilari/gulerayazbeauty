@@ -58,7 +58,11 @@ export const createAppointment = createServerFn({ method: "POST" })
 
     // Best-effort email notifications (skipped silently if email not configured)
     try {
-      const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+      // Optional: email templates may not be scaffolded yet.
+      // @ts-expect-error dynamic optional module
+      const mod = await import("@/lib/email-templates/send-email").catch(() => null);
+      if (!mod?.sendTemplateEmail) return;
+      const { sendTemplateEmail } = mod;
       await Promise.allSettled([
         sendTemplateEmail("admin-appointment-notification", ADMIN_EMAIL, {
           templateData: {
