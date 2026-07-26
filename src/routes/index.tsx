@@ -52,6 +52,8 @@ import serviceGold from "@/assets/service-goldneedle.jpg";
 import serviceLaser from "@/assets/service-laser.jpg";
 import serviceHifu from "@/assets/service-hifu.jpg";
 import { AppointmentForm } from "@/components/AppointmentForm";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useT } from "@/i18n/context";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -94,14 +96,15 @@ function Index() {
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const { t } = useT();
   const links: { href: string; label: string; route?: boolean }[] = [
-    { href: "#hakkinda", label: "Hakkımda" },
-    { href: "#uygulamalar", label: "Uygulamalar" },
-    { href: "#cihazlar", label: "Teknoloji" },
-    { href: "#surec", label: "Süreç" },
-    { href: "/blog", label: "Blog", route: true },
-    { href: "#sss", label: "SSS" },
-    { href: "#iletisim", label: "İletişim" },
+    { href: "#hakkinda", label: t.nav.about },
+    { href: "#uygulamalar", label: t.nav.services },
+    { href: "#cihazlar", label: t.nav.devices },
+    { href: "#surec", label: t.nav.journey },
+    { href: "/blog", label: t.nav.blog, route: true },
+    { href: "#sss", label: t.nav.faq },
+    { href: "#iletisim", label: t.nav.contact },
   ];
 
   return (
@@ -114,10 +117,10 @@ function Nav() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
         <a href="#top" className="flex items-center gap-2 group">
           <span className="text-gold-gradient font-display text-base md:text-lg tracking-wide whitespace-nowrap">
-            Dr. Gökhan Değirmencioğlu
+            {t.nav.brand}
           </span>
           <span className="hidden lg:block text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
-            Medikal Estetik
+            {t.nav.tagline}
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8">
@@ -144,21 +147,27 @@ function Nav() {
           )}
         </nav>
 
-        <a
-          href="#iletisim"
-          className="hidden md:inline-flex items-center gap-2 rounded-full border border-primary/60 px-5 py-2 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
-        >
-          Randevu <ArrowUpRight className="w-3.5 h-3.5" />
-        </a>
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-primary p-2"
-          aria-label="Menu"
-        >
-          <div className="w-6 h-px bg-current mb-1.5" />
-          <div className="w-6 h-px bg-current mb-1.5" />
-          <div className="w-4 h-px bg-current ml-auto" />
-        </button>
+        <div className="hidden md:flex items-center gap-3">
+          <LanguageSwitcher />
+          <a
+            href="#iletisim"
+            className="inline-flex items-center gap-2 rounded-full border border-primary/60 px-5 py-2 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
+          >
+            {t.nav.ctaAppointment} <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+        <div className="md:hidden flex items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            onClick={() => setOpen(!open)}
+            className="text-primary p-2"
+            aria-label={t.nav.menuAria}
+          >
+            <div className="w-6 h-px bg-current mb-1.5" />
+            <div className="w-6 h-px bg-current mb-1.5" />
+            <div className="w-4 h-px bg-current ml-auto" />
+          </button>
+        </div>
       </div>
       {open && (
         <div className="md:hidden border-t border-border/40 bg-background/95">
@@ -174,7 +183,6 @@ function Nav() {
                 </a>
               ),
             )}
-
           </div>
         </div>
       )}
