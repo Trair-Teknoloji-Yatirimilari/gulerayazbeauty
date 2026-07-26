@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { adminGetPost } from "@/lib/blog.functions";
 import { BlogPostForm } from "@/components/BlogPostForm";
+import { useT } from "@/i18n/context";
 
 export const Route = createFileRoute("/_authenticated/admin/blog/$id")({
   head: () => ({ meta: [{ title: "Yazıyı Düzenle" }, { name: "robots", content: "noindex" }] }),
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/_authenticated/admin/blog/$id")({
 });
 
 function EditPostPage() {
+  const { t } = useT();
   const { id } = Route.useParams();
   const getFn = useServerFn(adminGetPost);
   const { data: post, isLoading } = useQuery({
@@ -22,9 +24,9 @@ function EditPostPage() {
     <div className="min-h-screen bg-background pt-24 pb-16 px-6">
       <div className="mx-auto max-w-6xl">
         <Link to="/_authenticated/admin/blog" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary/70 hover:text-primary mb-4">
-          <ArrowLeft className="w-3.5 h-3.5" /> Blog Yönetimi
+          <ArrowLeft className="w-3.5 h-3.5" /> {t.blogAdmin.backList}
         </Link>
-        <h1 className="font-display text-3xl md:text-4xl text-gold-gradient mb-8">Yazıyı Düzenle</h1>
+        <h1 className="font-display text-3xl md:text-4xl text-gold-gradient mb-8">{t.blogAdmin.editTitle}</h1>
         {isLoading ? (
           <div className="flex justify-center py-24"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>
         ) : post ? (
@@ -44,7 +46,7 @@ function EditPostPage() {
             }}
           />
         ) : (
-          <p className="text-foreground/60">Yazı bulunamadı.</p>
+          <p className="text-foreground/60">{t.blogAdmin.notFound}</p>
         )}
       </div>
     </div>

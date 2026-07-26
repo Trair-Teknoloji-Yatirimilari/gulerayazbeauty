@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Lock } from "lucide-react";
+import { useT } from "@/i18n/context";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
+  const { t } = useT();
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
@@ -35,7 +37,7 @@ function AuthPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        toast.success("Giriş başarılı.");
+        toast.success(t.auth.successSignin);
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -43,11 +45,11 @@ function AuthPage() {
           options: { emailRedirectTo: `${window.location.origin}/admin` },
         });
         if (error) throw error;
-        toast.success("Kayıt tamamlandı.");
+        toast.success(t.auth.successSignup);
       }
       navigate({ to: "/admin" });
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "İşlem başarısız.");
+      toast.error(err instanceof Error ? err.message : t.auth.failed);
     } finally {
       setLoading(false);
     }
@@ -57,22 +59,22 @@ function AuthPage() {
     <div className="min-h-screen flex items-center justify-center px-4 bg-background">
       <div className="w-full max-w-md">
         <Link to="/" className="block text-center mb-8 text-xs uppercase tracking-[0.4em] text-muted-foreground hover:text-primary">
-          ← Ana sayfa
+          {t.auth.backHome}
         </Link>
         <div className="bg-card/60 backdrop-blur border border-border/60 rounded-sm p-8 md:p-10">
           <div className="flex flex-col items-center text-center mb-8">
             <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
               <Lock className="w-6 h-6" strokeWidth={1.2} />
             </div>
-            <h1 className="font-display text-2xl md:text-3xl text-gold-gradient">Yönetici Paneli</h1>
+            <h1 className="font-display text-2xl md:text-3xl text-gold-gradient">{t.auth.badge}</h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              {mode === "signin" ? "Panele erişim için giriş yapın" : "Yönetici hesabı oluşturun"}
+              {mode === "signin" ? t.auth.subtitleSignin : t.auth.subtitleSignup}
             </p>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2">E-posta</label>
+              <label className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2">{t.auth.emailLabel}</label>
               <input
                 type="email"
                 required
@@ -82,7 +84,7 @@ function AuthPage() {
               />
             </div>
             <div>
-              <label className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2">Şifre</label>
+              <label className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2">{t.auth.passwordLabel}</label>
               <input
                 type="password"
                 required
@@ -98,22 +100,21 @@ function AuthPage() {
               className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm uppercase tracking-widest text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              {mode === "signin" ? "Giriş Yap" : "Kayıt Ol"}
+              {mode === "signin" ? t.auth.signIn : t.auth.signUp}
             </button>
           </form>
 
           <div className="mt-6 text-center text-xs text-muted-foreground">
-            {mode === "signin" ? "Hesabınız yok mu? " : "Hesabınız var mı? "}
+            {mode === "signin" ? t.auth.noAccount : t.auth.hasAccount}
             <button
               onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
               className="text-primary hover:underline"
             >
-              {mode === "signin" ? "Kayıt olun" : "Giriş yapın"}
+              {mode === "signin" ? t.auth.signUpLink : t.auth.signInLink}
             </button>
           </div>
           <p className="mt-6 text-[10px] text-muted-foreground/70 text-center leading-relaxed">
-            Yalnızca yetkili yönetici hesabı (info@drgokhandegirmencioglu.com)
-            randevu paneline erişebilir.
+            {t.auth.notice}
           </p>
         </div>
       </div>

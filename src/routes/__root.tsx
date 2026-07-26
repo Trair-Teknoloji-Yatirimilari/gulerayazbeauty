@@ -11,23 +11,22 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { LocaleProvider } from "@/i18n/context";
+import { LocaleProvider, useT } from "@/i18n/context";
 
 function NotFoundComponent() {
+  const { t } = useT();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-display text-gold-gradient">404</h1>
-        <h2 className="mt-4 text-xl font-display text-foreground">Sayfa bulunamadı</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Aradığınız sayfa mevcut değil ya da taşınmış.
-        </p>
+        <h2 className="mt-4 text-xl font-display text-foreground">{t.notFound.title}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{t.notFound.body}</p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Ana sayfaya dön
+            {t.notFound.cta}
           </Link>
         </div>
       </div>
@@ -38,6 +37,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const { t } = useT();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -45,22 +45,20 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-display text-foreground">Sayfa yüklenemedi</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Bir sorun oluştu. Sayfayı yenilemeyi veya ana sayfaya dönmeyi deneyin.
-        </p>
+        <h1 className="text-xl font-display text-foreground">{t.errorBoundary.title}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t.errorBoundary.body}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => { router.invalidate(); reset(); }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
-            Tekrar dene
+            {t.errorBoundary.retry}
           </button>
           <a
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
           >
-            Ana sayfa
+            {t.errorBoundary.home}
           </a>
         </div>
       </div>

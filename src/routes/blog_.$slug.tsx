@@ -1,9 +1,10 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "motion/react";
 import { ArrowLeft, Calendar, Loader2, Tag } from "lucide-react";
 import { getPostBySlug } from "@/lib/blog.functions";
+import { useT } from "@/i18n/context";
 
 export const Route = createFileRoute("/blog_/$slug")({
   head: ({ params }) => ({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/blog_/$slug")({
 });
 
 function BlogDetailPage() {
+  const { t } = useT();
   const { slug } = Route.useParams();
   const getFn = useServerFn(getPostBySlug);
   const { data: post, isLoading, error } = useQuery({
@@ -36,9 +38,9 @@ function BlogDetailPage() {
   if (error || !post) {
     return (
       <div className="min-h-screen bg-background pt-32 pb-24 text-center px-6">
-        <h1 className="font-display text-3xl text-gold-gradient mb-4">Yazı bulunamadı</h1>
-        <p className="text-foreground/60 mb-8">Aradığınız yazı kaldırılmış veya taşınmış olabilir.</p>
-        <Link to="/blog" className="text-primary hover:underline">← Bloga dön</Link>
+        <h1 className="font-display text-3xl text-gold-gradient mb-4">{t.blog.notFound}</h1>
+        <p className="text-foreground/60 mb-8">{t.blog.notFoundBody}</p>
+        <Link to="/blog" className="text-primary hover:underline">{t.blog.backBlog}</Link>
       </div>
     );
   }
@@ -63,7 +65,7 @@ function BlogDetailPage() {
             to="/blog"
             className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary/80 hover:text-primary transition mb-6"
           >
-            <ArrowLeft className="w-3.5 h-3.5" /> Tüm Yazılar
+            <ArrowLeft className="w-3.5 h-3.5" /> {t.blog.allPosts}
           </Link>
 
           {post.category && (
@@ -78,14 +80,14 @@ function BlogDetailPage() {
           <div className="flex flex-wrap items-center gap-5 text-xs text-foreground/60 mb-8 pb-8 border-b border-border/30">
             <span className="inline-flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
-              {post.published_at ? new Date(post.published_at).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" }) : ""}
+              {post.published_at ? new Date(post.published_at).toLocaleDateString(t.blog.dateLocale, { day: "numeric", month: "long", year: "numeric" }) : ""}
             </span>
             {post.tags && post.tags.length > 0 && (
               <span className="inline-flex items-center gap-2 flex-wrap">
                 <Tag className="w-3.5 h-3.5" />
-                {post.tags.map((t) => (
-                  <span key={t} className="px-2 py-0.5 rounded-full border border-border/40 text-[11px]">
-                    {t}
+                {post.tags.map((tag) => (
+                  <span key={tag} className="px-2 py-0.5 rounded-full border border-border/40 text-[11px]">
+                    {tag}
                   </span>
                 ))}
               </span>
@@ -104,13 +106,13 @@ function BlogDetailPage() {
           />
 
           <div className="mt-12 pt-8 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-foreground/60">Bu konu hakkında görüşmek ister misiniz?</p>
+            <p className="text-sm text-foreground/60">{t.blog.ctaQuestion}</p>
             <Link
               to="/"
               hash="iletisim"
               className="inline-flex items-center gap-2 rounded-full border border-primary/60 px-5 py-2 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
             >
-              Randevu Al
+              {t.blog.ctaBook}
             </Link>
           </div>
         </motion.div>
