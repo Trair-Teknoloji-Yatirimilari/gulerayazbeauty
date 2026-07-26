@@ -94,14 +94,16 @@ function Index() {
 
 function Nav() {
   const [open, setOpen] = useState(false);
-  const links = [
+  const links: { href: string; label: string; route?: boolean }[] = [
     { href: "#hakkinda", label: "Hakkımda" },
     { href: "#uygulamalar", label: "Uygulamalar" },
     { href: "#cihazlar", label: "Teknoloji" },
     { href: "#surec", label: "Süreç" },
+    { href: "/blog", label: "Blog", route: true },
     { href: "#sss", label: "SSS" },
     { href: "#iletisim", label: "İletişim" },
   ];
+
   return (
     <motion.header
       initial={{ y: -30, opacity: 0 }}
