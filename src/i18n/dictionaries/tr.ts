@@ -343,4 +343,4 @@ export const tr = {
     retry: "Tekrar dene",
     home: "Ana sayfa",
   },
-} as const;
+};
