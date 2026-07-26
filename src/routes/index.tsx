@@ -743,15 +743,17 @@ function ServiceRow({ service, reversed, index }: { service: Service; reversed: 
           Detayları Gör <ArrowUpRight className="w-3.5 h-3.5" />
         </button>
       </div>
-      <DetailDialog
-        open={open}
-        onOpenChange={setOpen}
-        title={service.title}
-        subtitle={service.subtitle}
-        image={service.image}
-        items={service.items}
-        detail={service.detail}
-      />
+      {open && (
+        <DetailDialog
+          open={open}
+          onOpenChange={setOpen}
+          title={service.title}
+          subtitle={service.subtitle}
+          image={service.image}
+          items={service.items}
+          detail={service.detail}
+        />
+      )}
     </motion.div>
   );
 }
