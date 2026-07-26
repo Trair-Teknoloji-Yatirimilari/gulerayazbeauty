@@ -591,6 +591,12 @@ const services: Service[] = [
       interval: "9–18 ay",
       closing:
         "Doğallıktan taviz vermeden yüzün altın oranlarını yeniden görünür kılıyoruz.",
+      faqs: [
+        { q: "Dolgu kalıcı mıdır?", a: "Kullandığımız hyaluronik asit dolguları geri dönüşümlüdür ve 9–18 ay içinde vücut tarafından doğal olarak emilir. Gerektiğinde özel enzimle çözülebilir." },
+        { q: "Dudağım şişkin veya orantısız görünür mü?", a: "Doğal ve ölçülü tasarım anlayışıyla yüz oranlarınıza uygun dozda uygulama yapılır. Amaç dudağınızı büyütmek değil, hatlarını dengelemektir." },
+        { q: "İşleme hemen sonra sosyal hayata dönebilir miyim?", a: "Evet, ancak ilk 24–48 saat hafif şişlik ve nadiren morarma olabilir. Önemli bir davetten en az 1 hafta önce uygulama planlanır." },
+        { q: "Göz altı ışık dolgusu herkese yapılır mı?", a: "Hayır. Göz altı fıtığı, ödem eğilimi ve cilt kalitesine göre uygunluk değerlendirilir; her hastaya yapılmaz." },
+      ],
     },
   },
   {
