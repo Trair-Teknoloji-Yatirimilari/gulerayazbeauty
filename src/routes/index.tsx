@@ -1260,31 +1260,74 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="relative border-t border-border/40 py-12">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-3">
-          <span className="text-gold-gradient font-display text-base tracking-wide whitespace-nowrap">
-            Dr. Gökhan Değirmencioğlu
-          </span>
-          <span className="hidden md:block text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
-            Medikal Estetik
-          </span>
+    <footer className="relative border-t border-border/40 py-12 md:py-16">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid md:grid-cols-3 gap-10 md:gap-8 items-start">
+          <div>
+            <span className="text-gold-gradient font-display text-lg tracking-wide whitespace-nowrap block">
+              Dr. Gökhan Değirmencioğlu
+            </span>
+            <span className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground mt-2 block">
+              Medikal Estetik
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">İletişim</h4>
+            <a
+              href="tel:+905454508834"
+              className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
+            >
+              <Phone className="w-4 h-4 text-primary" strokeWidth={1.5} />
+              +90 545 450 88 34
+            </a>
+            <a
+              href="mailto:info@drgokhandegirmencioglu.com"
+              className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
+            >
+              <Mail className="w-4 h-4 text-primary" strokeWidth={1.5} />
+              info@drgokhandegirmencioglu.com
+            </a>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Huzur+Mahallesi+Azerbaycan+Caddesi+No:4+Skyland+Ofis+B+Blok+Kat:6+Daire:99+Sarıyer+İstanbul"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
+            >
+              <MapPin className="w-4 h-4 text-primary mt-0.5" strokeWidth={1.5} />
+              <span>
+                Huzur Mahallesi Azerbaycan Caddesi No:4
+                <br />
+                Skyland Ofis B Blok Kat:6 Daire:99
+                <br />
+                34396 Sarıyer / İstanbul
+              </span>
+            </a>
+          </div>
+
+          <div className="md:text-right">
+            <h4 className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-4">Sosyal</h4>
+            <a
+              href="#"
+              aria-label="Instagram"
+              className="inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-primary transition-colors"
+            >
+              <Instagram className="w-4 h-4" />
+              Instagram
+            </a>
+          </div>
         </div>
-        <p className="text-xs text-muted-foreground text-center">
-          © {new Date().getFullYear()} Dr. Gökhan Değirmencioğlu. Tüm hakları saklıdır.
-        </p>
-        <a
-          href="#"
-          aria-label="Instagram"
-          className="text-muted-foreground hover:text-primary transition-colors"
-        >
-          <Instagram className="w-4 h-4" />
-        </a>
+
+        <div className="mt-12 pt-8 border-t border-border/40">
+          <p className="text-xs text-muted-foreground text-center">
+            © {new Date().getFullYear()} Dr. Gökhan Değirmencioğlu. Tüm hakları saklıdır.
+          </p>
+          <p className="mt-4 text-[10px] text-muted-foreground/60 text-center max-w-3xl mx-auto leading-relaxed">
+            Bu sitedeki bilgiler tanıtım amaçlıdır ve hekim muayenesi yerine geçmez.
+            Uygulama sonuçları kişiye göre farklılık gösterebilir.
+          </p>
+        </div>
       </div>
-      <p className="mt-6 px-6 text-[10px] text-muted-foreground/60 text-center max-w-3xl mx-auto leading-relaxed">
-        Bu sitedeki bilgiler tanıtım amaçlıdır ve hekim muayenesi yerine geçmez.
-        Uygulama sonuçları kişiye göre farklılık gösterebilir.
-      </p>
     </footer>
   );
 }
