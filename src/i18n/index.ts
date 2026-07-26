@@ -6,20 +6,15 @@ import { DEFAULT_LOCALE, isLocale, type Locale } from "./types";
 
 export type Dict = typeof tr;
 
-const DICTS: Record<Locale, Dict> = { tr, en, fa: fa as Dict };
+const DICTS: Record<Locale, Dict> = { tr, en, fa };
 
 export function getDict(locale: Locale): Dict {
   return DICTS[locale] ?? DICTS[DEFAULT_LOCALE];
 }
 
-export function useLocale(): Locale {
+export function useLocaleFromRoute(): Locale {
   const params = useParams({ strict: false }) as { lang?: string };
   return isLocale(params.lang) ? params.lang : DEFAULT_LOCALE;
-}
-
-export function useT() {
-  const locale = useLocale();
-  return { t: getDict(locale), locale };
 }
 
 export { DEFAULT_LOCALE, isLocale, type Locale } from "./types";
