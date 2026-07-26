@@ -401,7 +401,7 @@ type Detail = {
   faqs: { q: string; a: string }[];
 };
 
-const DetailDialog = React.memo(function DetailDialog({
+const DetailDialog = memo(function DetailDialog({
   open,
   onOpenChange,
   title,
