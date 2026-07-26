@@ -43,7 +43,7 @@ import {
 } from "@/components/ui/accordion";
 
 import heroClinic from "@/assets/hero-clinic.jpg";
-import beautyPortrait from "@/assets/beauty-portrait.jpg";
+import drPortrait from "@/assets/dr-portrait.jpg.asset.json";
 import serviceBotox from "@/assets/service-botox.jpg";
 import serviceFiller from "@/assets/service-filler.jpg";
 import serviceMeso from "@/assets/service-meso.jpg";
@@ -375,17 +375,16 @@ function About() {
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           <motion.div {...fadeUp} className="lg:col-span-5 relative lg:sticky lg:top-28">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-sm">
+            <div className="relative aspect-square overflow-hidden rounded-sm">
               <img
-                src={beautyPortrait}
-                alt="Dr. Gökhan Değirmencioğlu portre alanı"
+                src={drPortrait.url}
+                alt="Dr. Gökhan Değirmencioğlu"
                 className="w-full h-full object-cover"
-                width={1200}
-                height={1600}
+                width={447}
+                height={447}
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
             </div>
             <div className="absolute -bottom-6 -right-6 hidden md:block border border-primary/40 bg-background/90 backdrop-blur px-6 py-4 rounded-sm">
               <div className="text-gold-gradient font-display text-4xl">15+</div>
@@ -393,9 +392,6 @@ function About() {
                 Yıl Klinik Deneyim
               </div>
             </div>
-            <p className="mt-8 text-[11px] text-muted-foreground uppercase tracking-widest">
-              * Portre alanına Dr. Gökhan Değirmencioğlu'nun profesyonel fotoğrafı eklenebilir.
-            </p>
           </motion.div>
 
           <motion.div {...fadeUp} className="lg:col-span-7">
