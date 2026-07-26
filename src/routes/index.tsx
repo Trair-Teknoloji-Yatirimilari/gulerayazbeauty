@@ -94,14 +94,16 @@ function Index() {
 
 function Nav() {
   const [open, setOpen] = useState(false);
-  const links = [
+  const links: { href: string; label: string; route?: boolean }[] = [
     { href: "#hakkinda", label: "Hakkımda" },
     { href: "#uygulamalar", label: "Uygulamalar" },
     { href: "#cihazlar", label: "Teknoloji" },
     { href: "#surec", label: "Süreç" },
+    { href: "/blog", label: "Blog", route: true },
     { href: "#sss", label: "SSS" },
     { href: "#iletisim", label: "İletişim" },
   ];
+
   return (
     <motion.header
       initial={{ y: -30, opacity: 0 }}
@@ -119,17 +121,29 @@ function Nav() {
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-foreground/80 hover:text-primary transition-colors relative group"
-            >
-              {l.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
-            </a>
-          ))}
+          {links.map((l) =>
+            l.route ? (
+              <Link
+                key={l.href}
+                to={l.href}
+                className="text-sm text-foreground/80 hover:text-primary transition-colors relative group"
+              >
+                {l.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
+              </Link>
+            ) : (
+              <a
+                key={l.href}
+                href={l.href}
+                className="text-sm text-foreground/80 hover:text-primary transition-colors relative group"
+              >
+                {l.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
+              </a>
+            ),
+          )}
         </nav>
+
         <a
           href="#iletisim"
           className="hidden md:inline-flex items-center gap-2 rounded-full border border-primary/60 px-5 py-2 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
@@ -149,11 +163,18 @@ function Nav() {
       {open && (
         <div className="md:hidden border-t border-border/40 bg-background/95">
           <div className="px-6 py-4 flex flex-col gap-4">
-            {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">
-                {l.label}
-              </a>
-            ))}
+            {links.map((l) =>
+              l.route ? (
+                <Link key={l.href} to={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">
+                  {l.label}
+                </Link>
+              ) : (
+                <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">
+                  {l.label}
+                </a>
+              ),
+            )}
+
           </div>
         </div>
       )}
@@ -1422,6 +1443,10 @@ function Footer() {
             © {new Date().getFullYear()} Dr. Gökhan Değirmencioğlu. Tüm hakları saklıdır.
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/60">
+            <Link to="/blog" className="hover:text-primary transition-colors underline underline-offset-2">
+              Blog
+            </Link>
+            <span className="hidden sm:inline">·</span>
             <Link
               to="/kvkk"
               className="hover:text-primary transition-colors underline underline-offset-2"
@@ -1429,6 +1454,7 @@ function Footer() {
               KVKK Aydınlatma Metni
             </Link>
             <span className="hidden sm:inline">·</span>
+
             <span>Bu sitedeki bilgiler tanıtım amaçlıdır ve hekim muayenesi yerine geçmez.</span>
           </div>
           <p className="mt-2 text-[10px] text-muted-foreground/60 text-center max-w-3xl mx-auto leading-relaxed">
