@@ -202,7 +202,13 @@ function Hero() {
 
   return (
     <section id="top" ref={ref} className="relative h-screen min-h-[720px] w-full overflow-hidden">
-      <motion.div style={{ y, scale }} className="absolute inset-0">
+      <motion.div
+        initial={{ filter: "brightness(0.72) saturate(0.85)", opacity: 0.9 }}
+        animate={{ filter: "brightness(1) saturate(1)", opacity: 1 }}
+        transition={{ duration: 2.4, ease: [0.22, 0.61, 0.36, 1] }}
+        style={{ y, scale }}
+        className="absolute inset-0"
+      >
         <img
           src={heroClinic}
           alt="Lüks medikal estetik klinik ortamı"
@@ -214,9 +220,40 @@ function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/40" />
       </motion.div>
 
+      {/* cinematic clinical scan sweep */}
+      <div className="pointer-events-none absolute inset-0 z-[5]">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-primary/70 to-transparent blur-[1px] animate-hero-scan" />
+        <div className="absolute inset-x-0 top-0 h-[140px] bg-gradient-to-b from-primary/10 to-transparent animate-hero-scan" />
+      </div>
+
       {/* floating gold orb */}
       <div className="pointer-events-none absolute -top-24 -right-32 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[120px] animate-pulse-glow" />
       <div className="pointer-events-none absolute -bottom-24 -left-24 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[100px] animate-float-slow" />
+
+      {/* ambient clinical dust particles */}
+      <div className="pointer-events-none absolute inset-0 z-[6] overflow-hidden">
+        {[
+          { left: "12%", delay: "0s", duration: "14s", opacity: 0.35, drift: "18px" },
+          { left: "26%", delay: "2.2s", duration: "18s", opacity: 0.25, drift: "-14px" },
+          { left: "44%", delay: "4.5s", duration: "16s", opacity: 0.3, drift: "22px" },
+          { left: "58%", delay: "1.1s", duration: "20s", opacity: 0.2, drift: "-10px" },
+          { left: "72%", delay: "6s", duration: "15s", opacity: 0.28, drift: "16px" },
+          { left: "86%", delay: "3.3s", duration: "17s", opacity: 0.22, drift: "-20px" },
+        ].map((p, i) => (
+          <span
+            key={i}
+            className="absolute bottom-0 w-[2px] h-[2px] rounded-full bg-ivory/80 animate-hero-particle"
+            style={{
+              left: p.left,
+              bottom: `${10 + (i * 6)}%`,
+              ["--particle-delay" as string]: p.delay,
+              ["--particle-duration" as string]: p.duration,
+              ["--particle-opacity" as string]: p.opacity,
+              ["--particle-drift-x" as string]: p.drift,
+            }}
+          />
+        ))}
+      </div>
 
       <motion.div style={{ opacity }} className="relative z-10 h-full flex items-end pb-24 md:pb-32">
         <div className="mx-auto max-w-7xl w-full px-6 lg:px-10">
@@ -287,6 +324,23 @@ function Hero() {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* subtle medical heartbeat line */}
+      <div className="pointer-events-none absolute bottom-24 left-0 right-0 z-10 flex justify-center px-6">
+        <svg
+          viewBox="0 0 320 24"
+          fill="none"
+          className="w-full max-w-md h-6 text-primary/40 animate-hero-heartbeat"
+          aria-hidden="true"
+        >
+          <path
+            d="M0 12 H120 L136 4 L152 20 L168 4 L184 20 L200 12 H320"
+            stroke="currentColor"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+      </div>
 
       <motion.div
         initial={{ opacity: 0 }}
