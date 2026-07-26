@@ -953,15 +953,17 @@ function DeviceCard({ device, index }: { device: Device; index: number }) {
           Detaylı Bilgi <ArrowUpRight className="w-3.5 h-3.5" />
         </button>
       </div>
-      <DetailDialog
-        open={open}
-        onOpenChange={setOpen}
-        title={device.name}
-        subtitle={device.tag}
-        image={device.image}
-        items={device.items}
-        detail={device.detail}
-      />
+      {open && (
+        <DetailDialog
+          open={open}
+          onOpenChange={setOpen}
+          title={device.name}
+          subtitle={device.tag}
+          image={device.image}
+          items={device.items}
+          detail={device.detail}
+        />
+      )}
     </motion.article>
   );
 }
