@@ -17,6 +17,7 @@ export type Database = {
       appointments: {
         Row: {
           admin_notes: string | null
+          consent_given: boolean
           created_at: string
           email: string | null
           full_name: string
@@ -30,6 +31,7 @@ export type Database = {
         }
         Insert: {
           admin_notes?: string | null
+          consent_given?: boolean
           created_at?: string
           email?: string | null
           full_name: string
@@ -43,6 +45,7 @@ export type Database = {
         }
         Update: {
           admin_notes?: string | null
+          consent_given?: boolean
           created_at?: string
           email?: string | null
           full_name?: string

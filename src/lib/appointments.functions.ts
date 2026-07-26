@@ -11,6 +11,9 @@ const appointmentSchema = z.object({
   preferred_date: z.string().optional().or(z.literal("")),
   service: z.string().trim().max(100).optional().or(z.literal("")),
   message: z.string().trim().max(2000).optional().or(z.literal("")),
+  consent_given: z.boolean().refine((v) => v === true, {
+    message: "Aydınlatma metnini onaylamanız gerekiyor.",
+  }),
 });
 
 export type AppointmentInput = z.infer<typeof appointmentSchema>;
@@ -43,6 +46,7 @@ export const createAppointment = createServerFn({ method: "POST" })
       preferred_date: data.preferred_date ? data.preferred_date : null,
       service: data.service ? data.service : null,
       message: data.message ? data.message : null,
+      consent_given: data.consent_given,
     };
 
     const { data: inserted, error } = await supabase

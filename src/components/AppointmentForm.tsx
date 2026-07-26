@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
+import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Check, Loader2 } from "lucide-react";
 import { createAppointment, type AppointmentInput } from "@/lib/appointments.functions";
@@ -138,6 +139,34 @@ export function AppointmentForm() {
           className={inputCls + " min-h-[110px] resize-y"}
           placeholder="Beklentileriniz, sorularınız veya notlarınız..."
         />
+      </div>
+
+      <div>
+        <label className="flex items-start gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            {...register("consent_given", { required: "Aydınlatma metnini onaylamanız zorunludur." })}
+            className="sr-only peer"
+          />
+          <span className="mt-0.5 w-5 h-5 flex-shrink-0 rounded border border-border/70 bg-background/40 peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
+            <Check className="w-3.5 h-3.5 text-primary-foreground opacity-0 peer-checked:opacity-100 transition-opacity" />
+          </span>
+          <span className="text-sm text-foreground/80 leading-relaxed group-hover:text-foreground/90 transition-colors">
+            Kişisel verilerimin işlenmesine ilişkin{" "}
+            <Link
+              to="/kvkk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors"
+            >
+              Aydınlatma Metni
+            </Link>
+            'ni okudum, anladım ve randevu talebim için onaylıyorum. *
+          </span>
+        </label>
+        {errors.consent_given && (
+          <p className="mt-2 text-xs text-destructive">{errors.consent_given.message}</p>
+        )}
       </div>
 
       <div className="pt-2">

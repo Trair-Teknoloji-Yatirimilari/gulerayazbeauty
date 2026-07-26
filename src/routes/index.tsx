@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { memo, useRef, useState } from "react";
 import {
@@ -1322,8 +1322,17 @@ function Footer() {
           <p className="text-xs text-muted-foreground text-center">
             © {new Date().getFullYear()} Dr. Gökhan Değirmencioğlu. Tüm hakları saklıdır.
           </p>
-          <p className="mt-4 text-[10px] text-muted-foreground/60 text-center max-w-3xl mx-auto leading-relaxed">
-            Bu sitedeki bilgiler tanıtım amaçlıdır ve hekim muayenesi yerine geçmez.
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/60">
+            <Link
+              to="/kvkk"
+              className="hover:text-primary transition-colors underline underline-offset-2"
+            >
+              KVKK Aydınlatma Metni
+            </Link>
+            <span className="hidden sm:inline">·</span>
+            <span>Bu sitedeki bilgiler tanıtım amaçlıdır ve hekim muayenesi yerine geçmez.</span>
+          </div>
+          <p className="mt-2 text-[10px] text-muted-foreground/60 text-center max-w-3xl mx-auto leading-relaxed">
             Uygulama sonuçları kişiye göre farklılık gösterebilir.
           </p>
         </div>
