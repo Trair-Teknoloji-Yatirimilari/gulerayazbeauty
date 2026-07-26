@@ -99,12 +99,21 @@ function AdminPage() {
               Randevu Paneli
             </h1>
           </div>
-          <button
-            onClick={signOut}
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
-          >
-            <LogOut className="w-4 h-4" /> Çıkış
-          </button>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/_authenticated/admin/blog"
+              className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
+            >
+              Blog Yönetimi
+            </Link>
+            <button
+              onClick={signOut}
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
+            >
+              <LogOut className="w-4 h-4" /> Çıkış
+            </button>
+          </div>
+
         </div>
       </header>
 
