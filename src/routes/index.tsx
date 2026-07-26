@@ -398,6 +398,7 @@ type Detail = {
   effect: string;
   interval: string;
   closing: string;
+  faqs: { q: string; a: string }[];
 };
 
 function DetailDialog({
