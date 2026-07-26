@@ -555,6 +555,12 @@ const services: Service[] = [
       interval: "4–6 ay",
       closing:
         "Amaç değişmek değil; dinlenmiş, aydınlık ve daha genç bir versiyonunuza kavuşmak.",
+      faqs: [
+        { q: "Botoks yüzümü donuk gösterir mi?", a: "Hayır. Mikro-dozaj tekniği ile mimikleriniz korunur; sadece istenmeyen çizgiler yumuşar. Amacımız hareketsiz değil, dinlenmiş bir ifade." },
+        { q: "Etkisi ne zaman başlar, ne kadar sürer?", a: "İlk etki 3–5 gün içinde belli olur, tam sonuç 10–14 günde oturur. Ortalama 4–6 ay boyunca etkisini korur." },
+        { q: "Uygulama ağrılı mıdır?", a: "Çok ince iğnelerle yapılır; hafif bir batma hissi dışında ağrı hissedilmez. Gerekirse soğutma veya numaralayıcı krem kullanılır." },
+        { q: "Uygulama sonrası günlük hayata dönebilir miyim?", a: "Evet. İlk 4 saat uzanmamak, egzersiz ve sıcak ortamlardan uzak durmak dışında herhangi bir kısıtlama yoktur." },
+      ],
     },
   },
   {
