@@ -27,6 +27,7 @@ import {
   Leaf,
   Activity,
   ChevronRight,
+  HelpCircle,
 } from "lucide-react";
 import {
   Dialog,
@@ -82,6 +83,7 @@ function Index() {
       <Services />
       <Devices />
       <Journey />
+      <Faq />
       <Contact />
       <Footer />
     </div>
@@ -97,6 +99,7 @@ function Nav() {
     { href: "#uygulamalar", label: "Uygulamalar" },
     { href: "#cihazlar", label: "Teknoloji" },
     { href: "#surec", label: "Süreç" },
+    { href: "#sss", label: "SSS" },
     { href: "#iletisim", label: "İletişim" },
   ];
   return (
@@ -1252,6 +1255,98 @@ function Contact() {
             </h3>
           </div>
           <AppointmentForm />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- FAQ ---------------- */
+
+const faqs = [
+  {
+    q: "Randevu almadan önce nelere dikkat etmeliyim?",
+    a: "Uygulama öncesi kan sulandırıcı ilaçlar, aşırı alkol ve güneş yanığından kaçınmalısınız. Hamilelik, emzirme dönemi veya aktif cilt enfeksiyonu durumunda mutlaka bildirmelisiniz.",
+  },
+  {
+    q: "İlk konsültasyonda neler yapılıyor?",
+    a: "Yüz ve cilt analiziniz yapılır, beklentileriniz ve sağlık öykünüz değerlendirilir. Size özel, doğal ve sürdürülebilir bir tedavi planı oluşturulur.",
+  },
+  {
+    q: "Uygulamalar acıtır mı?",
+    a: "Çoğu işlem çok ince iğnelerle ve gerekirse numaralayıcı krem ile konforlu şekilde yapılır. Cihaz bazlı tedavilerde sadece hafif sıcaklık veya titreşim hissi duyulabilir.",
+  },
+  {
+    q: "İşlemden hemen sonra sosyal hayata dönebilir miyim?",
+    a: "Botoks, dolgu ve mezoterapi gibi çoğu uygulama sonrası günlük hayata dönebilirsiniz. Cihaz bazlı tedavilerde 24–48 saat arasında hafif kızarıklık olabilir.",
+  },
+  {
+    q: "Sonuçlar ne kadar sürede görülür ve kalıcı mıdır?",
+    a: "Botoks 3–5 günde, dolgu anında, cihaz bazlı tedaviler ise 6–12 hafta içinde belirginleşir. Etkiler kişisel metabolizmaya bağlı olarak 4 ay ile 2 yıl arasında değişir.",
+  },
+  {
+    q: "Tedavilerin güvenliği konusunda endişem var. Ne önerirsiniz?",
+    a: "Tüm uygulamalar hekim kontrolünde, steril klinik ortamında ve onaylı ürünlerle yapılır. Öncelikli hedefimiz sağlığınızı koruyarak doğal bir güzellik elde etmektir.",
+  },
+  {
+    q: "Ödeme seçenekleri nelerdir?",
+    a: "Nakit ve kredi kartı ödemeleri kabul edilmektedir. Tedavi planınız netleştikten sonra size özel ödeme seçenekleri hakkında bilgi verilir.",
+  },
+  {
+    q: "Randevumu nasıl iptal edebilir veya erteleyebilirim?",
+    a: "Randevunuzu en az 24 saat öncesinden telefon veya WhatsApp üzerinden bildirerek iptal veya erteleyebilirsiniz.",
+  },
+];
+
+function Faq() {
+  return (
+    <section id="sss" className="relative py-24 md:py-40 bg-card/30 border-y border-border/40 overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-primary/8 blur-[160px] pointer-events-none" />
+      <div className="relative mx-auto max-w-4xl px-6 lg:px-10">
+        <motion.div {...fadeUp} className="text-center mb-16">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="h-px w-10 bg-primary" />
+            <span className="text-xs uppercase tracking-[0.4em] text-primary">Sık Sorulan Sorular</span>
+            <div className="h-px w-10 bg-primary" />
+          </div>
+          <h2 className="font-display text-4xl md:text-6xl leading-tight">
+            Randevu öncesi <span className="italic text-gold-gradient">merak edilenler</span>
+          </h2>
+          <p className="mt-6 text-foreground/70 max-w-2xl mx-auto">
+            Kliniğimize gelmeden önce hastalarımızın en çok sorduğu soruları yanıtladık.
+            Daha fazla bilgi için bizimle iletişime geçebilirsiniz.
+          </p>
+        </motion.div>
+
+        <motion.div {...fadeUp}>
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((f, idx) => (
+              <AccordionItem
+                key={f.q}
+                value={`faq-${idx}`}
+                className="border-b border-border/60"
+              >
+                <AccordionTrigger className="text-left text-base font-normal text-foreground/90 hover:text-primary hover:no-underline py-5">
+                  <span className="flex items-start gap-4">
+                    <HelpCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" strokeWidth={1.2} />
+                    {f.q}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-foreground/70 leading-relaxed pb-5 pl-9">
+                  {f.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+
+        <motion.div {...fadeUp} className="mt-12 text-center">
+          <a
+            href="#iletisim"
+            className="inline-flex items-center gap-2 rounded-full border border-primary/60 px-6 py-2.5 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
+          >
+            Randevu Talebi Oluştur <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
         </motion.div>
       </div>
     </section>
