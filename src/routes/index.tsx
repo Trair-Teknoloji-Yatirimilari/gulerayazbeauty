@@ -538,7 +538,7 @@ const DetailDialog = React.memo(function DetailDialog({
       </DialogContent>
     </Dialog>
   );
-}
+});
 
 /* ---------------- SERVICES ---------------- */
 
