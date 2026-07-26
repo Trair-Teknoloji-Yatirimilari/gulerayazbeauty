@@ -1363,7 +1363,7 @@ function Contact() {
           ))}
         </motion.div>
 
-        <motion.div {...fadeUp} className="mt-16 max-w-3xl mx-auto">
+        <motion.div {...fadeUp} id="randevu-formu" className="mt-16 max-w-3xl mx-auto scroll-mt-24">
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="h-px w-8 bg-primary/60" />
