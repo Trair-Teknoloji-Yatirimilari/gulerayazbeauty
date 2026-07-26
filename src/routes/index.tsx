@@ -27,6 +27,12 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 import heroClinic from "@/assets/hero-clinic.jpg";
 import beautyPortrait from "@/assets/beauty-portrait.jpg";
@@ -392,6 +398,7 @@ type Detail = {
   effect: string;
   interval: string;
   closing: string;
+  faqs: { q: string; a: string }[];
 };
 
 function DetailDialog({
@@ -486,6 +493,33 @@ function DetailDialog({
               {detail.closing}
             </p>
 
+            {detail.faqs?.length > 0 && (
+              <div className="mt-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-px w-8 bg-primary" />
+                  <span className="text-[10px] uppercase tracking-[0.4em] text-primary">
+                    Sık Sorulan Sorular
+                  </span>
+                </div>
+                <Accordion type="single" collapsible className="w-full">
+                  {detail.faqs.map((f, idx) => (
+                    <AccordionItem
+                      key={f.q}
+                      value={`faq-${idx}`}
+                      className="border-b border-border/60"
+                    >
+                      <AccordionTrigger className="text-left text-sm font-normal text-foreground/90 hover:text-primary hover:no-underline py-3">
+                        {f.q}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-foreground/70 leading-relaxed pb-4">
+                        {f.a}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            )}
+
             <div className="mt-7 flex items-center gap-3">
               <a
                 href="#iletisim"
@@ -548,6 +582,12 @@ const services: Service[] = [
       interval: "4–6 ay",
       closing:
         "Amaç değişmek değil; dinlenmiş, aydınlık ve daha genç bir versiyonunuza kavuşmak.",
+      faqs: [
+        { q: "Botoks yüzümü donuk gösterir mi?", a: "Hayır. Mikro-dozaj tekniği ile mimikleriniz korunur; sadece istenmeyen çizgiler yumuşar. Amacımız hareketsiz değil, dinlenmiş bir ifade." },
+        { q: "Etkisi ne zaman başlar, ne kadar sürer?", a: "İlk etki 3–5 gün içinde belli olur, tam sonuç 10–14 günde oturur. Ortalama 4–6 ay boyunca etkisini korur." },
+        { q: "Uygulama ağrılı mıdır?", a: "Çok ince iğnelerle yapılır; hafif bir batma hissi dışında ağrı hissedilmez. Gerekirse soğutma veya numaralayıcı krem kullanılır." },
+        { q: "Uygulama sonrası günlük hayata dönebilir miyim?", a: "Evet. İlk 4 saat uzanmamak, egzersiz ve sıcak ortamlardan uzak durmak dışında herhangi bir kısıtlama yoktur." },
+      ],
     },
   },
   {
@@ -578,6 +618,12 @@ const services: Service[] = [
       interval: "9–18 ay",
       closing:
         "Doğallıktan taviz vermeden yüzün altın oranlarını yeniden görünür kılıyoruz.",
+      faqs: [
+        { q: "Dolgu kalıcı mıdır?", a: "Kullandığımız hyaluronik asit dolguları geri dönüşümlüdür ve 9–18 ay içinde vücut tarafından doğal olarak emilir. Gerektiğinde özel enzimle çözülebilir." },
+        { q: "Dudağım şişkin veya orantısız görünür mü?", a: "Doğal ve ölçülü tasarım anlayışıyla yüz oranlarınıza uygun dozda uygulama yapılır. Amaç dudağınızı büyütmek değil, hatlarını dengelemektir." },
+        { q: "İşleme hemen sonra sosyal hayata dönebilir miyim?", a: "Evet, ancak ilk 24–48 saat hafif şişlik ve nadiren morarma olabilir. Önemli bir davetten en az 1 hafta önce uygulama planlanır." },
+        { q: "Göz altı ışık dolgusu herkese yapılır mı?", a: "Hayır. Göz altı fıtığı, ödem eğilimi ve cilt kalitesine göre uygunluk değerlendirilir; her hastaya yapılmaz." },
+      ],
     },
   },
   {
@@ -606,6 +652,12 @@ const services: Service[] = [
       interval: "4–6 seans / kür",
       closing:
         "Cildinizi kozmetikle örtmek yerine, içeriden aydınlatarak dönüştürüyoruz.",
+      faqs: [
+        { q: "Kaç seansta sonuç alırım?", a: "Genellikle 4–6 seanslık bir kür önerilir. İlk canlanma 2–3 seansta hissedilir, kalıcı etkiler kür sonunda oturur." },
+        { q: "Saç mezoterapisi dökülmeyi durdurur mu?", a: "Aktif dökülme dönemindeki uygun vakalarda dökülmeyi belirgin şekilde yavaşlatır ve yeni saç çıkışını destekler. Genetik kellikte destek tedavisidir." },
+        { q: "Hamilelikte veya emzirirken uygulanır mı?", a: "Hayır. Hamilelik ve emzirme döneminde mezoterapi ve gençlik aşısı önerilmez." },
+        { q: "Uygulama sonrası ne yapmamalıyım?", a: "12 saat makyaj yapmamak, 24 saat sauna/hamam ve yoğun spor yapmamak, güneşten korunmak yeterlidir." },
+      ],
     },
   },
 ];
@@ -746,6 +798,12 @@ const devices: Device[] = [
       interval: "3–4 seans / 4 hafta arayla",
       closing:
         "Filtresiz aydınlık bir cilt için, cildi içeriden yeniden inşa eden altın standart.",
+      faqs: [
+        { q: "Altın iğne acı verir mi?", a: "Uygulama öncesi yoğun numaralayıcı krem uygulanır; işlem sırasında yalnızca hafif titreşim ve sıcaklık hissi olur." },
+        { q: "İşlem sonrası izlenim nasıldır?", a: "İlk 24–48 saat hafif kızarıklık ve kuruluk olabilir. 3. günden itibaren makyajla kolayca kapatılır ve sosyal hayata dönülür." },
+        { q: "Kaç seans gerekir?", a: "Akne izi ve gençleştirme için ortalama 3–4 seans, 4 hafta aralıklarla planlanır. Yılda 1 tekrar seansı sonucu korur." },
+        { q: "Yaz aylarında yapılabilir mi?", a: "Yapılabilir; ancak sonrasında en az 4 hafta güneş koruyucu kullanımı ve doğrudan güneşten kaçınma şarttır." },
+      ],
     },
   },
   {
@@ -777,6 +835,12 @@ const devices: Device[] = [
       interval: "3–6 seans / 3–4 hafta arayla",
       closing:
         "Kapatmadan aydınlanan bir cilt: lekelerinizi silen, tonunuzu yeniden dengeleyen teknoloji.",
+      faqs: [
+        { q: "Q-Switch her cilt tonuna uygun mu?", a: "Uygun parametrelerle koyu cilt tonlarında da güvenle uygulanabilir. Uygulama öncesi cilt tipi ve leke türü mutlaka değerlendirilir." },
+        { q: "Dövme tamamen silinir mi?", a: "Dövmenin rengi, mürekkep kalitesi ve yaşına göre 5–10 seans arasında belirgin şekilde açılır; çoğu vakada tamamen silinebilir." },
+        { q: "Karbon peeling nedir?", a: "Cildin üzerine sürülen özel karbon maskenin lazerle buharlaştırıldığı; gözenekleri temizleyen ve cildi parlatan hızlı bir uygulamadır." },
+        { q: "İşlem sonrası ne yapmalıyım?", a: "En az 4 hafta güneş koruyucu kullanmak, ovalamamak ve nemlendirici kullanmak sonucu belirgin şekilde iyileştirir." },
+      ],
     },
   },
   {
@@ -808,6 +872,12 @@ const devices: Device[] = [
       interval: "Yılda 1–2 seans",
       closing:
         "Neşteri, dikişi ve iyileşme sürecini elemeden yüzün mimarisini yeniden yukarı taşıyoruz.",
+      faqs: [
+        { q: "HIFU ile LIFU arasındaki fark nedir?", a: "HIFU derin SMAS tabakasına odaklanır ve germe etkisi güçlüdür; LIFU daha yüzeysel katmanlarda çalışır, cilt sıkılaştırma ve doku canlandırma sağlar. Çoğu zaman kombine uygulanır." },
+        { q: "Ameliyat gibi sonuç verir mi?", a: "Cerrahi germe kadar dramatik olmasa da; hafif–orta düzey gevşemede ameliyatsız, izsiz ve iyileşme süreci gerektirmeyen belirgin bir toparlama sağlar." },
+        { q: "Etkisi ne zaman görülür?", a: "İlk etki uygulama sonrası hissedilse de kalıcı toparlanma 6–12 hafta içinde kolajen üretimiyle birlikte belirginleşir." },
+        { q: "Kimlere uygulanmaz?", a: "Yüzde metal implant, kalp pili, aktif cilt enfeksiyonu, hamilelik ve ileri derece sarkması olan hastalara uygulanmaz." },
+      ],
     },
   },
 ];
