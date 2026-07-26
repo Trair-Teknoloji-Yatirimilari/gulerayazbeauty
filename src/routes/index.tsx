@@ -27,6 +27,12 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 import heroClinic from "@/assets/hero-clinic.jpg";
 import beautyPortrait from "@/assets/beauty-portrait.jpg";
