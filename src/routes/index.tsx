@@ -19,6 +19,14 @@ import {
   Timer,
   Repeat,
   ShieldCheck,
+  GraduationCap,
+  HeartPulse,
+  Award,
+  Stethoscope,
+  Building2,
+  Leaf,
+  Activity,
+  ChevronRight,
 } from "lucide-react";
 import {
   Dialog,
