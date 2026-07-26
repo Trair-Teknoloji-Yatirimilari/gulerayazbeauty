@@ -64,51 +64,96 @@ export type Database = {
           author_id: string | null
           category: string | null
           content: string
+          content_en: string | null
+          content_fa: string | null
+          content_tr: string | null
           cover_image_url: string | null
           created_at: string
           excerpt: string | null
+          excerpt_en: string | null
+          excerpt_fa: string | null
+          excerpt_tr: string | null
           id: string
           published_at: string | null
           seo_description: string | null
+          seo_description_en: string | null
+          seo_description_fa: string | null
+          seo_description_tr: string | null
           seo_title: string | null
+          seo_title_en: string | null
+          seo_title_fa: string | null
+          seo_title_tr: string | null
           slug: string
           status: Database["public"]["Enums"]["post_status"]
           tags: string[]
           title: string
+          title_en: string | null
+          title_fa: string | null
+          title_tr: string | null
           updated_at: string
         }
         Insert: {
           author_id?: string | null
           category?: string | null
           content?: string
+          content_en?: string | null
+          content_fa?: string | null
+          content_tr?: string | null
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
+          excerpt_fa?: string | null
+          excerpt_tr?: string | null
           id?: string
           published_at?: string | null
           seo_description?: string | null
+          seo_description_en?: string | null
+          seo_description_fa?: string | null
+          seo_description_tr?: string | null
           seo_title?: string | null
+          seo_title_en?: string | null
+          seo_title_fa?: string | null
+          seo_title_tr?: string | null
           slug: string
           status?: Database["public"]["Enums"]["post_status"]
           tags?: string[]
           title: string
+          title_en?: string | null
+          title_fa?: string | null
+          title_tr?: string | null
           updated_at?: string
         }
         Update: {
           author_id?: string | null
           category?: string | null
           content?: string
+          content_en?: string | null
+          content_fa?: string | null
+          content_tr?: string | null
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
+          excerpt_fa?: string | null
+          excerpt_tr?: string | null
           id?: string
           published_at?: string | null
           seo_description?: string | null
+          seo_description_en?: string | null
+          seo_description_fa?: string | null
+          seo_description_tr?: string | null
           seo_title?: string | null
+          seo_title_en?: string | null
+          seo_title_fa?: string | null
+          seo_title_tr?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["post_status"]
           tags?: string[]
           title?: string
+          title_en?: string | null
+          title_fa?: string | null
+          title_tr?: string | null
           updated_at?: string
         }
         Relationships: []
