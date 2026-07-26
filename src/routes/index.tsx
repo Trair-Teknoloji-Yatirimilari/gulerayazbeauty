@@ -19,6 +19,14 @@ import {
   Timer,
   Repeat,
   ShieldCheck,
+  GraduationCap,
+  HeartPulse,
+  Award,
+  Stethoscope,
+  Building2,
+  Leaf,
+  Activity,
+  ChevronRight,
 } from "lucide-react";
 import {
   Dialog,
@@ -287,72 +295,232 @@ function Marquee() {
   );
 }
 
-/* ---------------- ABOUT ---------------- */
+/* ---------------- ABOUT / BIOGRAPHY ---------------- */
+
+const credentials = [
+  { icon: GraduationCap, label: "Tıp Eğitimi", value: "Gülhane Askeri Tıp Akademisi, 2006" },
+  { icon: HeartPulse, label: "Uzmanlık", value: "Kardiyoloji Uzmanı, GATA Haydarpaşa, 2014" },
+  { icon: Award, label: "Yüksek Lisans", value: "Fitoterapi & Beslenme ve Diyetetik" },
+  { icon: Stethoscope, label: "Klinik Deneyim", value: "15+ Yıl" },
+];
+
+const milestones = [
+  {
+    year: "1982",
+    title: "Almanya'da Doğdu",
+    desc: "Tıp ve bilimle iç içe büyüyen bir çocukluk.",
+    icon: Activity,
+  },
+  {
+    year: "2000",
+    title: "Kuleli Askeri Lisesi",
+    desc: "Disiplin, liderlik ve akademik mükemmellik temelleri.",
+    icon: Building2,
+  },
+  {
+    year: "2006",
+    title: "Gülhane Askeri Tıp Akademisi",
+    desc: "Tıp doktoru unvanını aldı; sağlığın bütünsel doğasına ilgi duymaya başladı.",
+    icon: GraduationCap,
+  },
+  {
+    year: "2006–2009",
+    title: "Burdur Pratisyen Hekimlik",
+    desc: "Zorunlu hizmet kapsamında saha pratiği ve hasta yönetimi deneyimi.",
+    icon: Stethoscope,
+  },
+  {
+    year: "2010–2014",
+    title: "Kardiyoloji İhtisası",
+    desc: "GATA Haydarpaşa Eğitim ve Araştırma Hastanesi'nde kardiyoloji uzmanı yetiştirilmesi.",
+    icon: HeartPulse,
+  },
+  {
+    year: "2014–2018",
+    title: "Kardiyoloji Uzmanı",
+    desc: "GATA Haydarpaşa'da kardiyoloji uzmanı olarak görev yaptı; koruyucu kalp sağlığına odaklandı.",
+    icon: HeartPulse,
+  },
+  {
+    year: "2018",
+    title: "Aritmi Kliniği",
+    desc: "Kartal Koşuyolu Yüksek İhtisas Hastanesi'nde 1 yıl aritmi kliniği deneyimi.",
+    icon: Activity,
+  },
+  {
+    year: "2017–2019",
+    title: "Fitoterapi Yüksek Lisansı",
+    desc: "Yeditepe Üniversitesi'nde bitkisel tedavi ve bütünsel farmakoloji alanında uzmanlaştı.",
+    icon: Leaf,
+  },
+  {
+    year: "2019–2020",
+    title: "Beslenme ve Diyetetik Yüksek Lisansı",
+    desc: "İstanbul Gelişim Üniversitesi'nde beslenme bilimleri ve metabolik sağlık üzerine yoğunlaştı.",
+    icon: Award,
+  },
+  {
+    year: "2020–Günümüz",
+    title: "Medikal Estetik & Bütünsel Sağlık",
+    desc: "Ozonterapi, mezoterapi ve medikal estetik sertifikalarıyla fiziksel, ruhsal ve zihinsel bütünlüğe dayalı hasta takibi sunuyor.",
+    icon: Sparkles,
+  },
+];
 
 function About() {
   return (
     <section id="hakkinda" className="relative py-24 md:py-40 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-        <motion.div
-          {...fadeUp}
-          className="lg:col-span-5 relative"
-        >
-          <div className="relative aspect-[3/4] overflow-hidden rounded-sm">
-            <img
-              src={beautyPortrait}
-              alt="Doğal medikal estetik sonucu"
-              className="w-full h-full object-cover"
-              width={1200}
-              height={1600}
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-          </div>
-          <div className="absolute -bottom-6 -right-6 hidden md:block border border-primary/40 bg-background/80 backdrop-blur px-6 py-4 rounded-sm">
-            <div className="text-gold-gradient font-display text-4xl">15+</div>
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
-              Yıl Klinik Deneyim
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-primary/8 blur-[160px] pointer-events-none" />
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+          <motion.div {...fadeUp} className="lg:col-span-5 relative lg:sticky lg:top-28">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-sm">
+              <img
+                src={beautyPortrait}
+                alt="Dr. Gökhan Değirmencioğlu portre alanı"
+                className="w-full h-full object-cover"
+                width={1200}
+                height={1600}
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-transparent" />
+            </div>
+            <div className="absolute -bottom-6 -right-6 hidden md:block border border-primary/40 bg-background/90 backdrop-blur px-6 py-4 rounded-sm">
+              <div className="text-gold-gradient font-display text-4xl">15+</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
+                Yıl Klinik Deneyim
+              </div>
+            </div>
+            <p className="mt-8 text-[11px] text-muted-foreground uppercase tracking-widest">
+              * Portre alanına Dr. Gökhan Değirmencioğlu'nun profesyonel fotoğrafı eklenebilir.
+            </p>
+          </motion.div>
+
+          <motion.div {...fadeUp} className="lg:col-span-7">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px w-10 bg-primary" />
+              <span className="text-xs uppercase tracking-[0.4em] text-primary">Hakkımda</span>
+            </div>
+            <h2 className="font-display text-4xl md:text-6xl leading-tight">
+              Dr. Gökhan
+              <br />
+              <span className="italic text-gold-gradient">Değirmencioğlu</span>
+            </h2>
+            <div className="hairline my-8 max-w-md" />
+
+            <p className="text-foreground/80 leading-relaxed text-lg">
+              1982 yılında Almanya'da doğdum. Lise eğitimimi Kuleli Askeri Lisesi'nde,
+              tıp fakültesi eğitimimi ise 2006 yılında Gülhane Askeri Tıp Akademisi'nde
+              tamamladım. Mezuniyet sonrası Burdur'da pratisyen hekim olarak çalıştım.
+            </p>
+            <p className="text-foreground/75 leading-relaxed mt-4">
+              2010 yılında GATA Haydarpaşa Eğitim ve Araştırma Hastanesi'nde başlayan
+              kardiyoloji ihtisasımı 2014'te tamamlayarak kardiyoloji uzmanı oldum.
+              2018'e kadar aynı hastanede kardiyoloji uzmanı olarak görev yaptım;
+              ardından Kartal Koşuyolu Yüksek İhtisas Hastanesi'nde aritmi kliniğinde
+              deneyim kazandım.
+            </p>
+            <p className="text-foreground/75 leading-relaxed mt-4">
+              Kardiyoloji alanındaki derin tecrübemle koruyucu kalp sağlığının ve önleyici
+              hekimliğin önemini klinik pratiğime yansıttım. 2017–2019 yılları arasında
+              Yeditepe Üniversitesi'nde <em>fitoterapi</em>, 2019–2020 yılları arasında
+              İstanbul Gelişim Üniversitesi'nde <em>beslenme ve diyetetik</em> yüksek
+              lisanslarımı tamamladım.
+            </p>
+            <p className="text-foreground/75 leading-relaxed mt-4">
+              Sağlık Bakanlığı onaylı ozonterapi ve mezoterapi sertifika programlarını
+              başarıyla tamamlamamın ardından, egzersiz fizyolojisi, beslenme ve bitkisel
+              tedavi bilgimi bir araya getirerek kişinin bedenini fiziksel, ruhsal ve
+              zihinsel anlamda bir bütün olarak değerlendiren bir takip ve danışmanlık
+              anlayışı geliştirdim.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
+              {credentials.map((c) => {
+                const Icon = c.icon;
+                return (
+                  <div
+                    key={c.label}
+                    className="group border border-border/60 bg-card/30 hover:bg-card/60 transition-colors p-5 rounded-sm"
+                  >
+                    <Icon className="w-6 h-6 text-primary mb-3" strokeWidth={1.2} />
+                    <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      {c.label}
+                    </div>
+                    <div className="text-sm text-foreground/90 mt-1 leading-snug">
+                      {c.value}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="mt-32">
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="h-px w-10 bg-primary" />
+              <span className="text-xs uppercase tracking-[0.4em] text-primary">Kariyer Yolculuğu</span>
+              <div className="h-px w-10 bg-primary" />
+            </div>
+            <h3 className="font-display text-3xl md:text-5xl">
+              Eğitimden <span className="italic text-gold-gradient">kliniğe</span>
+            </h3>
+          </motion.div>
+
+          <div className="relative max-w-4xl mx-auto">
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-primary/20 to-transparent" />
+            <div className="space-y-10">
+              {milestones.map((m, i) => {
+                const Icon = m.icon;
+                const isLeft = i % 2 === 0;
+                return (
+                  <motion.div
+                    key={m.year}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ delay: i * 0.05, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    className={`relative flex flex-col md:flex-row items-start md:items-center gap-6 ${
+                      isLeft ? "md:flex-row-reverse" : ""
+                    }`}
+                  >
+                    <div className={`flex-1 ${isLeft ? "md:text-right" : "md:text-left"}`}>
+                      <div className="pl-12 md:pl-0">
+                        <div className="text-gold-gradient font-display text-2xl md:text-3xl">
+                          {m.year}
+                        </div>
+                        <h4 className="text-lg text-foreground/90 mt-1">{m.title}</h4>
+                        <p className="text-sm text-foreground/60 mt-2 leading-relaxed max-w-sm">
+                          {m.desc}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="absolute left-4 md:left-1/2 -translate-x-1/2 md:-translate-x-1/2 top-0 w-8 h-8 rounded-full border border-primary/50 bg-background flex items-center justify-center z-10">
+                      <Icon className="w-3.5 h-3.5 text-primary" strokeWidth={1.5} />
+                    </div>
+                    <div className="flex-1 hidden md:block" />
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div {...fadeUp} className="lg:col-span-7">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.4em] text-primary">Hakkında</span>
-          </div>
-          <h2 className="font-display text-4xl md:text-6xl leading-tight">
-            Yüzün <span className="italic text-gold-gradient">mimarisine</span> sadık,
-            <br /> sanatsal bir yaklaşım.
-          </h2>
-          <div className="hairline my-10 max-w-md" />
-          <p className="text-foreground/75 leading-relaxed text-lg">
-            Dr. Gökhan Değirmencioğlu, medikal estetik uygulamalarında yüzün doğal
-            hatlarını, oranlarını ve mimiklerini koruyan bir perspektifle çalışır.
-            Her yüz kendine has bir kompozisyondur; amaç değiştirmek değil,
-            zamanın bıraktığı izleri incelikle rötuşlamaktır.
+        <motion.div
+          {...fadeUp}
+          className="mt-24 border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent rounded-sm p-8 md:p-12 text-center"
+        >
+          <h4 className="font-display text-2xl md:text-3xl text-foreground/90">
+            "Sağlık bir bütündür; estetik de o bütünün aynasıdır."
+          </h4>
+          <p className="mt-4 text-foreground/60 text-sm max-w-2xl mx-auto">
+            Kişinin fiziksel, ruhsal ve zihinsel dengesini gözeterek; bilimsel, ölçülü ve
+            sanatsal bir yaklaşımla medikal estetik uygulamaları sunuyorum.
           </p>
-          <p className="text-foreground/75 leading-relaxed mt-4">
-            Klinikte tüm süreçler kişiye özel planlanır: yüz analizi, üç boyutlu
-            değerlendirme, teknik seçim ve takip. Kullanılan tüm ürünler global
-            standartlarda sertifikalı, cihazlar ise son nesil teknolojilerdir.
-          </p>
-
-          <div className="grid grid-cols-2 gap-6 mt-10">
-            {[
-              { k: "Doğal", v: "Sonuç" },
-              { k: "Hassas", v: "Teknik" },
-              { k: "Steril", v: "Ortam" },
-              { k: "Kişiye Özel", v: "Plan" },
-            ].map((f) => (
-              <div key={f.k} className="border-l border-primary/40 pl-4">
-                <div className="text-gold-gradient font-display text-2xl">{f.k}</div>
-                <div className="text-xs uppercase tracking-widest text-muted-foreground mt-1">
-                  {f.v}
-                </div>
-              </div>
-            ))}
-          </div>
         </motion.div>
       </div>
     </section>
