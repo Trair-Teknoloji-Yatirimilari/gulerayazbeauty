@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, Calendar, Loader2, Tag } from "lucide-react";
 import { getPostBySlug } from "@/lib/blog.functions";
 
-export const Route = createFileRoute("/blog/$slug")({
+export const Route = createFileRoute("/blog_/$slug")({
   head: ({ params }) => ({
     meta: [
       { title: `${decodeURIComponent(params.slug).replace(/-/g, " ")} | Dr. Gökhan Değirmencioğlu Blog` },
