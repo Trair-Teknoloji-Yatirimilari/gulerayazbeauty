@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
+import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Check, Loader2 } from "lucide-react";
 import { createAppointment, type AppointmentInput } from "@/lib/appointments.functions";
