@@ -149,3 +149,78 @@
 @utility animate-marquee {
   animation: marquee 40s linear infinite;
 }
+
+/* ---- Cinematic accordion ---- */
+@keyframes accordion-down-cinematic {
+  from {
+    height: 0;
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(-4px);
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes accordion-up-cinematic {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+  to {
+    height: 0;
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes accordion-inner-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    letter-spacing: 0.02em;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: normal;
+  }
+}
+
+@utility accordion-content-cinematic {
+  overflow: hidden;
+  will-change: height, opacity, filter, transform;
+  &[data-state="open"] {
+    animation: accordion-down-cinematic 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  &[data-state="closed"] {
+    animation: accordion-up-cinematic 460ms cubic-bezier(0.7, 0, 0.84, 0);
+  }
+}
+
+@utility accordion-inner-cinematic {
+  animation: accordion-inner-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+}
+
+@utility accordion-trigger-cinematic {
+  transition:
+    color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    letter-spacing 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  &[data-state="open"] {
+    letter-spacing: 0.01em;
+  }
+  & > svg {
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  &[data-state="open"] > svg {
+    transform: rotate(180deg);
+  }
+}
+
