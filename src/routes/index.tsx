@@ -325,6 +325,23 @@ function Hero() {
         </div>
       </motion.div>
 
+      {/* subtle medical heartbeat line */}
+      <div className="pointer-events-none absolute bottom-24 left-0 right-0 z-10 flex justify-center px-6">
+        <svg
+          viewBox="0 0 320 24"
+          fill="none"
+          className="w-full max-w-md h-6 text-primary/40 animate-hero-heartbeat"
+          aria-hidden="true"
+        >
+          <path
+            d="M0 12 H120 L136 4 L152 20 L168 4 L184 20 L200 12 H320"
+            stroke="currentColor"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+      </div>
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
