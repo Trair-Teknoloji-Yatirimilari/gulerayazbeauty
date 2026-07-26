@@ -1083,8 +1083,10 @@ function Footer() {
     <footer className="relative border-t border-border/40 py-12">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <span className="text-gold-gradient font-display text-lg tracking-wider">DGD</span>
-          <span className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
+          <span className="text-gold-gradient font-display text-base tracking-wide whitespace-nowrap">
+            Dr. Gökhan Değirmencioğlu
+          </span>
+          <span className="hidden md:block text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
             Medikal Estetik
           </span>
         </div>
