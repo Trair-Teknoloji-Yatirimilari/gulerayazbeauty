@@ -90,7 +90,7 @@ export function AppointmentForm() {
           <input
             {...register("phone", { required: "Zorunlu alan", minLength: 5, maxLength: 30 })}
             className={inputCls}
-            placeholder="+90 5__ ___ __ __"
+            placeholder="+90 545 450 88 34"
             inputMode="tel"
             autoComplete="tel"
           />
