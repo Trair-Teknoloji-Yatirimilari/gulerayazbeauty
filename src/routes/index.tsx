@@ -771,6 +771,12 @@ const devices: Device[] = [
       interval: "3–4 seans / 4 hafta arayla",
       closing:
         "Filtresiz aydınlık bir cilt için, cildi içeriden yeniden inşa eden altın standart.",
+      faqs: [
+        { q: "Altın iğne acı verir mi?", a: "Uygulama öncesi yoğun numaralayıcı krem uygulanır; işlem sırasında yalnızca hafif titreşim ve sıcaklık hissi olur." },
+        { q: "İşlem sonrası izlenim nasıldır?", a: "İlk 24–48 saat hafif kızarıklık ve kuruluk olabilir. 3. günden itibaren makyajla kolayca kapatılır ve sosyal hayata dönülür." },
+        { q: "Kaç seans gerekir?", a: "Akne izi ve gençleştirme için ortalama 3–4 seans, 4 hafta aralıklarla planlanır. Yılda 1 tekrar seansı sonucu korur." },
+        { q: "Yaz aylarında yapılabilir mi?", a: "Yapılabilir; ancak sonrasında en az 4 hafta güneş koruyucu kullanımı ve doğrudan güneşten kaçınma şarttır." },
+      ],
     },
   },
   {
