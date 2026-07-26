@@ -83,6 +83,7 @@ function Index() {
       <Services />
       <Devices />
       <Journey />
+      <Faq />
       <Contact />
       <Footer />
     </div>
