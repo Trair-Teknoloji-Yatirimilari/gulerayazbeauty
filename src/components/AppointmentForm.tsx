@@ -6,19 +6,10 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Check, Loader2 } from "lucide-react";
 import { createAppointment, type AppointmentInput } from "@/lib/appointments.functions";
-
-const services = [
-  "Botoks",
-  "Dolgu",
-  "Mezoterapi",
-  "Altın İğne",
-  "Q-Switch Lazer",
-  "HIFU / LIFU",
-  "Konsültasyon",
-  "Diğer",
-];
+import { useT } from "@/i18n/context";
 
 export function AppointmentForm() {
+  const { t } = useT();
   const submit = useServerFn(createAppointment);
   const [sent, setSent] = useState(false);
   const {
@@ -33,9 +24,9 @@ export function AppointmentForm() {
       await submit({ data: values });
       setSent(true);
       reset();
-      toast.success("Randevu talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.");
+      toast.success(t.form.successToast);
     } catch (e) {
-      const msg = e instanceof Error ? e.message : "Bir hata oluştu.";
+      const msg = e instanceof Error ? e.message : t.form.error;
       toast.error(msg);
     }
   };
@@ -50,17 +41,13 @@ export function AppointmentForm() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/15 text-primary mb-6">
           <Check className="w-8 h-8" strokeWidth={1.5} />
         </div>
-        <h3 className="font-display text-2xl md:text-3xl text-gold-gradient">
-          Talebiniz alındı
-        </h3>
-        <p className="mt-4 text-foreground/70 max-w-md mx-auto">
-          Randevu ekibimiz en kısa sürede sizinle iletişime geçecek. Bize güvendiğiniz için teşekkür ederiz.
-        </p>
+        <h3 className="font-display text-2xl md:text-3xl text-gold-gradient">{t.form.successTitle}</h3>
+        <p className="mt-4 text-foreground/70 max-w-md mx-auto">{t.form.successBody}</p>
         <button
           onClick={() => setSent(false)}
           className="mt-8 text-xs uppercase tracking-[0.35em] text-primary hover:text-primary/80"
         >
-          Yeni talep oluştur
+          {t.form.newRequest}
         </button>
       </motion.div>
     );
@@ -77,67 +64,65 @@ export function AppointmentForm() {
     >
       <div className="grid md:grid-cols-2 gap-5">
         <div>
-          <label className={labelCls}>Ad Soyad *</label>
+          <label className={labelCls}>{t.form.fullName} *</label>
           <input
-            {...register("full_name", { required: "Zorunlu alan", minLength: 2, maxLength: 100 })}
+            {...register("full_name", { required: true, minLength: 2, maxLength: 100 })}
             className={inputCls}
-            placeholder="Adınız Soyadınız"
+            placeholder={t.form.fullNamePh}
             autoComplete="name"
           />
-          {errors.full_name && <p className="mt-1 text-xs text-destructive">Ad soyad zorunlu.</p>}
+          {errors.full_name && <p className="mt-1 text-xs text-destructive">{t.form.reqFullName}</p>}
         </div>
         <div>
-          <label className={labelCls}>Telefon *</label>
+          <label className={labelCls}>{t.form.phone} *</label>
           <input
-            {...register("phone", { required: "Zorunlu alan", minLength: 5, maxLength: 30 })}
+            {...register("phone", { required: true, minLength: 5, maxLength: 30 })}
             className={inputCls}
-            placeholder="+90 545 450 88 34"
+            placeholder={t.form.phonePh}
             inputMode="tel"
             autoComplete="tel"
           />
-          {errors.phone && <p className="mt-1 text-xs text-destructive">Telefon zorunlu.</p>}
+          {errors.phone && <p className="mt-1 text-xs text-destructive">{t.form.reqPhone}</p>}
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-5">
         <div>
-          <label className={labelCls}>E-posta</label>
+          <label className={labelCls}>{t.form.email}</label>
           <input
             type="email"
             {...register("email", { maxLength: 255 })}
             className={inputCls}
-            placeholder="ornek@eposta.com"
+            placeholder={t.form.emailPh}
             autoComplete="email"
           />
         </div>
         <div>
-          <label className={labelCls}>Tercih Edilen Tarih</label>
+          <label className={labelCls}>{t.form.date}</label>
           <input type="date" {...register("preferred_date")} className={inputCls} />
         </div>
       </div>
 
       <div>
-        <label className={labelCls}>İlgilendiğiniz Uygulama</label>
+        <label className={labelCls}>{t.form.service}</label>
         <select
           {...register("service")}
           className={inputCls + " appearance-none cursor-pointer"}
           defaultValue=""
         >
-          <option value="" className="bg-background">Seçiniz (opsiyonel)</option>
-          {services.map((s) => (
-            <option key={s} value={s} className="bg-background">
-              {s}
-            </option>
+          <option value="" className="bg-background">{t.form.selectPlaceholder}</option>
+          {t.form.services.map((s) => (
+            <option key={s} value={s} className="bg-background">{s}</option>
           ))}
         </select>
       </div>
 
       <div>
-        <label className={labelCls}>Mesajınız</label>
+        <label className={labelCls}>{t.form.message}</label>
         <textarea
           {...register("message", { maxLength: 2000 })}
           className={inputCls + " min-h-[110px] resize-y"}
-          placeholder="Beklentileriniz, sorularınız veya notlarınız..."
+          placeholder={t.form.messagePh}
         />
       </div>
 
@@ -145,27 +130,27 @@ export function AppointmentForm() {
         <label className="flex items-start gap-3 cursor-pointer group">
           <input
             type="checkbox"
-            {...register("consent_given", { required: "Aydınlatma metnini onaylamanız zorunludur." })}
+            {...register("consent_given", { required: t.form.consentRequired })}
             className="sr-only peer"
           />
           <span className="mt-0.5 w-5 h-5 flex-shrink-0 rounded border border-border/70 bg-background/40 peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
             <Check className="w-3.5 h-3.5 text-primary-foreground opacity-0 peer-checked:opacity-100 transition-opacity" />
           </span>
           <span className="text-sm text-foreground/80 leading-relaxed group-hover:text-foreground/90 transition-colors">
-            Kişisel verilerimin işlenmesine ilişkin{" "}
+            {t.form.consentPrefix}{" "}
             <Link
               to="/kvkk"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors"
             >
-              Aydınlatma Metni
+              {t.form.consentLink}
             </Link>
-            'ni okudum, anladım ve randevu talebim için onaylıyorum. *
+            {t.form.consentSuffix} *
           </span>
         </label>
         {errors.consent_given && (
-          <p className="mt-2 text-xs text-destructive">{errors.consent_given.message}</p>
+          <p className="mt-2 text-xs text-destructive">{errors.consent_given.message as string}</p>
         )}
       </div>
 
@@ -177,15 +162,13 @@ export function AppointmentForm() {
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin" /> Gönderiliyor...
+              <Loader2 className="w-4 h-4 animate-spin" /> {t.form.sending}
             </>
           ) : (
-            "Randevu Talep Et"
+            t.form.submit
           )}
         </button>
-        <p className="mt-4 text-xs text-muted-foreground/70">
-          Bilgileriniz gizli tutulur. Kliniğimiz size en kısa sürede geri dönüş yapacaktır.
-        </p>
+        <p className="mt-4 text-xs text-muted-foreground/70">{t.form.footer}</p>
       </div>
     </form>
   );
