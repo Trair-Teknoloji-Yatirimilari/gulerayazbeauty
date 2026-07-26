@@ -383,6 +383,129 @@ function Philosophy() {
   );
 }
 
+/* ---------------- SHARED DETAIL ---------------- */
+
+type Detail = {
+  pitch: string;
+  benefits: string[];
+  duration: string;
+  effect: string;
+  interval: string;
+  closing: string;
+};
+
+function DetailDialog({
+  open,
+  onOpenChange,
+  title,
+  subtitle,
+  image,
+  items,
+  detail,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  title: string;
+  subtitle: string;
+  image: string;
+  items: string[];
+  detail: Detail;
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl w-[95vw] p-0 bg-background border border-primary/30 overflow-hidden max-h-[92vh] overflow-y-auto">
+        <div className="grid md:grid-cols-2">
+          <div className="relative aspect-[4/5] md:aspect-auto md:min-h-full overflow-hidden">
+            <img src={image} alt={title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-background/70" />
+          </div>
+          <div className="p-8 md:p-10">
+            <DialogHeader className="text-left space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="h-px w-8 bg-primary" />
+                <span className="text-[10px] uppercase tracking-[0.4em] text-primary">Detay</span>
+              </div>
+              <DialogTitle className="font-display text-3xl md:text-4xl font-normal">
+                {title}
+              </DialogTitle>
+              <DialogDescription className="text-primary/90 italic font-display text-lg">
+                {subtitle}
+              </DialogDescription>
+            </DialogHeader>
+
+            <p className="mt-5 text-foreground/80 leading-relaxed text-sm">{detail.pitch}</p>
+
+            <div className="mt-6 space-y-2">
+              {detail.benefits.map((b) => (
+                <div key={b} className="flex items-start gap-2.5 text-sm text-foreground/85">
+                  <Check className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" strokeWidth={1.5} />
+                  <span>{b}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="hairline my-6" />
+
+            <div className="grid grid-cols-3 gap-3 text-xs">
+              <div>
+                <Clock className="w-4 h-4 text-primary mb-1.5" strokeWidth={1.2} />
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Süre</div>
+                <div className="text-foreground/90 mt-1">{detail.duration}</div>
+              </div>
+              <div>
+                <Timer className="w-4 h-4 text-primary mb-1.5" strokeWidth={1.2} />
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Etki</div>
+                <div className="text-foreground/90 mt-1">{detail.effect}</div>
+              </div>
+              <div>
+                <Repeat className="w-4 h-4 text-primary mb-1.5" strokeWidth={1.2} />
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Aralık</div>
+                <div className="text-foreground/90 mt-1">{detail.interval}</div>
+              </div>
+            </div>
+
+            <div className="hairline my-6" />
+
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-3">
+                Uygulama Alanları
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {items.map((it) => (
+                  <span
+                    key={it}
+                    className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-card/50 text-foreground/75"
+                  >
+                    {it}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <p className="mt-6 text-sm text-foreground/70 italic border-l-2 border-primary/60 pl-4">
+              {detail.closing}
+            </p>
+
+            <div className="mt-7 flex items-center gap-3">
+              <a
+                href="#iletisim"
+                onClick={() => onOpenChange(false)}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-xs uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all glow-gold"
+              >
+                Randevu Al <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
+                Hekim kontrolünde
+              </div>
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 /* ---------------- SERVICES ---------------- */
 
 type Service = {
@@ -391,6 +514,7 @@ type Service = {
   subtitle: string;
   image: string;
   items: string[];
+  detail: Detail;
 };
 
 const services: Service[] = [
@@ -410,6 +534,21 @@ const services: Service[] = [
       "Burun Ucu Kaldırma",
       "Çene Ucu Botoksu",
     ],
+    detail: {
+      pitch:
+        "Yüz ifadenizi silmeden; alın, göz çevresi ve kaşlar arasındaki mimik çizgilerini yumuşatan hassas bir uygulama. Aşırı dozdan uzak, oranı koruyan mikro-dozaj ile doğal bir dinlenmişlik hissi.",
+      benefits: [
+        "Doğal mimik, hareketli ve canlı görünüm",
+        "Alın, kaz ayakları ve öfke çizgilerinde belirgin yumuşama",
+        "Çene inceltme ile yüzde V hattı",
+        "Diş sıkma ve baş ağrısında rahatlama",
+      ],
+      duration: "15–20 dk",
+      effect: "3–5 gün",
+      interval: "4–6 ay",
+      closing:
+        "Amaç değişmek değil; dinlenmiş, aydınlık ve daha genç bir versiyonunuza kavuşmak.",
+    },
   },
   {
     icon: Droplets,
@@ -425,6 +564,21 @@ const services: Service[] = [
       "Şakak Dolgusu",
       "Ameliyatsız Burun Estetiği",
     ],
+    detail: {
+      pitch:
+        "Zamanla azalan hacmi ve yüz mimarisinde kayan hatları hyaluronik asit bazlı, geri dönüşümü mümkün dolgularla yeniden tasarlıyoruz. Dudak, elmacık, çene ve göz altı için farklı yoğunlukta ürünler.",
+      benefits: [
+        "Elmacık ve çene hattında belirginlik",
+        "Doğal dolgunlukta, orantılı dudak tasarımı",
+        "Göz altı morluk ve çöküklüğünde ışık etkisi",
+        "Ameliyatsız burun estetiği ile pürüzsüz profil",
+      ],
+      duration: "20–40 dk",
+      effect: "Anında",
+      interval: "9–18 ay",
+      closing:
+        "Doğallıktan taviz vermeden yüzün altın oranlarını yeniden görünür kılıyoruz.",
+    },
   },
   {
     icon: Sparkles,
@@ -438,6 +592,21 @@ const services: Service[] = [
       "Lipolitik Mezoterapi",
       "Gençlik Aşısı",
     ],
+    detail: {
+      pitch:
+        "Vitamin, aminoasit ve hyaluronik asit kokteylleri ile cildi hücresel düzeyde besleyen bir tazelenme protokolü. Cilt parlar, gözenekler sıkılaşır, saç köklerinde güç geri kazanılır.",
+      benefits: [
+        "Cilt tonunda belirgin canlanma ve parlaklık",
+        "İnce çizgilerde ve mat görünümde iyileşme",
+        "Saç dökülmesinde durma, yeni çıkışa destek",
+        "Bölgesel yağlanmada erime ve konturlama",
+      ],
+      duration: "20–30 dk",
+      effect: "2–3 seans",
+      interval: "4–6 seans / kür",
+      closing:
+        "Cildinizi kozmetikle örtmek yerine, içeriden aydınlatarak dönüştürüyoruz.",
+    },
   },
 ];
 
@@ -472,6 +641,7 @@ function Services() {
 
 function ServiceRow({ service, reversed, index }: { service: Service; reversed: boolean; index: number }) {
   const Icon = service.icon;
+  const [open, setOpen] = useState(false);
   return (
     <motion.div
       initial={{ opacity: 0, y: 60 }}
@@ -514,7 +684,22 @@ function ServiceRow({ service, reversed, index }: { service: Service; reversed: 
             </li>
           ))}
         </ul>
+        <button
+          onClick={() => setOpen(true)}
+          className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary/60 px-6 py-2.5 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
+        >
+          Detayları Gör <ArrowUpRight className="w-3.5 h-3.5" />
+        </button>
       </div>
+      <DetailDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={service.title}
+        subtitle={service.subtitle}
+        image={service.image}
+        items={service.items}
+        detail={service.detail}
+      />
     </motion.div>
   );
 }
@@ -528,6 +713,7 @@ type Device = {
   desc: string;
   image: string;
   items: string[];
+  detail: Detail;
 };
 
 const devices: Device[] = [
@@ -546,6 +732,21 @@ const devices: Device[] = [
       "Yara İzi (Skar) Tedavisi",
       "Boyun · Dekolte · El Gençleştirme",
     ],
+    detail: {
+      pitch:
+        "Altın kaplı mikro iğneler, cildin belirlenen derinliğine radyofrekans enerjisi taşır. Üst tabakayı zedelemeden dermiste kolajen ve elastin üretimini tetikler; iz, gözenek ve gevşeklik aynı seansta iyileşir.",
+      benefits: [
+        "Akne izi ve yara izlerinde belirgin düzelme",
+        "Gözeneklerde küçülme, cilt yüzeyinde pürüzsüzlük",
+        "Kolajen artışıyla doğal sıkılaşma",
+        "Boyun, dekolte ve elde gençleştirme",
+      ],
+      duration: "45–60 dk",
+      effect: "2–4 hafta",
+      interval: "3–4 seans / 4 hafta arayla",
+      closing:
+        "Filtresiz aydınlık bir cilt için, cildi içeriden yeniden inşa eden altın standart.",
+    },
   },
   {
     icon: Sun,
@@ -562,6 +763,21 @@ const devices: Device[] = [
       "Cilt Tonu Eşitleme",
       "Kalıcı Makyaj · Dövme Silme",
     ],
+    detail: {
+      pitch:
+        "Nano-saniye atımlarıyla yalnızca pigmenti hedef alan, çevre dokuyu koruyan hassas lazer. Güneş lekesinden dövme silmeye kadar geniş bir aralıkta güvenli ve öngörülebilir sonuç sağlar.",
+      benefits: [
+        "Güneş ve yaşlılık lekelerinde ton eşitleme",
+        "Karbon peeling ile parlak, arınmış cilt",
+        "Kalıcı makyaj ve dövme temizliği",
+        "Downtime düşük, günlük hayata hızlı dönüş",
+      ],
+      duration: "20–30 dk",
+      effect: "1–2 seans sonrası",
+      interval: "3–6 seans / 3–4 hafta arayla",
+      closing:
+        "Kapatmadan aydınlanan bir cilt: lekelerinizi silen, tonunuzu yeniden dengeleyen teknoloji.",
+    },
   },
   {
     icon: Waves,
@@ -578,6 +794,21 @@ const devices: Device[] = [
       "Dekolte Sıkılaştırma",
       "Karın · Kol · Vücut Sıkılaştırma",
     ],
+    detail: {
+      pitch:
+        "Odaklanmış ultrason enerjisi; cerrahide gerdirilen SMAS tabakasına kesi olmadan ulaşır. Cilt kendi kolajenini yeniden üreterek aylar içinde toparlanır; jawline belirginleşir, gıdı ve gevşeklik geri çekilir.",
+      benefits: [
+        "Ameliyatsız yüz germe ve toparlanma",
+        "Jawline ve elmacık hatlarında belirginlik",
+        "Boyun, dekolte ve gıdıda sıkılaşma",
+        "Karın, kol ve vücutta bölgesel toparlama",
+      ],
+      duration: "45–90 dk",
+      effect: "6–12 hafta içinde belirginleşir",
+      interval: "Yılda 1–2 seans",
+      closing:
+        "Neşteri, dikişi ve iyileşme sürecini elemeden yüzün mimarisini yeniden yukarı taşıyoruz.",
+    },
   },
 ];
 
@@ -607,13 +838,14 @@ function Devices() {
 
 function DeviceCard({ device, index }: { device: Device; index: number }) {
   const Icon = device.icon;
+  const [open, setOpen] = useState(false);
   return (
     <motion.article
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.15, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-background border border-border/60 rounded-sm overflow-hidden hover:border-primary/60 transition-all duration-700"
+      className="group relative bg-background border border-border/60 rounded-sm overflow-hidden hover:border-primary/60 transition-all duration-700 flex flex-col"
     >
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
@@ -629,12 +861,12 @@ function DeviceCard({ device, index }: { device: Device; index: number }) {
           <Icon className="w-8 h-8 text-primary" strokeWidth={1} />
         </div>
       </div>
-      <div className="p-8">
+      <div className="p-8 flex flex-col flex-1">
         <span className="text-[10px] uppercase tracking-[0.35em] text-primary/80">{device.tag}</span>
         <h3 className="font-display text-3xl mt-2">{device.name}</h3>
         <p className="text-sm text-foreground/70 leading-relaxed mt-4">{device.desc}</p>
         <div className="hairline my-6" />
-        <ul className="space-y-2">
+        <ul className="space-y-2 flex-1">
           {device.items.map((it) => (
             <li key={it} className="flex items-start gap-2 text-xs text-foreground/70">
               <span className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
@@ -642,7 +874,22 @@ function DeviceCard({ device, index }: { device: Device; index: number }) {
             </li>
           ))}
         </ul>
+        <button
+          onClick={() => setOpen(true)}
+          className="mt-6 inline-flex items-center justify-between gap-2 rounded-full border border-primary/50 px-5 py-2.5 text-[11px] uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
+        >
+          Detaylı Bilgi <ArrowUpRight className="w-3.5 h-3.5" />
+        </button>
       </div>
+      <DetailDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={device.name}
+        subtitle={device.tag}
+        image={device.image}
+        items={device.items}
+        detail={device.detail}
+      />
     </motion.article>
   );
 }
