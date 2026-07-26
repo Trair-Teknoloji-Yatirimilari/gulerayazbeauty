@@ -15,7 +15,18 @@ import {
   Mail,
   ArrowUpRight,
   Check,
+  Clock,
+  Timer,
+  Repeat,
+  ShieldCheck,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 import heroClinic from "@/assets/hero-clinic.jpg";
 import beautyPortrait from "@/assets/beauty-portrait.jpg";
