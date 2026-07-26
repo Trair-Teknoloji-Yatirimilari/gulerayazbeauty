@@ -1206,7 +1206,7 @@ function Contact() {
           </p>
         </motion.div>
 
-        <motion.div {...fadeUp} className="grid md:grid-cols-3 gap-6">
+        <motion.div {...fadeUp} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { icon: Phone, label: "Telefon", value: "+90 545 450 88 34", href: "tel:+905454508834" },
             { icon: Mail, label: "E-posta", value: "info@drgokhandegirmencioglu.com", href: "mailto:info@drgokhandegirmencioglu.com" },
@@ -1215,6 +1215,12 @@ function Contact() {
               label: "Klinik",
               value: "Skyland Ofis B Blok Kat:6 Daire:99, Sarıyer / İstanbul",
               href: "https://www.google.com/maps/search/?api=1&query=Huzur+Mahallesi+Azerbaycan+Caddesi+No:4+Skyland+Ofis+B+Blok+Kat:6+Daire:99+Sarıyer+İstanbul",
+            },
+            {
+              icon: Instagram,
+              label: "Instagram",
+              value: "@dr.gokhandegirmencioglu",
+              href: "https://www.instagram.com/dr.gokhandegirmencioglu/",
             },
           ].map((c) => (
             <a
@@ -1304,12 +1310,14 @@ function Footer() {
           <div className="md:text-right">
             <h4 className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-4">Sosyal</h4>
             <a
-              href="#"
-              aria-label="Instagram"
+              href="https://www.instagram.com/dr.gokhandegirmencioglu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram profili: @dr.gokhandegirmencioglu"
               className="inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-primary transition-colors"
             >
               <Instagram className="w-4 h-4" />
-              Instagram
+              @dr.gokhandegirmencioglu
             </a>
           </div>
         </div>
