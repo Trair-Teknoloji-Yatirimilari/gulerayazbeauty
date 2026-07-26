@@ -46,6 +46,7 @@ export const createAppointment = createServerFn({ method: "POST" })
       preferred_date: data.preferred_date ? data.preferred_date : null,
       service: data.service ? data.service : null,
       message: data.message ? data.message : null,
+      consent_given: data.consent_given,
     };
 
     const { data: inserted, error } = await supabase
