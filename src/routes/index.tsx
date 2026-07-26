@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import {
   Sparkles,
   Syringe,
@@ -401,7 +401,7 @@ type Detail = {
   faqs: { q: string; a: string }[];
 };
 
-function DetailDialog({
+const DetailDialog = memo(function DetailDialog({
   open,
   onOpenChange,
   title,
@@ -538,7 +538,7 @@ function DetailDialog({
       </DialogContent>
     </Dialog>
   );
-}
+});
 
 /* ---------------- SERVICES ---------------- */
 
@@ -743,15 +743,17 @@ function ServiceRow({ service, reversed, index }: { service: Service; reversed: 
           Detayları Gör <ArrowUpRight className="w-3.5 h-3.5" />
         </button>
       </div>
-      <DetailDialog
-        open={open}
-        onOpenChange={setOpen}
-        title={service.title}
-        subtitle={service.subtitle}
-        image={service.image}
-        items={service.items}
-        detail={service.detail}
-      />
+      {open && (
+        <DetailDialog
+          open={open}
+          onOpenChange={setOpen}
+          title={service.title}
+          subtitle={service.subtitle}
+          image={service.image}
+          items={service.items}
+          detail={service.detail}
+        />
+      )}
     </motion.div>
   );
 }
@@ -951,15 +953,17 @@ function DeviceCard({ device, index }: { device: Device; index: number }) {
           Detaylı Bilgi <ArrowUpRight className="w-3.5 h-3.5" />
         </button>
       </div>
-      <DetailDialog
-        open={open}
-        onOpenChange={setOpen}
-        title={device.name}
-        subtitle={device.tag}
-        image={device.image}
-        items={device.items}
-        detail={device.detail}
-      />
+      {open && (
+        <DetailDialog
+          open={open}
+          onOpenChange={setOpen}
+          title={device.name}
+          subtitle={device.tag}
+          image={device.image}
+          items={device.items}
+          detail={device.detail}
+        />
+      )}
     </motion.article>
   );
 }

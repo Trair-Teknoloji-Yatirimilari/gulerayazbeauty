@@ -150,77 +150,64 @@
   animation: marquee 40s linear infinite;
 }
 
-/* ---- Cinematic accordion ---- */
+/* ---- Cinematic accordion ----
+   Perf notes:
+   - Container animates only height + opacity → no blur/transform reflow, no
+     visible jump on close.
+   - Inner reveal uses transform + opacity (compositor only) so it never
+     shifts sibling FAQ rows.
+   - Trigger no longer animates letter-spacing (that reflows text metrics
+     and pushes surrounding rows every open/close). */
 @keyframes accordion-down-cinematic {
-  from {
-    height: 0;
-    opacity: 0;
-    filter: blur(6px);
-    transform: translateY(-4px);
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(0);
-  }
+  from { height: 0; opacity: 0; }
+  to   { height: var(--radix-accordion-content-height); opacity: 1; }
 }
 
 @keyframes accordion-up-cinematic {
-  from {
-    height: var(--radix-accordion-content-height);
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(0);
-  }
-  to {
-    height: 0;
-    opacity: 0;
-    filter: blur(6px);
-    transform: translateY(-4px);
-  }
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to   { height: 0; opacity: 0; }
 }
 
 @keyframes accordion-inner-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-    letter-spacing: 0.02em;
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    letter-spacing: normal;
-  }
+  from { opacity: 0; transform: translate3d(0, 6px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @utility accordion-content-cinematic {
   overflow: hidden;
-  will-change: height, opacity, filter, transform;
+  contain: layout paint;
   &[data-state="open"] {
-    animation: accordion-down-cinematic 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    animation: accordion-down-cinematic 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: height;
   }
   &[data-state="closed"] {
-    animation: accordion-up-cinematic 460ms cubic-bezier(0.7, 0, 0.84, 0);
+    animation: accordion-up-cinematic 360ms cubic-bezier(0.7, 0, 0.84, 0);
+    will-change: height;
   }
 }
 
 @utility accordion-inner-cinematic {
-  animation: accordion-inner-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+  animation: accordion-inner-reveal 520ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+  will-change: transform, opacity;
 }
 
 @utility accordion-trigger-cinematic {
-  transition:
-    color 500ms cubic-bezier(0.22, 1, 0.36, 1),
-    letter-spacing 500ms cubic-bezier(0.22, 1, 0.36, 1);
-  &[data-state="open"] {
-    letter-spacing: 0.01em;
-  }
+  transition: color 400ms cubic-bezier(0.22, 1, 0.36, 1);
   & > svg {
-    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
   }
   &[data-state="open"] > svg {
     transform: rotate(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content-cinematic,
+  .accordion-content-cinematic[data-state="open"],
+  .accordion-content-cinematic[data-state="closed"],
+  .accordion-inner-cinematic {
+    animation: none !important;
   }
 }
 
