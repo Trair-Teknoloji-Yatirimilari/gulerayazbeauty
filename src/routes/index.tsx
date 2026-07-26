@@ -625,6 +625,12 @@ const services: Service[] = [
       interval: "4–6 seans / kür",
       closing:
         "Cildinizi kozmetikle örtmek yerine, içeriden aydınlatarak dönüştürüyoruz.",
+      faqs: [
+        { q: "Kaç seansta sonuç alırım?", a: "Genellikle 4–6 seanslık bir kür önerilir. İlk canlanma 2–3 seansta hissedilir, kalıcı etkiler kür sonunda oturur." },
+        { q: "Saç mezoterapisi dökülmeyi durdurur mu?", a: "Aktif dökülme dönemindeki uygun vakalarda dökülmeyi belirgin şekilde yavaşlatır ve yeni saç çıkışını destekler. Genetik kellikte destek tedavisidir." },
+        { q: "Hamilelikte veya emzirirken uygulanır mı?", a: "Hayır. Hamilelik ve emzirme döneminde mezoterapi ve gençlik aşısı önerilmez." },
+        { q: "Uygulama sonrası ne yapmamalıyım?", a: "12 saat makyaj yapmamak, 24 saat sauna/hamam ve yoğun spor yapmamak, güneşten korunmak yeterlidir." },
+      ],
     },
   },
 ];
