@@ -42,6 +42,8 @@ export const tr = {
     ctaConsult: "Konsültasyon Talebi",
     ctaServices: "Uygulamalar",
     discover: "Keşfet",
+    appointmentCta: "Randevu Al",
+    appointmentCtaDesc: "Size özel bir konsültasyon için hemen randevu oluşturun.",
     heroAlt: "Lüks medikal estetik klinik ortamı",
   },
   marquee: [

@@ -44,6 +44,8 @@ export const fa: typeof tr = {
     ctaConsult: "درخواست مشاوره",
     ctaServices: "درمان‌ها",
     discover: "کشف کنید",
+    appointmentCta: "رزرو نوبت",
+    appointmentCtaDesc: "امروز برای مشاورهٔ اختصاصی خود نوبت رزرو کنید.",
     heroAlt: "محیط کلینیک زیبایی پزشکی لوکس",
   },
   marquee: [

@@ -44,6 +44,8 @@ export const en: typeof tr = {
     ctaConsult: "Request Consultation",
     ctaServices: "Treatments",
     discover: "Discover",
+    appointmentCta: "Book Appointment",
+    appointmentCtaDesc: "Schedule a personalized consultation today.",
     heroAlt: "Luxury medical aesthetic clinic environment",
   },
   marquee: [
