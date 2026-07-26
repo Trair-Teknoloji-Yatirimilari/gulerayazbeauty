@@ -845,6 +845,12 @@ const devices: Device[] = [
       interval: "Yılda 1–2 seans",
       closing:
         "Neşteri, dikişi ve iyileşme sürecini elemeden yüzün mimarisini yeniden yukarı taşıyoruz.",
+      faqs: [
+        { q: "HIFU ile LIFU arasındaki fark nedir?", a: "HIFU derin SMAS tabakasına odaklanır ve germe etkisi güçlüdür; LIFU daha yüzeysel katmanlarda çalışır, cilt sıkılaştırma ve doku canlandırma sağlar. Çoğu zaman kombine uygulanır." },
+        { q: "Ameliyat gibi sonuç verir mi?", a: "Cerrahi germe kadar dramatik olmasa da; hafif–orta düzey gevşemede ameliyatsız, izsiz ve iyileşme süreci gerektirmeyen belirgin bir toparlama sağlar." },
+        { q: "Etkisi ne zaman görülür?", a: "İlk etki uygulama sonrası hissedilse de kalıcı toparlanma 6–12 hafta içinde kolajen üretimiyle birlikte belirginleşir." },
+        { q: "Kimlere uygulanmaz?", a: "Yüzde metal implant, kalp pili, aktif cilt enfeksiyonu, hamilelik ve ileri derece sarkması olan hastalara uygulanmaz." },
+      ],
     },
   },
 ];
