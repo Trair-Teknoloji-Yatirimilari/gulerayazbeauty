@@ -361,6 +361,42 @@ function Hero() {
   );
 }
 
+/* ---------------- HERO CTA ---------------- */
+
+function HeroCta() {
+  const { t } = useT();
+  return (
+    <section className="relative z-20 -mt-24 md:-mt-32 pb-8 md:pb-12 pointer-events-none">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          className="pointer-events-auto flex flex-col sm:flex-row items-center justify-between gap-6 bg-card/70 backdrop-blur-xl border border-primary/30 rounded-sm px-6 py-6 md:px-10 md:py-8 shadow-elegant"
+        >
+          <div className="text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start gap-3 mb-2">
+              <div className="h-px w-8 bg-primary/60" />
+              <span className="text-[10px] uppercase tracking-[0.35em] text-primary/80">{t.nav.ctaAppointment}</span>
+            </div>
+            <p className="text-foreground/80 text-sm md:text-base max-w-md leading-relaxed">
+              {t.hero.appointmentCtaDesc}
+            </p>
+          </div>
+          <a
+            href="#randevu-formu"
+            className="group inline-flex items-center gap-3 rounded-full bg-primary px-7 py-3.5 text-sm uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all glow-gold shrink-0"
+          >
+            {t.hero.appointmentCta}
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- MARQUEE ---------------- */
 
 function Marquee() {
