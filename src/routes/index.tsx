@@ -27,6 +27,7 @@ import {
   Leaf,
   Activity,
   ChevronRight,
+  HelpCircle,
 } from "lucide-react";
 import {
   Dialog,
