@@ -808,6 +808,12 @@ const devices: Device[] = [
       interval: "3–6 seans / 3–4 hafta arayla",
       closing:
         "Kapatmadan aydınlanan bir cilt: lekelerinizi silen, tonunuzu yeniden dengeleyen teknoloji.",
+      faqs: [
+        { q: "Q-Switch her cilt tonuna uygun mu?", a: "Uygun parametrelerle koyu cilt tonlarında da güvenle uygulanabilir. Uygulama öncesi cilt tipi ve leke türü mutlaka değerlendirilir." },
+        { q: "Dövme tamamen silinir mi?", a: "Dövmenin rengi, mürekkep kalitesi ve yaşına göre 5–10 seans arasında belirgin şekilde açılır; çoğu vakada tamamen silinebilir." },
+        { q: "Karbon peeling nedir?", a: "Cildin üzerine sürülen özel karbon maskenin lazerle buharlaştırıldığı; gözenekleri temizleyen ve cildi parlatan hızlı bir uygulamadır." },
+        { q: "İşlem sonrası ne yapmalıyım?", a: "En az 4 hafta güneş koruyucu kullanmak, ovalamamak ve nemlendirici kullanmak sonucu belirgin şekilde iyileştirir." },
+      ],
     },
   },
   {
