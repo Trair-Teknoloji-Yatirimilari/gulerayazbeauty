@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { logout } from "@/lib/auth.functions";
 import {
   listAppointments,
   updateAppointmentStatus,
@@ -79,7 +79,7 @@ function AdminPage() {
   }, [data]);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await logout();
     navigate({ to: "/auth" });
   };
 

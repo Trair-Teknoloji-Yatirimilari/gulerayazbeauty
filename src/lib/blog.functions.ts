@@ -1,26 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
-import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
-import type { Database } from "@/integrations/supabase/types";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-
-function publicClient() {
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
-  const url = process.env.SUPABASE_URL!;
-  return createClient<Database>(url, key, {
-    auth: { persistSession: false, autoRefreshToken: false },
-    global: {
-      fetch: (input, init) => {
-        const h = new Headers(init?.headers);
-        if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) {
-          h.delete("Authorization");
-        }
-        h.set("apikey", key);
-        return fetch(input, { ...init, headers: h });
-      },
-    },
-  });
-}
+import { db } from "./db";
+import { requireAdmin } from "./auth.functions";
 
 const postSchema = z.object({
   id: z.string().uuid().optional(),
@@ -38,60 +19,72 @@ const postSchema = z.object({
 
 export type BlogPostInput = z.infer<typeof postSchema>;
 
+export interface BlogPostRow {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  content: string;
+  cover_image_url: string | null;
+  category: string | null;
+  tags: string[];
+  seo_title: string | null;
+  seo_description: string | null;
+  status: "draft" | "published";
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type BlogPostListItem = Pick<
+  BlogPostRow,
+  "id" | "slug" | "title" | "excerpt" | "cover_image_url" | "category" | "tags" | "published_at"
+>;
+
+
 export const listPublishedPosts = createServerFn({ method: "GET" }).handler(async () => {
-  const sb = publicClient();
-  const { data, error } = await sb
-    .from("blog_posts")
-    .select("id, slug, title, excerpt, cover_image_url, category, tags, published_at")
-    .eq("status", "published")
-    .order("published_at", { ascending: false });
-  if (error) throw new Error(error.message);
-  return data ?? [];
+  const { rows } = await db().query<BlogPostListItem>(
+    `SELECT id, slug, title, excerpt, cover_image_url, category, tags, published_at
+     FROM blog_posts WHERE status = 'published'
+     ORDER BY published_at DESC`,
+  );
+  return rows;
 });
 
 export const getPostBySlug = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => z.object({ slug: z.string() }).parse(d))
   .handler(async ({ data }) => {
-    const sb = publicClient();
-    const { data: post, error } = await sb
-      .from("blog_posts")
-      .select("*")
-      .eq("slug", data.slug)
-      .eq("status", "published")
-      .maybeSingle();
-    if (error) throw new Error(error.message);
-    return post;
+    const { rows } = await db().query<BlogPostRow>(
+      `SELECT * FROM blog_posts WHERE slug = $1 AND status = 'published' LIMIT 1`,
+      [data.slug],
+    );
+    return rows[0] ?? null;
   });
 
 export const adminListPosts = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
-      .from("blog_posts")
-      .select("id, slug, title, status, category, published_at, updated_at")
-      .order("updated_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return data ?? [];
+  .middleware([requireAdmin])
+  .handler(async () => {
+    const { rows } = await db().query<Pick<BlogPostRow, "id" | "slug" | "title" | "status" | "category" | "published_at" | "updated_at">>(
+      `SELECT id, slug, title, status, category, published_at, updated_at
+       FROM blog_posts ORDER BY updated_at DESC`,
+    );
+    return rows;
   });
 
 export const adminGetPost = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAdmin])
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
-  .handler(async ({ data, context }) => {
-    const { data: post, error } = await context.supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("id", data.id)
-      .maybeSingle();
-    if (error) throw new Error(error.message);
-    return post;
+  .handler(async ({ data }) => {
+    const { rows } = await db().query<BlogPostRow>(`SELECT * FROM blog_posts WHERE id = $1`, [data.id]);
+    return rows[0] ?? null;
   });
 
 export const upsertPost = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAdmin])
   .inputValidator((d: unknown) => postSchema.parse(d))
-  .handler(async ({ data, context }) => {
-    const payload = {
+  .handler(async ({ data }) => {
+    const pool = db();
+    const vals = {
       slug: data.slug,
       title: data.title,
       excerpt: data.excerpt || null,
@@ -102,49 +95,51 @@ export const upsertPost = createServerFn({ method: "POST" })
       seo_title: data.seo_title || null,
       seo_description: data.seo_description || null,
       status: data.status,
-      published_at:
-        data.status === "published"
-          ? new Date().toISOString()
-          : null,
-      author_id: context.userId,
+      published_at: data.status === "published" ? new Date().toISOString() : null,
     };
 
     if (data.id) {
-      // Preserve original published_at when updating an already-published post
+      // Yayınlanmış bir yazı güncellenirken orijinal yayın tarihini koru
       if (data.status === "published") {
-        const { data: existing } = await context.supabase
-          .from("blog_posts")
-          .select("published_at, status")
-          .eq("id", data.id)
-          .maybeSingle();
-        if (existing?.published_at && existing.status === "published") {
-          payload.published_at = existing.published_at;
+        const { rows } = await pool.query(
+          `SELECT published_at, status FROM blog_posts WHERE id = $1`,
+          [data.id],
+        );
+        if (rows[0]?.published_at && rows[0].status === "published") {
+          vals.published_at = rows[0].published_at;
         }
       }
-      const { data: updated, error } = await context.supabase
-        .from("blog_posts")
-        .update(payload)
-        .eq("id", data.id)
-        .select("id, slug")
-        .single();
-      if (error) throw new Error(error.message);
-      return updated;
+      const { rows } = await pool.query(
+        `UPDATE blog_posts SET
+           slug=$1, title=$2, excerpt=$3, content=$4, cover_image_url=$5,
+           category=$6, tags=$7, seo_title=$8, seo_description=$9,
+           status=$10, published_at=$11
+         WHERE id=$12 RETURNING id, slug`,
+        [vals.slug, vals.title, vals.excerpt, vals.content, vals.cover_image_url,
+         vals.category, vals.tags, vals.seo_title, vals.seo_description,
+         vals.status, vals.published_at, data.id],
+      );
+      if (!rows[0]) throw new Error("Yazı bulunamadı.");
+      return rows[0];
     }
 
-    const { data: inserted, error } = await context.supabase
-      .from("blog_posts")
-      .insert(payload)
-      .select("id, slug")
-      .single();
-    if (error) throw new Error(error.message);
-    return inserted;
+    const { rows } = await pool.query(
+      `INSERT INTO blog_posts
+         (slug, title, excerpt, content, cover_image_url, category, tags,
+          seo_title, seo_description, status, published_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+       RETURNING id, slug`,
+      [vals.slug, vals.title, vals.excerpt, vals.content, vals.cover_image_url,
+       vals.category, vals.tags, vals.seo_title, vals.seo_description,
+       vals.status, vals.published_at],
+    );
+    return rows[0];
   });
 
 export const deletePost = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAdmin])
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
-  .handler(async ({ data, context }) => {
-    const { error } = await context.supabase.from("blog_posts").delete().eq("id", data.id);
-    if (error) throw new Error(error.message);
+  .handler(async ({ data }) => {
+    await db().query(`DELETE FROM blog_posts WHERE id = $1`, [data.id]);
     return { ok: true };
   });

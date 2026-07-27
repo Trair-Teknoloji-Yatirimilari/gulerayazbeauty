@@ -1,8 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/integrations/supabase/types";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { db } from "./db";
+import { requireAdmin } from "./auth.functions";
 
 const appointmentSchema = z.object({
   full_name: z.string().trim().min(2).max(100),
@@ -18,76 +17,70 @@ const appointmentSchema = z.object({
 
 export type AppointmentInput = z.infer<typeof appointmentSchema>;
 
+export interface AppointmentRow {
+  id: string;
+  full_name: string;
+  phone: string;
+  email: string | null;
+  preferred_date: string | null;
+  service: string | null;
+  message: string | null;
+  consent_given: boolean;
+  status: "pending" | "confirmed" | "completed" | "cancelled";
+  admin_notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+
 const ADMIN_EMAIL = "info@drgokhandegirmencioglu.com";
 
 export const createAppointment = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => appointmentSchema.parse(data))
   .handler(async ({ data }) => {
-    const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
-    const url = process.env.SUPABASE_URL!;
-    const supabase = createClient<Database>(url, key, {
-      auth: { persistSession: false, autoRefreshToken: false },
-      global: {
-        fetch: (input, init) => {
-          const h = new Headers(init?.headers);
-          if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) {
-            h.delete("Authorization");
-          }
-          h.set("apikey", key);
-          return fetch(input, { ...init, headers: h });
-        },
-      },
-    });
+    const { rows } = await db().query(
+      `INSERT INTO appointments (full_name, phone, email, preferred_date, service, message, consent_given)
+       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`,
+      [
+        data.full_name,
+        data.phone,
+        data.email || null,
+        data.preferred_date || null,
+        data.service || null,
+        data.message || null,
+        data.consent_given,
+      ],
+    );
+    const inserted = rows[0];
 
-    const payload = {
-      full_name: data.full_name,
-      phone: data.phone,
-      email: data.email ? data.email : null,
-      preferred_date: data.preferred_date ? data.preferred_date : null,
-      service: data.service ? data.service : null,
-      message: data.message ? data.message : null,
-      consent_given: data.consent_given,
-    };
-
-    const { data: inserted, error } = await supabase
-      .from("appointments")
-      .insert(payload)
-      .select("id")
-      .single();
-
-    if (error) {
-      console.error("createAppointment insert error", error);
-      throw new Error("Randevu talebiniz kaydedilemedi. Lütfen tekrar deneyin.");
-    }
-
-    // Best-effort email notifications (skipped silently if email not configured)
+    // E-posta bildirimi (yapılandırılmadıysa sessizce atlanır)
     try {
       const mod = await import("@/lib/email-templates/send-email").catch(() => null);
-      if (!mod?.sendTemplateEmail) return;
-      const { sendTemplateEmail } = mod;
-      await Promise.allSettled([
-        sendTemplateEmail("admin-appointment-notification", ADMIN_EMAIL, {
-          templateData: {
-            fullName: data.full_name,
-            phone: data.phone,
-            email: data.email || "—",
-            preferredDate: data.preferred_date || "—",
-            service: data.service || "—",
-            message: data.message || "—",
-          },
-          idempotencyKey: `appt-admin-${inserted.id}`,
-        }),
-        data.email
-          ? sendTemplateEmail("appointment-confirmation", data.email, {
-              templateData: {
-                fullName: data.full_name,
-                preferredDate: data.preferred_date || "En kısa sürede sizinle iletişime geçilecek",
-                service: data.service || "Belirtilmedi",
-              },
-              idempotencyKey: `appt-user-${inserted.id}`,
-            })
-          : Promise.resolve(),
-      ]);
+      if (mod?.sendTemplateEmail) {
+        await Promise.allSettled([
+          mod.sendTemplateEmail("admin-appointment-notification", ADMIN_EMAIL, {
+            templateData: {
+              fullName: data.full_name,
+              phone: data.phone,
+              email: data.email || "—",
+              preferredDate: data.preferred_date || "—",
+              service: data.service || "—",
+              message: data.message || "—",
+            },
+            idempotencyKey: `appt-admin-${inserted.id}`,
+          }),
+          data.email
+            ? mod.sendTemplateEmail("appointment-confirmation", data.email, {
+                templateData: {
+                  fullName: data.full_name,
+                  preferredDate: data.preferred_date || "En kısa sürede sizinle iletişime geçilecek",
+                  service: data.service || "Belirtilmedi",
+                },
+                idempotencyKey: `appt-user-${inserted.id}`,
+              })
+            : Promise.resolve(),
+        ]);
+      }
     } catch (e) {
       console.warn("appointment email skipped:", e);
     }
@@ -96,20 +89,10 @@ export const createAppointment = createServerFn({ method: "POST" })
   });
 
 export const listAppointments = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data: isAdmin } = await context.supabase.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
-    if (!isAdmin) throw new Error("Yetkisiz erişim.");
-
-    const { data, error } = await context.supabase
-      .from("appointments")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return data ?? [];
+  .middleware([requireAdmin])
+  .handler(async () => {
+    const { rows } = await db().query<AppointmentRow>(`SELECT * FROM appointments ORDER BY created_at DESC`);
+    return rows;
   });
 
 const updateStatusSchema = z.object({
@@ -118,34 +101,17 @@ const updateStatusSchema = z.object({
 });
 
 export const updateAppointmentStatus = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAdmin])
   .inputValidator((d: unknown) => updateStatusSchema.parse(d))
-  .handler(async ({ data, context }) => {
-    const { data: isAdmin } = await context.supabase.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
-    if (!isAdmin) throw new Error("Yetkisiz erişim.");
-    const { error } = await context.supabase
-      .from("appointments")
-      .update({ status: data.status })
-      .eq("id", data.id);
-    if (error) throw new Error(error.message);
+  .handler(async ({ data }) => {
+    await db().query(`UPDATE appointments SET status = $1 WHERE id = $2`, [data.status, data.id]);
     return { ok: true };
   });
 
-const deleteSchema = z.object({ id: z.string().uuid() });
-
 export const deleteAppointment = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((d: unknown) => deleteSchema.parse(d))
-  .handler(async ({ data, context }) => {
-    const { data: isAdmin } = await context.supabase.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
-    if (!isAdmin) throw new Error("Yetkisiz erişim.");
-    const { error } = await context.supabase.from("appointments").delete().eq("id", data.id);
-    if (error) throw new Error(error.message);
+  .middleware([requireAdmin])
+  .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
+  .handler(async ({ data }) => {
+    await db().query(`DELETE FROM appointments WHERE id = $1`, [data.id]);
     return { ok: true };
   });
