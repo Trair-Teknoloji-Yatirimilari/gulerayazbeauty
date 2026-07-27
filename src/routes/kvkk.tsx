@@ -6,10 +6,10 @@ import { useT } from "@/i18n/context";
 export const Route = createFileRoute("/kvkk")({
   head: () => ({
     meta: [
-      { title: "KVKK Aydınlatma Metni | Dr. Gökhan Değirmencioğlu" },
-      { name: "description", content: "Dr. Gökhan Değirmencioğlu Medikal Estetik Kliniği Kişisel Verilerin İşlenmesi Aydınlatma Metni." },
+      { title: "KVKK Aydınlatma Metni | Güler Ayaz Beauty" },
+      { name: "description", content: "Güler Ayaz Beauty Kişisel Verilerin İşlenmesi Aydınlatma Metni." },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "KVKK Aydınlatma Metni | Dr. Gökhan Değirmencioğlu" },
+      { property: "og:title", content: "KVKK Aydınlatma Metni | Güler Ayaz Beauty" },
       { property: "og:description", content: "Kişisel verilerinizin nasıl işlendiği, saklandığı ve haklarınız." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
