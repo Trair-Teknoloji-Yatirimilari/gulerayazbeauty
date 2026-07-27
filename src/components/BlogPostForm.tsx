@@ -1,12 +1,13 @@
-import { useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Loader2, Save } from "lucide-react";
+import { Eye, Loader2, Save, UploadCloud } from "lucide-react";
 import { upsertPost, type BlogPostInput } from "@/lib/blog.functions";
 import { uploadImage } from "@/lib/upload.functions";
 import { RichTextEditor } from "@/components/RichTextEditor";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useT } from "@/i18n/context";
 
 interface Props {
@@ -25,6 +26,8 @@ function slugify(s: string) {
     .replace(/^-|-$/g, "");
 }
 
+const AUTOSAVE_MS = 30_000;
+
 export function BlogPostForm({ initial }: Props) {
   const { t } = useT();
   const f = t.blogForm;
@@ -32,8 +35,8 @@ export function BlogPostForm({ initial }: Props) {
   const qc = useQueryClient();
   const upsertFn = useServerFn(upsertPost);
   const uploadFn = useServerFn(uploadImage);
-  const [uploading, setUploading] = useState(false);
 
+  const [postId, setPostId] = useState(initial?.id);
   const [title, setTitle] = useState(initial?.title ?? "");
   const [slug, setSlug] = useState(initial?.slug ?? "");
   const [slugTouched, setSlugTouched] = useState(!!initial?.slug);
@@ -45,11 +48,28 @@ export function BlogPostForm({ initial }: Props) {
   const [seoTitle, setSeoTitle] = useState(initial?.seo_title ?? "");
   const [seoDesc, setSeoDesc] = useState(initial?.seo_description ?? "");
   const [status, setStatus] = useState<"draft" | "published">(initial?.status ?? "draft");
+  const [uploading, setUploading] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [lastAutoSave, setLastAutoSave] = useState<Date | null>(null);
+
+  const buildPayload = useCallback((): BlogPostInput => ({
+    id: postId,
+    title: title.trim(),
+    slug: (slug || slugify(title)).trim(),
+    excerpt: excerpt.trim(),
+    content,
+    cover_image_url: cover.trim(),
+    category: category.trim(),
+    tags: tags.split(",").map((s) => s.trim()).filter(Boolean),
+    seo_title: seoTitle.trim(),
+    seo_description: seoDesc.trim(),
+    status,
+  }), [postId, title, slug, excerpt, content, cover, category, tags, seoTitle, seoDesc, status]);
 
   const mut = useMutation({
     mutationFn: (payload: BlogPostInput) => upsertFn({ data: payload }),
     onSuccess: () => {
-      toast.success(initial?.id ? f.updated : f.saved);
+      toast.success(postId ? f.updated : f.saved);
       qc.invalidateQueries({ queryKey: ["admin", "blog"] });
       qc.invalidateQueries({ queryKey: ["blog"] });
       navigate({ to: "/admin/blog" });
@@ -59,21 +79,71 @@ export function BlogPostForm({ initial }: Props) {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const payload: BlogPostInput = {
-      id: initial?.id,
-      title: title.trim(),
-      slug: (slug || slugify(title)).trim(),
-      excerpt: excerpt.trim(),
-      content,
-      cover_image_url: cover.trim(),
-      category: category.trim(),
-      tags: tags.split(",").map((s) => s.trim()).filter(Boolean),
-      seo_title: seoTitle.trim(),
-      seo_description: seoDesc.trim(),
-      status,
-    };
-    mut.mutate(payload);
+    mut.mutate(buildPayload());
   };
+
+  // ---- Otomatik taslak kaydetme (yalnızca taslaklar; 30 sn'de bir, değişiklik varsa) ----
+  const lastSavedRef = useRef<string>(JSON.stringify(buildPayload()));
+  const savingRef = useRef(false);
+  useEffect(() => {
+    const iv = setInterval(() => {
+      void (async () => {
+        if (savingRef.current || mut.isPending) return;
+        const payload = buildPayload();
+        if (payload.status !== "draft") return; // yayındaki yazıya otomatik dokunma
+        if (payload.title.length < 2 || !/^[a-z0-9-]{2,}$/.test(payload.slug)) return;
+        const snapshot = JSON.stringify(payload);
+        if (snapshot === lastSavedRef.current) return;
+        savingRef.current = true;
+        try {
+          const res = await upsertFn({ data: payload });
+          if (!payload.id && res?.id) setPostId(res.id);
+          lastSavedRef.current = snapshot;
+          setLastAutoSave(new Date());
+        } catch {
+          /* otomatik kayıt sessizce başarısız olabilir */
+        } finally {
+          savingRef.current = false;
+        }
+      })();
+    }, AUTOSAVE_MS);
+    return () => clearInterval(iv);
+  }, [buildPayload, mut.isPending, upsertFn]);
+
+  // ---- Görsel yükleme (kapak + içerik için ortak) ----
+  const uploadFile = useCallback(async (file: File): Promise<string> => {
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Dosya 5MB'den büyük olamaz.");
+      throw new Error("too-big");
+    }
+    setUploading(true);
+    try {
+      const dataBase64 = await new Promise<string>((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve((r.result as string).split(",")[1] ?? "");
+        r.onerror = () => reject(new Error("Dosya okunamadı."));
+        r.readAsDataURL(file);
+      });
+      const res = await uploadFn({ data: { mime: file.type, dataBase64 } });
+      toast.success("Görsel yüklendi.");
+      return res.url;
+    } catch (err) {
+      if (!(err instanceof Error && err.message === "too-big")) {
+        toast.error(err instanceof Error ? err.message : "Yükleme başarısız.");
+      }
+      throw err;
+    } finally {
+      setUploading(false);
+    }
+  }, [uploadFn]);
+
+  // ---- SEO önizleme değerleri ----
+  const effSeoTitle = (seoTitle || title || "Yazı başlığı").slice(0, 70);
+  const effSeoDesc = (seoDesc || excerpt || "Yazı açıklaması burada görünecek.").slice(0, 180);
+  const effSlug = slug || slugify(title) || "yazi-basligi";
+  const counter = (len: number, max: number) => (
+    <span className={`text-[11px] tabular-nums ${len > max ? "text-red-400" : "text-foreground/40"}`}>{len}/{max}</span>
+  );
 
   const input = "w-full rounded-md border border-border/40 bg-background/60 px-4 py-2.5 text-sm focus:outline-none focus:border-primary/60 transition";
   const label = "block text-xs uppercase tracking-widest text-foreground/60 mb-2";
@@ -121,7 +191,10 @@ export function BlogPostForm({ initial }: Props) {
 
         <div>
           <label className={label}>{f.content}</label>
-          <RichTextEditor value={content} onChange={setContent} />
+          <RichTextEditor value={content} onChange={setContent} onUploadImage={uploadFile} />
+          <p className="mt-2 text-[11px] text-foreground/40">
+            İpucu: Araç çubuğundaki görsel butonu bilgisayarınızdan yükleme yapar (JPG/PNG/WebP, en fazla 5MB).
+          </p>
         </div>
       </div>
 
@@ -143,14 +216,29 @@ export function BlogPostForm({ initial }: Props) {
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={mut.isPending}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground py-2.5 text-sm hover:bg-primary/90 transition disabled:opacity-50"
-          >
-            {mut.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {f.save}
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setPreviewOpen(true)}
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-md border border-border/60 py-2.5 text-sm text-foreground/70 hover:text-primary hover:border-primary/60 transition"
+            >
+              <Eye className="w-4 h-4" /> Önizle
+            </button>
+            <button
+              type="submit"
+              disabled={mut.isPending}
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground py-2.5 text-sm hover:bg-primary/90 transition disabled:opacity-50"
+            >
+              {mut.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+              {f.save}
+            </button>
+          </div>
+
+          {lastAutoSave && (
+            <p className="text-[11px] text-foreground/40 text-center">
+              Otomatik kaydedildi: {lastAutoSave.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+            </p>
+          )}
         </div>
 
         <div className="rounded-2xl border border-border/40 bg-card/40 p-5 space-y-4">
@@ -166,7 +254,7 @@ export function BlogPostForm({ initial }: Props) {
             <label className={label}>{f.cover}</label>
             <input value={cover} onChange={(e) => setCover(e.target.value)} className={input} placeholder="https://... veya bilgisayardan yükleyin" />
             <label className="mt-2 inline-flex items-center gap-2 cursor-pointer rounded-full border border-border/60 px-4 py-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary hover:border-primary/60 transition">
-              {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+              {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <UploadCloud className="w-3.5 h-3.5" />}
               {uploading ? "Yükleniyor..." : "Bilgisayardan Görsel Yükle"}
               <input
                 type="file"
@@ -176,25 +264,10 @@ export function BlogPostForm({ initial }: Props) {
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   if (!file) return;
-                  if (file.size > 5 * 1024 * 1024) {
-                    toast.error("Dosya 5MB'den büyük olamaz.");
-                    return;
-                  }
-                  setUploading(true);
                   try {
-                    const dataBase64 = await new Promise<string>((resolve, reject) => {
-                      const r = new FileReader();
-                      r.onload = () => resolve((r.result as string).split(",")[1] ?? "");
-                      r.onerror = () => reject(new Error("Dosya okunamadı."));
-                      r.readAsDataURL(file);
-                    });
-                    const res = await uploadFn({ data: { mime: file.type, dataBase64 } });
-                    setCover(res.url);
-                    toast.success("Görsel yüklendi.");
-                  } catch (err) {
-                    toast.error(err instanceof Error ? err.message : "Yükleme başarısız.");
-                  } finally {
-                    setUploading(false);
+                    setCover(await uploadFile(file));
+                  } catch {
+                    /* toast uploadFile içinde gösterildi */
                   }
                 }}
               />
@@ -208,15 +281,54 @@ export function BlogPostForm({ initial }: Props) {
         <div className="rounded-2xl border border-border/40 bg-card/40 p-5 space-y-4">
           <p className="text-xs uppercase tracking-widest text-primary/70">{f.seo}</p>
           <div>
-            <label className={label}>{f.seoTitle}</label>
-            <input value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} className={input} />
+            <div className="flex items-center justify-between mb-2">
+              <label className={`${label} mb-0`}>{f.seoTitle}</label>
+              {counter((seoTitle || title).length, 60)}
+            </div>
+            <input value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} className={input} placeholder="Boşsa yazı başlığı kullanılır" />
           </div>
           <div>
-            <label className={label}>{f.seoDesc}</label>
-            <textarea value={seoDesc} onChange={(e) => setSeoDesc(e.target.value)} rows={3} className={input} />
+            <div className="flex items-center justify-between mb-2">
+              <label className={`${label} mb-0`}>{f.seoDesc}</label>
+              {counter((seoDesc || excerpt).length, 160)}
+            </div>
+            <textarea value={seoDesc} onChange={(e) => setSeoDesc(e.target.value)} rows={3} className={input} placeholder="Boşsa özet kullanılır" />
+          </div>
+
+          <div>
+            <p className="text-[11px] uppercase tracking-widest text-foreground/40 mb-2">Google Önizleme</p>
+            <div className="rounded-lg border border-border/40 bg-background/70 p-4">
+              <p className="text-[13px] text-emerald-400/90 truncate">drgokhandegirmencioglu.com › blog › {effSlug}</p>
+              <p className="mt-1 text-[17px] leading-snug text-sky-300 line-clamp-2">{effSeoTitle}</p>
+              <p className="mt-1 text-[13px] text-foreground/60 line-clamp-3">{effSeoDesc}</p>
+            </div>
           </div>
         </div>
       </div>
+
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="sr-only">Yazı Önizleme</DialogTitle>
+          </DialogHeader>
+          <article>
+            {cover && (
+              <img src={cover} alt="" className="w-full aspect-video object-cover rounded-lg border border-border/40 mb-6" />
+            )}
+            {category && (
+              <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">{category}</p>
+            )}
+            <h1 className="font-display text-3xl md:text-4xl text-gold-gradient leading-tight">
+              {title || "Yazı başlığı"}
+            </h1>
+            {excerpt && <p className="mt-4 text-foreground/70 leading-relaxed">{excerpt}</p>}
+            <div
+              className="prose prose-invert max-w-none mt-6 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: content || "<p><em>İçerik henüz boş.</em></p>" }}
+            />
+          </article>
+        </DialogContent>
+      </Dialog>
     </form>
   );
 }

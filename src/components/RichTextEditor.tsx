@@ -3,7 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Bold, Italic, Heading1, Heading2, List, ListOrdered, Quote, Link as LinkIcon, Image as ImageIcon, Undo, Redo, Minus } from "lucide-react";
 import { useT } from "@/i18n/context";
 
@@ -11,9 +11,11 @@ interface Props {
   value: string;
   onChange: (html: string) => void;
   placeholder?: string;
+  /** Verilirse, görsel butonu dosya seçtirip bu fonksiyonla yükler ve dönen URL'yi ekler. */
+  onUploadImage?: (file: File) => Promise<string>;
 }
 
-export function RichTextEditor({ value, onChange, placeholder }: Props) {
+export function RichTextEditor({ value, onChange, placeholder, onUploadImage }: Props) {
   const { t } = useT();
   const editor = useEditor({
     extensions: [
@@ -44,15 +46,16 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
 
   return (
     <div className="border border-border/40 rounded-md overflow-hidden bg-background/40">
-      <Toolbar editor={editor} />
+      <Toolbar editor={editor} onUploadImage={onUploadImage} />
       <EditorContent editor={editor} />
     </div>
   );
 }
 
-function Toolbar({ editor }: { editor: Editor }) {
+function Toolbar({ editor, onUploadImage }: { editor: Editor; onUploadImage?: (file: File) => Promise<string> }) {
   const { t } = useT();
   const e = t.editor;
+  const fileRef = useRef<HTMLInputElement>(null);
   const btn = "p-2 rounded hover:bg-primary/10 hover:text-primary transition text-foreground/70";
   const active = "bg-primary/15 text-primary";
 
@@ -68,8 +71,22 @@ function Toolbar({ editor }: { editor: Editor }) {
   };
 
   const addImage = () => {
+    if (onUploadImage) {
+      fileRef.current?.click();
+      return;
+    }
     const url = window.prompt(e.imagePrompt);
     if (url) editor.chain().focus().setImage({ src: url }).run();
+  };
+
+  const onFilePicked = async (file: File | undefined) => {
+    if (!file || !onUploadImage) return;
+    try {
+      const url = await onUploadImage(file);
+      editor.chain().focus().setImage({ src: url }).run();
+    } catch {
+      /* hata bildirimi yükleyen tarafta */
+    }
   };
 
   return (
@@ -87,6 +104,13 @@ function Toolbar({ editor }: { editor: Editor }) {
       <span className="w-px bg-border/40 mx-1" />
       <button type="button" onClick={addLink} className={`${btn} ${editor.isActive("link") ? active : ""}`} title={e.link}><LinkIcon className="w-4 h-4" /></button>
       <button type="button" onClick={addImage} className={btn} title={e.image}><ImageIcon className="w-4 h-4" /></button>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        className="hidden"
+        onChange={(ev) => { void onFilePicked(ev.target.files?.[0]); ev.target.value = ""; }}
+      />
       <span className="w-px bg-border/40 mx-1" />
       <button type="button" onClick={() => editor.chain().focus().undo().run()} className={btn} title={e.undo}><Undo className="w-4 h-4" /></button>
       <button type="button" onClick={() => editor.chain().focus().redo().run()} className={btn} title={e.redo}><Redo className="w-4 h-4" /></button>
