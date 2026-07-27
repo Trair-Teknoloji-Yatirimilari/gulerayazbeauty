@@ -9,7 +9,7 @@ import { useT } from "@/i18n/context";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Yönetici Girişi | Dr. Gökhan Değirmencioğlu" },
+      { title: "Yönetici Girişi | Güler Ayaz Beauty" },
       { name: "description", content: "Klinik yönetici paneli girişi." },
       { name: "robots", content: "noindex, nofollow" },
     ],

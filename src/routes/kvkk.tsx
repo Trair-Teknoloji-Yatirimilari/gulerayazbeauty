@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Shield, Mail, ArrowLeft, Clock, Trash2, Eye, Lock, FileText } from "lucide-react";
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/kvkk")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/kvkk` }],
   }),
   component: KvkkPage,
 });

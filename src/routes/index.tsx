@@ -46,6 +46,7 @@ import servicePilates from "@/assets/service-pilates.jpg";
 import { AppointmentForm } from "@/components/AppointmentForm";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useT } from "@/i18n/context";
+import { SITE_URL } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -56,6 +57,29 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Uzman kadro, premium teknoloji, davetkar atmosfer." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BeautySalon",
+          name: "Güler Ayaz Beauty",
+          url: SITE_URL,
+          image: `${SITE_URL}/og-image.jpg`,
+          telephone: "+905010274777",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Maslak 1453",
+            addressLocality: "Sarıyer",
+            addressRegion: "İstanbul",
+            addressCountry: "TR",
+          },
+          sameAs: ["https://www.instagram.com/gulerayaz_beautycenter/"],
+          priceRange: "₺₺",
+        }),
+      },
     ],
   }),
   component: Index,

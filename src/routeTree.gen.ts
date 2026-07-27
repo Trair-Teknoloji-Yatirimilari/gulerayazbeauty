@@ -14,6 +14,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as GaleriRouteImport } from './routes/galeri'
 import { Route as KvkkRouteImport } from './routes/kvkk'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as UploadsSplatRouteImport } from './routes/uploads.$'
 import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin_.gallery'
@@ -42,6 +44,16 @@ const KvkkRoute = KvkkRouteImport.update({
   path: '/kvkk',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -64,6 +76,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/uploads/$': typeof UploadsSplatRoute
   '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
@@ -73,6 +87,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/uploads/$': typeof UploadsSplatRoute
   '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
@@ -84,6 +100,8 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/uploads/$': typeof UploadsSplatRoute
   '/_authenticated/admin_/gallery': typeof AuthenticatedAdminGalleryRoute
@@ -95,6 +113,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/galeri'
     | '/kvkk'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/admin'
     | '/uploads/$'
     | '/admin/gallery'
@@ -104,6 +124,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/galeri'
     | '/kvkk'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/admin'
     | '/uploads/$'
     | '/admin/gallery'
@@ -114,6 +136,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/galeri'
     | '/kvkk'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/uploads/$'
     | '/_authenticated/admin_/gallery'
@@ -125,6 +149,8 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   GaleriRoute: typeof GaleriRoute
   KvkkRoute: typeof KvkkRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UploadsSplatRoute: typeof UploadsSplatRoute
 }
 
@@ -163,6 +189,20 @@ declare module '@tanstack/react-router' {
       path: '/kvkk'
       fullPath: '/kvkk'
       preLoaderRoute: typeof KvkkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -208,8 +248,20 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   GaleriRoute: GaleriRoute,
   KvkkRoute: KvkkRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   UploadsSplatRoute: UploadsSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
