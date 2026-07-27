@@ -11,10 +11,10 @@ export const fa: typeof tr = {
       ogDescription:
         "تیم متخصص، فناوری پرمیوم، فضای دلپذیر. مراسم زیبایی که با دقت طراحی شده است.",
     },
-    blogList: {
-      title: "وبلاگ | Güler Ayaz Beauty",
+    gallery: {
+      title: "گالری | Güler Ayaz Beauty",
       description:
-        "مقالات تخصصی دربارهٔ مراقبت پوست، لیزر موهای زائد، نیل آرت و پیلاتس.",
+        "لحظاتی از مرکز ما، خدمات در حال انجام و اتمسفر فضای ما.",
     },
     legal: {
       title: "متن روشنگری حفاظت از داده‌ها | Güler Ayaz Beauty",
