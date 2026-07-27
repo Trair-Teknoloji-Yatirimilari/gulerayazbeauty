@@ -12,9 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as GaleriRouteImport } from './routes/galeri'
 import { Route as KvkkRouteImport } from './routes/kvkk'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as UploadsSplatRouteImport } from './routes/uploads.$'
+import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin_.gallery'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,6 +30,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GaleriRoute = GaleriRouteImport.update({
+  id: '/galeri',
+  path: '/galeri',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KvkkRoute = KvkkRouteImport.update({
@@ -45,49 +52,78 @@ const UploadsSplatRoute = UploadsSplatRouteImport.update({
   path: '/uploads/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminGalleryRoute =
+  AuthenticatedAdminGalleryRouteImport.update({
+    id: '/admin_/gallery',
+    path: '/admin/gallery',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/uploads/$': typeof UploadsSplatRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/uploads/$': typeof UploadsSplatRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/uploads/$': typeof UploadsSplatRoute
+  '/_authenticated/admin_/gallery': typeof AuthenticatedAdminGalleryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/kvkk' | '/admin' | '/uploads/$'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/galeri'
+    | '/kvkk'
+    | '/admin'
+    | '/uploads/$'
+    | '/admin/gallery'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/kvkk' | '/admin' | '/uploads/$'
+  to:
+    | '/'
+    | '/auth'
+    | '/galeri'
+    | '/kvkk'
+    | '/admin'
+    | '/uploads/$'
+    | '/admin/gallery'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/galeri'
     | '/kvkk'
     | '/_authenticated/admin'
     | '/uploads/$'
+    | '/_authenticated/admin_/gallery'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  GaleriRoute: typeof GaleriRoute
   KvkkRoute: typeof KvkkRoute
   UploadsSplatRoute: typeof UploadsSplatRoute
 }
@@ -115,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/galeri': {
+      id: '/galeri'
+      path: '/galeri'
+      fullPath: '/galeri'
+      preLoaderRoute: typeof GaleriRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kvkk': {
       id: '/kvkk'
       path: '/kvkk'
@@ -136,15 +179,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UploadsSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin_/gallery': {
+      id: '/_authenticated/admin_/gallery'
+      path: '/admin/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AuthenticatedAdminGalleryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminGalleryRoute: typeof AuthenticatedAdminGalleryRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminGalleryRoute: AuthenticatedAdminGalleryRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -154,6 +206,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  GaleriRoute: GaleriRoute,
   KvkkRoute: KvkkRoute,
   UploadsSplatRoute: UploadsSplatRoute,
 }
