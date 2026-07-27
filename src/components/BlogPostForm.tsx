@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Loader2, Save } from "lucide-react";
 import { upsertPost, type BlogPostInput } from "@/lib/blog.functions";
+import { uploadImage } from "@/lib/upload.functions";
 import { RichTextEditor } from "@/components/RichTextEditor";
 import { useT } from "@/i18n/context";
 
@@ -30,6 +31,8 @@ export function BlogPostForm({ initial }: Props) {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const upsertFn = useServerFn(upsertPost);
+  const uploadFn = useServerFn(uploadImage);
+  const [uploading, setUploading] = useState(false);
 
   const [title, setTitle] = useState(initial?.title ?? "");
   const [slug, setSlug] = useState(initial?.slug ?? "");
@@ -161,7 +164,41 @@ export function BlogPostForm({ initial }: Props) {
           </div>
           <div>
             <label className={label}>{f.cover}</label>
-            <input value={cover} onChange={(e) => setCover(e.target.value)} className={input} placeholder="https://..." />
+            <input value={cover} onChange={(e) => setCover(e.target.value)} className={input} placeholder="https://... veya bilgisayardan yükleyin" />
+            <label className="mt-2 inline-flex items-center gap-2 cursor-pointer rounded-full border border-border/60 px-4 py-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary hover:border-primary/60 transition">
+              {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+              {uploading ? "Yükleniyor..." : "Bilgisayardan Görsel Yükle"}
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  e.target.value = "";
+                  if (!file) return;
+                  if (file.size > 5 * 1024 * 1024) {
+                    toast.error("Dosya 5MB'den büyük olamaz.");
+                    return;
+                  }
+                  setUploading(true);
+                  try {
+                    const dataBase64 = await new Promise<string>((resolve, reject) => {
+                      const r = new FileReader();
+                      r.onload = () => resolve((r.result as string).split(",")[1] ?? "");
+                      r.onerror = () => reject(new Error("Dosya okunamadı."));
+                      r.readAsDataURL(file);
+                    });
+                    const res = await uploadFn({ data: { mime: file.type, dataBase64 } });
+                    setCover(res.url);
+                    toast.success("Görsel yüklendi.");
+                  } catch (err) {
+                    toast.error(err instanceof Error ? err.message : "Yükleme başarısız.");
+                  } finally {
+                    setUploading(false);
+                  }
+                }}
+              />
+            </label>
             {cover && (
               <img src={cover} alt={f.coverAlt} className="mt-3 rounded-md w-full aspect-video object-cover border border-border/40" />
             )}

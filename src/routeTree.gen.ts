@@ -16,6 +16,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as KvkkRouteImport } from './routes/kvkk'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
+import { Route as UploadsSplatRouteImport } from './routes/uploads.$'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin_.blog'
 import { Route as AuthenticatedAdminBlogIdRouteImport } from './routes/_authenticated/admin_.blog_.$id'
 import { Route as AuthenticatedAdminBlogNewRouteImport } from './routes/_authenticated/admin_.blog_.new'
@@ -54,6 +55,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UploadsSplatRoute = UploadsSplatRouteImport.update({
+  id: '/uploads/$',
+  path: '/uploads/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
   id: '/admin_/blog',
   path: '/admin/blog',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/kvkk': typeof KvkkRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/uploads/$': typeof UploadsSplatRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
   '/admin/blog/new': typeof AuthenticatedAdminBlogNewRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/kvkk': typeof KvkkRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/uploads/$': typeof UploadsSplatRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
   '/admin/blog/new': typeof AuthenticatedAdminBlogNewRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/kvkk': typeof KvkkRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/blog_/$slug': typeof BlogSlugRoute
+  '/uploads/$': typeof UploadsSplatRoute
   '/_authenticated/admin_/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin_/blog_/$id': typeof AuthenticatedAdminBlogIdRoute
   '/_authenticated/admin_/blog_/new': typeof AuthenticatedAdminBlogNewRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/kvkk'
     | '/admin'
     | '/blog/$slug'
+    | '/uploads/$'
     | '/admin/blog'
     | '/admin/blog/$id'
     | '/admin/blog/new'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/kvkk'
     | '/admin'
     | '/blog/$slug'
+    | '/uploads/$'
     | '/admin/blog'
     | '/admin/blog/$id'
     | '/admin/blog/new'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/kvkk'
     | '/_authenticated/admin'
     | '/blog_/$slug'
+    | '/uploads/$'
     | '/_authenticated/admin_/blog'
     | '/_authenticated/admin_/blog_/$id'
     | '/_authenticated/admin_/blog_/new'
@@ -151,6 +163,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   KvkkRoute: typeof KvkkRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  UploadsSplatRoute: typeof UploadsSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/uploads/$': {
+      id: '/uploads/$'
+      path: '/uploads/$'
+      fullPath: '/uploads/$'
+      preLoaderRoute: typeof UploadsSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin_/blog': {
       id: '/_authenticated/admin_/blog'
       path: '/admin/blog'
@@ -252,6 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   KvkkRoute: KvkkRoute,
   BlogSlugRoute: BlogSlugRoute,
+  UploadsSplatRoute: UploadsSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

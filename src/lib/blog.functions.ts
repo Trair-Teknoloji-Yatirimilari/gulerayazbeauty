@@ -9,7 +9,13 @@ const postSchema = z.object({
   title: z.string().trim().min(2).max(200),
   excerpt: z.string().trim().max(500).optional().or(z.literal("")),
   content: z.string().default(""),
-  cover_image_url: z.string().trim().url().max(1000).optional().or(z.literal("")),
+  cover_image_url: z
+    .string()
+    .trim()
+    .max(1000)
+    .refine((v) => v === "" || v.startsWith("/") || /^https?:\/\//.test(v), "Geçerli bir URL veya /uploads yolu girin")
+    .optional()
+    .or(z.literal("")),
   category: z.string().trim().max(80).optional().or(z.literal("")),
   tags: z.array(z.string().trim().max(40)).max(20).default([]),
   seo_title: z.string().trim().max(200).optional().or(z.literal("")),
