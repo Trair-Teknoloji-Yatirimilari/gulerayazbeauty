@@ -97,10 +97,10 @@ function AdminPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link
-              to="/admin/blog"
+              to="/admin/gallery"
               className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
             >
-              {t.admin.blogManagement}
+              {t.admin.galleryManagement}
             </Link>
             <button
               onClick={signOut}
@@ -160,7 +160,7 @@ function AdminPage() {
                 <div>
                   <h3 className="font-display text-lg md:text-xl text-foreground">{a.full_name}</h3>
                   <div className="text-xs text-muted-foreground mt-1">
-                    {new Date(a.created_at).toLocaleString(t.blog.dateLocale)}
+                    {new Date(a.created_at).toLocaleString(t.gallery.dateLocale)}
                   </div>
                 </div>
                 <span
@@ -182,7 +182,7 @@ function AdminPage() {
                 {a.preferred_date && (
                   <div className="flex items-center gap-2 text-foreground/80">
                     <Calendar className="w-4 h-4 text-primary" />
-                    {new Date(a.preferred_date).toLocaleDateString(t.blog.dateLocale)}
+                    {new Date(a.preferred_date).toLocaleDateString(t.gallery.dateLocale)}
                   </div>
                 )}
                 {a.service && (
