@@ -71,11 +71,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Dr. Gökhan Değirmencioğlu | Medikal Estetik" },
-      { name: "description", content: "Dr. Gökhan Değirmencioğlu ile botoks, dolgu, mezoterapi, altın iğne, Q-Switch lazer ve HIFU-LIFU uygulamalarında hassas, sanatsal medikal estetik yaklaşımı." },
-      { name: "author", content: "Dr. Gökhan Değirmencioğlu" },
-      { property: "og:title", content: "Dr. Gökhan Değirmencioğlu | Medikal Estetik" },
-      { property: "og:description", content: "Sinematik bir estetik deneyim: doğal, dengeli ve hassas medikal estetik uygulamalar." },
+      { title: "Güler Ayaz Beauty | Maslak Güzellik & Estetik Merkezi" },
+      { name: "description", content: "Güler Ayaz Beauty · Maslak 1453'te lazer epilasyon, cilt bakımı, kirpik & kaş, manikür-pedikür ve özel Pilates." },
+      { name: "author", content: "Güler Ayaz Beauty" },
+      { property: "og:title", content: "Güler Ayaz Beauty | Maslak Güzellik Merkezi" },
+      { property: "og:description", content: "Uzman kadro, premium teknoloji, davetkar atmosfer. Sizin için özenle tasarlanmış güzellik ritüelleri." },
+
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
