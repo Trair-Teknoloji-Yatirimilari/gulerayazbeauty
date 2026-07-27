@@ -12,14 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as BlogRouteImport } from './routes/blog'
+import { Route as GaleriRouteImport } from './routes/galeri'
 import { Route as KvkkRouteImport } from './routes/kvkk'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
 import { Route as UploadsSplatRouteImport } from './routes/uploads.$'
-import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin_.blog'
-import { Route as AuthenticatedAdminBlogIdRouteImport } from './routes/_authenticated/admin_.blog_.$id'
-import { Route as AuthenticatedAdminBlogNewRouteImport } from './routes/_authenticated/admin_.blog_.new'
+import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin_.gallery'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,9 +32,9 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
+const GaleriRoute = GaleriRouteImport.update({
+  id: '/galeri',
+  path: '/galeri',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KvkkRoute = KvkkRouteImport.update({
@@ -50,119 +47,84 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog_/$slug',
-  path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const UploadsSplatRoute = UploadsSplatRouteImport.update({
   id: '/uploads/$',
   path: '/uploads/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
-  id: '/admin_/blog',
-  path: '/admin/blog',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminBlogIdRoute =
-  AuthenticatedAdminBlogIdRouteImport.update({
-    id: '/admin_/blog_/$id',
-    path: '/admin/blog/$id',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminBlogNewRoute =
-  AuthenticatedAdminBlogNewRouteImport.update({
-    id: '/admin_/blog_/new',
-    path: '/admin/blog/new',
+const AuthenticatedAdminGalleryRoute =
+  AuthenticatedAdminGalleryRouteImport.update({
+    id: '/admin_/gallery',
+    path: '/admin/gallery',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
   '/admin': typeof AuthenticatedAdminRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/uploads/$': typeof UploadsSplatRoute
-  '/admin/blog': typeof AuthenticatedAdminBlogRoute
-  '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
-  '/admin/blog/new': typeof AuthenticatedAdminBlogNewRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
   '/admin': typeof AuthenticatedAdminRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/uploads/$': typeof UploadsSplatRoute
-  '/admin/blog': typeof AuthenticatedAdminBlogRoute
-  '/admin/blog/$id': typeof AuthenticatedAdminBlogIdRoute
-  '/admin/blog/new': typeof AuthenticatedAdminBlogNewRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/galeri': typeof GaleriRoute
   '/kvkk': typeof KvkkRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
-  '/blog_/$slug': typeof BlogSlugRoute
   '/uploads/$': typeof UploadsSplatRoute
-  '/_authenticated/admin_/blog': typeof AuthenticatedAdminBlogRoute
-  '/_authenticated/admin_/blog_/$id': typeof AuthenticatedAdminBlogIdRoute
-  '/_authenticated/admin_/blog_/new': typeof AuthenticatedAdminBlogNewRoute
+  '/_authenticated/admin_/gallery': typeof AuthenticatedAdminGalleryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
-    | '/blog'
+    | '/galeri'
     | '/kvkk'
     | '/admin'
-    | '/blog/$slug'
     | '/uploads/$'
-    | '/admin/blog'
-    | '/admin/blog/$id'
-    | '/admin/blog/new'
+    | '/admin/gallery'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
-    | '/blog'
+    | '/galeri'
     | '/kvkk'
     | '/admin'
-    | '/blog/$slug'
     | '/uploads/$'
-    | '/admin/blog'
-    | '/admin/blog/$id'
-    | '/admin/blog/new'
+    | '/admin/gallery'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
-    | '/blog'
+    | '/galeri'
     | '/kvkk'
     | '/_authenticated/admin'
-    | '/blog_/$slug'
     | '/uploads/$'
-    | '/_authenticated/admin_/blog'
-    | '/_authenticated/admin_/blog_/$id'
-    | '/_authenticated/admin_/blog_/new'
+    | '/_authenticated/admin_/gallery'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  BlogRoute: typeof BlogRoute
+  GaleriRoute: typeof GaleriRoute
   KvkkRoute: typeof KvkkRoute
-  BlogSlugRoute: typeof BlogSlugRoute
   UploadsSplatRoute: typeof UploadsSplatRoute
 }
 
@@ -189,11 +151,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
+    '/galeri': {
+      id: '/galeri'
+      path: '/galeri'
+      fullPath: '/galeri'
+      preLoaderRoute: typeof GaleriRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kvkk': {
@@ -210,13 +172,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/blog_/$slug': {
-      id: '/blog_/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/uploads/$': {
       id: '/uploads/$'
       path: '/uploads/$'
@@ -224,25 +179,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UploadsSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin_/blog': {
-      id: '/_authenticated/admin_/blog'
-      path: '/admin/blog'
-      fullPath: '/admin/blog'
-      preLoaderRoute: typeof AuthenticatedAdminBlogRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin_/blog_/$id': {
-      id: '/_authenticated/admin_/blog_/$id'
-      path: '/admin/blog/$id'
-      fullPath: '/admin/blog/$id'
-      preLoaderRoute: typeof AuthenticatedAdminBlogIdRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin_/blog_/new': {
-      id: '/_authenticated/admin_/blog_/new'
-      path: '/admin/blog/new'
-      fullPath: '/admin/blog/new'
-      preLoaderRoute: typeof AuthenticatedAdminBlogNewRouteImport
+    '/_authenticated/admin_/gallery': {
+      id: '/_authenticated/admin_/gallery'
+      path: '/admin/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AuthenticatedAdminGalleryRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -250,16 +191,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
-  AuthenticatedAdminBlogIdRoute: typeof AuthenticatedAdminBlogIdRoute
-  AuthenticatedAdminBlogNewRoute: typeof AuthenticatedAdminBlogNewRoute
+  AuthenticatedAdminGalleryRoute: typeof AuthenticatedAdminGalleryRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
-  AuthenticatedAdminBlogIdRoute: AuthenticatedAdminBlogIdRoute,
-  AuthenticatedAdminBlogNewRoute: AuthenticatedAdminBlogNewRoute,
+  AuthenticatedAdminGalleryRoute: AuthenticatedAdminGalleryRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -269,9 +206,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  BlogRoute: BlogRoute,
+  GaleriRoute: GaleriRoute,
   KvkkRoute: KvkkRoute,
-  BlogSlugRoute: BlogSlugRoute,
   UploadsSplatRoute: UploadsSplatRoute,
 }
 export const routeTree = rootRouteImport

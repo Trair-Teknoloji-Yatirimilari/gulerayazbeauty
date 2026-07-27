@@ -109,7 +109,7 @@ function Nav() {
     { href: "#merkez", label: t.nav.about },
     { href: "#hizmetler", label: t.nav.services },
     { href: "#deneyim", label: t.nav.journey },
-    { href: "/blog", label: t.nav.blog, route: true },
+    { href: "/galeri", label: t.nav.gallery, route: true },
     { href: "#sss", label: t.nav.faq },
     { href: "#iletisim", label: t.nav.contact },
   ];
@@ -941,8 +941,8 @@ function Footer() {
             © {new Date().getFullYear()} {t.nav.brand}. {t.footer.copyright}
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/60">
-            <Link to="/blog" className="hover:text-primary transition-colors underline underline-offset-2">
-              {t.footer.blogLink}
+            <Link to="/galeri" className="hover:text-primary transition-colors underline underline-offset-2">
+              {t.footer.galleryLink}
             </Link>
             <span className="hidden sm:inline">·</span>
             <Link to="/kvkk" className="hover:text-primary transition-colors underline underline-offset-2">
