@@ -97,7 +97,7 @@ function AdminPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link
-              to="/_authenticated/admin/blog"
+              to="/admin/blog"
               className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
             >
               {t.admin.blogManagement}

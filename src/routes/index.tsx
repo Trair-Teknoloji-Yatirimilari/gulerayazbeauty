@@ -43,7 +43,7 @@ import {
 } from "@/components/ui/accordion";
 
 import heroClinic from "@/assets/hero-clinic.jpg";
-import drPortrait from "@/assets/dr-portrait.jpg.asset.json";
+import drPortrait from "@/assets/dr-portrait.jpg";
 import serviceBotox from "@/assets/service-botox.jpg";
 import serviceFiller from "@/assets/service-filler.jpg";
 import serviceMeso from "@/assets/service-meso.jpg";
@@ -260,6 +260,7 @@ function Hero() {
           </motion.div>
 
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl">
+            <span dir="ltr" className="inline-block" style={{ unicodeBidi: "isolate" }}>
             {t.hero.firstName.split("").map((c, i) => (
               <motion.span
                 key={i}
@@ -271,6 +272,7 @@ function Hero() {
                 {c === " " ? "\u00A0" : c}
               </motion.span>
             ))}
+            </span>
             <br />
             <motion.span
               initial={{ opacity: 0, y: 40 }}
@@ -393,7 +395,7 @@ function About() {
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           <motion.div {...fadeUp} className="lg:col-span-5 relative lg:sticky lg:top-28">
             <div className="relative aspect-square overflow-hidden rounded-sm">
-              <img src={drPortrait.url} alt={t.about.portraitAlt} className="w-full h-full object-cover" width={447} height={447} loading="lazy" />
+              <img src={drPortrait} alt={t.about.portraitAlt} className="w-full h-full object-cover" width={447} height={447} loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
             </div>
             <div className="absolute -bottom-6 -right-6 hidden md:block border border-primary/40 bg-background/90 backdrop-blur px-6 py-4 rounded-sm">

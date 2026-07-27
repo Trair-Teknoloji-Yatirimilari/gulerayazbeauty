@@ -49,7 +49,7 @@ export function BlogPostForm({ initial }: Props) {
       toast.success(initial?.id ? f.updated : f.saved);
       qc.invalidateQueries({ queryKey: ["admin", "blog"] });
       qc.invalidateQueries({ queryKey: ["blog"] });
-      navigate({ to: "/_authenticated/admin/blog" });
+      navigate({ to: "/admin/blog" });
     },
     onError: (e) => toast.error(e instanceof Error ? e.message : f.saveError),
   });

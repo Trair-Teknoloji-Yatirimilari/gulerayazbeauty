@@ -36,13 +36,13 @@ function AdminBlogPage() {
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
-            <Link to="/_authenticated/admin" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary/70 hover:text-primary mb-2">
+            <Link to="/admin" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary/70 hover:text-primary mb-2">
               <ArrowLeft className="w-3.5 h-3.5" /> {t.blogAdmin.backAppointments}
             </Link>
             <h1 className="font-display text-3xl md:text-4xl text-gold-gradient">{t.blogAdmin.title}</h1>
           </div>
           <Link
-            to="/_authenticated/admin/blog/new"
+            to="/admin/blog/new"
             className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm hover:bg-primary/90 transition"
           >
             <Plus className="w-4 h-4" /> {t.blogAdmin.newPost}
@@ -96,7 +96,7 @@ function AdminBlogPage() {
                           </Link>
                         )}
                         <Link
-                          to="/_authenticated/admin/blog/$id"
+                          to="/admin/blog/$id"
                           params={{ id: post.id }}
                           className="p-2 rounded hover:bg-primary/10 text-foreground/70 hover:text-primary transition"
                           title={t.blogAdmin.edit}
