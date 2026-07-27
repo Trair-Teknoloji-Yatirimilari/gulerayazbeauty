@@ -122,11 +122,11 @@ function Nav() {
       className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl bg-background/60 border-b border-border/40"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
-        <a href="#top" className="flex items-center gap-2 group">
+        <a href="#top" className="flex flex-col items-start leading-none group">
           <span className="text-gold-gradient font-display text-base md:text-lg tracking-wide whitespace-nowrap">
             {t.nav.brand}
           </span>
-          <span className="hidden lg:block text-[11px] uppercase tracking-[0.35em] text-muted-foreground">
+          <span className="text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-muted-foreground/70">
             {t.nav.tagline}
           </span>
         </a>
