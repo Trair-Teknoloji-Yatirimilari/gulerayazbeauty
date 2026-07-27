@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Loader2, Plus, Pencil, Trash2, Eye, ArrowLeft } from "lucide-react";
 import { useT } from "@/i18n/context";
 
-export const Route = createFileRoute("/_authenticated/admin/blog")({
+export const Route = createFileRoute("/_authenticated/admin_/blog")({
   head: () => ({ meta: [{ title: "Blog Yönetimi" }, { name: "robots", content: "noindex" }] }),
   component: AdminBlogPage,
 });

@@ -6,7 +6,7 @@ import { adminGetPost } from "@/lib/blog.functions";
 import { BlogPostForm } from "@/components/BlogPostForm";
 import { useT } from "@/i18n/context";
 
-export const Route = createFileRoute("/_authenticated/admin/blog/$id")({
+export const Route = createFileRoute("/_authenticated/admin_/blog_/$id")({
   head: () => ({ meta: [{ title: "Yazıyı Düzenle" }, { name: "robots", content: "noindex" }] }),
   component: EditPostPage,
 });

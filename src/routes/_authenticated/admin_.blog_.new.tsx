@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { BlogPostForm } from "@/components/BlogPostForm";
 import { useT } from "@/i18n/context";
 
-export const Route = createFileRoute("/_authenticated/admin/blog/new")({
+export const Route = createFileRoute("/_authenticated/admin_/blog_/new")({
   head: () => ({ meta: [{ title: "Yeni Yazı" }, { name: "robots", content: "noindex" }] }),
   component: NewPostPage,
 });
