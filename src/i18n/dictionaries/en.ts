@@ -4,7 +4,7 @@ import type { tr } from "./tr";
 export const en: typeof tr = {
   meta: {
     home: {
-      title: "Güler Ayaz Beauty | Maslak Beauty & Wellness Center",
+      title: "Güler Ayaz Beauty | Maslak Beauty Clinic Center",
       description:
         "Laser hair removal, skincare, lash & brow, mani-pedi and private Pilates. Güler Ayaz Beauty offers a cinematic beauty experience at Maslak 1453.",
       ogTitle: "Güler Ayaz Beauty | Maslak Beauty Center",
@@ -24,7 +24,7 @@ export const en: typeof tr = {
   },
   nav: {
     brand: "Güler Ayaz Beauty",
-    tagline: "Beauty & Wellness",
+    tagline: "Beauty Clinic",
     about: "Center",
     services: "Services",
     devices: "Price List",
@@ -37,7 +37,7 @@ export const en: typeof tr = {
     menuAria: "Menu",
   },
   hero: {
-    badge: "Maslak 1453 · Beauty & Wellness",
+    badge: "Maslak 1453 · Beauty Clinic",
     firstName: "Güler Ayaz",
     lastName: "Beauty",
     subtitle:
@@ -402,7 +402,7 @@ export const en: typeof tr = {
     error: "An error occurred.",
   },
   footer: {
-    tagline: "Beauty & Wellness · Maslak",
+    tagline: "Beauty Clinic · Maslak",
     contactHeader: "Contact",
     socialHeader: "Social",
     address: "Maslak 1453\nSarıyer / Istanbul",

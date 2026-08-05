@@ -22,7 +22,7 @@ export const tr = {
   },
   nav: {
     brand: "Güler Ayaz Beauty",
-    tagline: "Beauty & Wellness",
+    tagline: "Beauty Clinic",
     about: "Merkezimiz",
     services: "Hizmetler",
     devices: "Fiyat Listesi",
@@ -35,7 +35,7 @@ export const tr = {
     menuAria: "Menü",
   },
   hero: {
-    badge: "Maslak 1453 · Beauty & Wellness",
+    badge: "Maslak 1453 · Beauty Clinic",
     firstName: "Güler Ayaz",
     lastName: "Beauty",
     subtitle:
@@ -400,7 +400,7 @@ export const tr = {
     error: "Bir hata oluştu.",
   },
   footer: {
-    tagline: "Beauty & Wellness · Maslak",
+    tagline: "Beauty Clinic · Maslak",
     contactHeader: "İletişim",
     socialHeader: "Sosyal",
     address: "Maslak 1453\nSarıyer / İstanbul",

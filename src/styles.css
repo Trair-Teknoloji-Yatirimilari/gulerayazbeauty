@@ -41,34 +41,34 @@
 :root {
   --radius: 0.5rem;
 
-  --background: oklch(0.13 0.008 60);
-  --foreground: oklch(0.94 0.015 80);
-  --card: oklch(0.16 0.01 60);
-  --card-foreground: oklch(0.94 0.015 80);
-  --popover: oklch(0.16 0.01 60);
-  --popover-foreground: oklch(0.94 0.015 80);
-  --primary: oklch(0.78 0.13 78);
-  --primary-foreground: oklch(0.13 0.008 60);
-  --secondary: oklch(0.22 0.012 60);
-  --secondary-foreground: oklch(0.94 0.015 80);
-  --muted: oklch(0.20 0.008 60);
-  --muted-foreground: oklch(0.68 0.02 70);
-  --accent: oklch(0.78 0.13 78);
-  --accent-foreground: oklch(0.13 0.008 60);
+  --background: oklch(0.14 0.022 310);
+  --foreground: oklch(0.95 0.012 310);
+  --card: oklch(0.17 0.028 310);
+  --card-foreground: oklch(0.95 0.012 310);
+  --popover: oklch(0.17 0.028 310);
+  --popover-foreground: oklch(0.95 0.012 310);
+  --primary: oklch(0.74 0.105 48);
+  --primary-foreground: oklch(0.14 0.022 310);
+  --secondary: oklch(0.24 0.045 305);
+  --secondary-foreground: oklch(0.95 0.012 310);
+  --muted: oklch(0.21 0.03 308);
+  --muted-foreground: oklch(0.72 0.035 310);
+  --accent: oklch(0.74 0.105 48);
+  --accent-foreground: oklch(0.14 0.022 310);
   --destructive: oklch(0.60 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.28 0.015 70 / 60%);
-  --input: oklch(0.24 0.012 70);
-  --ring: oklch(0.78 0.13 78);
+  --border: oklch(0.34 0.05 308 / 60%);
+  --input: oklch(0.26 0.04 308);
+  --ring: oklch(0.74 0.105 48);
 
-  --gold: oklch(0.80 0.14 80);
-  --gold-soft: oklch(0.68 0.10 75);
-  --ivory: oklch(0.96 0.015 85);
-  --onyx: oklch(0.09 0.005 60);
+  --gold: oklch(0.76 0.11 50);
+  --gold-soft: oklch(0.66 0.085 45);
+  --ivory: oklch(0.96 0.01 310);
+  --onyx: oklch(0.10 0.015 310);
 
-  --gradient-gold: linear-gradient(135deg, oklch(0.85 0.14 82), oklch(0.62 0.12 60));
-  --gradient-radial-gold: radial-gradient(circle at 50% 0%, oklch(0.78 0.13 78 / 0.25), transparent 60%);
-  --shadow-gold: 0 20px 60px -20px oklch(0.78 0.13 78 / 0.35);
+  --gradient-gold: linear-gradient(135deg, oklch(0.84 0.10 55), oklch(0.60 0.10 35));
+  --gradient-radial-gold: radial-gradient(circle at 50% 0%, oklch(0.74 0.105 48 / 0.25), transparent 60%);
+  --shadow-gold: 0 20px 60px -20px oklch(0.74 0.105 48 / 0.35);
   --shadow-elegant: 0 40px 80px -30px oklch(0 0 0 / 0.7);
 }
 
@@ -105,7 +105,7 @@
 
 @utility hairline {
   height: 1px;
-  background: linear-gradient(90deg, transparent, oklch(0.78 0.13 78 / 0.6), transparent);
+  background: linear-gradient(90deg, transparent, oklch(0.74 0.105 48 / 0.6), transparent);
 }
 
 @utility glow-gold {
@@ -191,7 +191,7 @@
 }
 
 @utility animate-shimmer {
-  background: linear-gradient(90deg, transparent, oklch(0.85 0.14 82 / 0.4), transparent);
+  background: linear-gradient(90deg, transparent, oklch(0.84 0.10 55 / 0.4), transparent);
   background-size: 200% 100%;
   animation: shimmer 3s linear infinite;
 }

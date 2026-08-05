@@ -24,7 +24,7 @@ export const fa: typeof tr = {
   },
   nav: {
     brand: "Güler Ayaz Beauty",
-    tagline: "Beauty & Wellness",
+    tagline: "Beauty Clinic",
     about: "مرکز ما",
     services: "خدمات",
     devices: "لیست قیمت",
@@ -37,7 +37,7 @@ export const fa: typeof tr = {
     menuAria: "منو",
   },
   hero: {
-    badge: "ماسلاک ۱۴۵۳ · Beauty & Wellness",
+    badge: "ماسلاک ۱۴۵۳ · Beauty Clinic",
     firstName: "Güler Ayaz",
     lastName: "Beauty",
     subtitle:
@@ -402,7 +402,7 @@ export const fa: typeof tr = {
     error: "خطایی رخ داد.",
   },
   footer: {
-    tagline: "Beauty & Wellness · ماسلاک",
+    tagline: "Beauty Clinic · ماسلاک",
     contactHeader: "تماس",
     socialHeader: "شبکه‌های اجتماعی",
     address: "ماسلاک ۱۴۵۳\nسریئر / استانبول",
