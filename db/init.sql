@@ -44,6 +44,20 @@ CREATE TABLE IF NOT EXISTS appointments (
 );
 ALTER TABLE appointments ADD COLUMN IF NOT EXISTS consent_given boolean NOT NULL DEFAULT false;
 
+-- Galeri: src/lib/gallery.functions.ts'in beklediği şema.
+-- Tablo şemaya hiç eklenmemişti; kod canlıda "relation gallery does not exist"
+-- alıyordu. Sıfırdan kurulan ortamların da galerisi çalışsın diye burada.
+CREATE TABLE IF NOT EXISTS gallery (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  image_url text NOT NULL,
+  title text,
+  caption text,
+  category text,
+  sort_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS gallery_sort_idx ON gallery (sort_order ASC, created_at DESC);
+
 CREATE TABLE IF NOT EXISTS admin_users (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   email text NOT NULL UNIQUE,
