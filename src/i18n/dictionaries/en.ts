@@ -4,7 +4,7 @@ import type { tr } from "./tr";
 export const en: typeof tr = {
   meta: {
     home: {
-      title: "Güler Ayaz Beauty | Maslak Beauty Clinic Center",
+      title: "Güler Ayaz Beauty | Maslak Beauty Clinic",
       description:
         "Laser hair removal, skincare, lash & brow, mani-pedi and private Pilates. Güler Ayaz Beauty offers a cinematic beauty experience at Maslak 1453.",
       ogTitle: "Güler Ayaz Beauty | Maslak Beauty Center",

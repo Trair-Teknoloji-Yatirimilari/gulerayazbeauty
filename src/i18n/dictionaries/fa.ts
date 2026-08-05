@@ -4,7 +4,7 @@ import type { tr } from "./tr";
 export const fa: typeof tr = {
   meta: {
     home: {
-      title: "Güler Ayaz Beauty | مرکز زیبایی و سلامت ماسلاک",
+      title: "Güler Ayaz Beauty | کلینیک زیبایی ماسلاک",
       description:
         "لیزر موهای زائد، مراقبت پوست، مژه و ابرو، مانیکور-پدیکور و پیلاتس خصوصی. Güler Ayaz Beauty یک تجربهٔ زیبایی سینمایی در ماسلاک ۱۴۵۳ ارائه می‌دهد.",
       ogTitle: "Güler Ayaz Beauty | مرکز زیبایی ماسلاک",
