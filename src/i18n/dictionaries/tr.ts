@@ -4,7 +4,7 @@ export const tr = {
     home: {
       title: "Güler Ayaz Beauty | Maslak Güzellik & Estetik Merkezi",
       description:
-        "Lazer epilasyon, cilt bakımı, kirpik & kaş, manikür-pedikür ve özel Pilates. Güler Ayaz Beauty, Maslak 1453'te sinematik bir güzellik deneyimi sunar.",
+        "Lazer epilasyon, cilt bakımı, vücut şekillendirme, dövme silme, kalıcı makyaj, kuaför ve reformer pilates. Maslak 1453'te Güler Ayaz Beauty.",
       ogTitle: "Güler Ayaz Beauty | Maslak Güzellik Merkezi",
       ogDescription:
         "Uzman kadro, premium teknoloji, davetkar atmosfer. Sizin için özenle tasarlanmış güzellik ritüelleri.",
@@ -111,6 +111,7 @@ export const tr = {
         key: "lazer",
         title: "Lazer Epilasyon",
         subtitle: "Alma & Alpha diode teknolojisi",
+        imageAlt: "Lazer epilasyon seansında soğutmalı diode lazer başlığı",
         items: [
           "Bikini · Genital · Popo",
           "Koltuk Altı",
@@ -158,17 +159,19 @@ export const tr = {
         key: "cilt",
         title: "Cilt Bakımı",
         subtitle: "Hydrafacial · Medikal · Karbon Peeling",
+        imageAlt: "Cilt bakımı seansında yüz bakım uygulaması",
         items: [
           "Klasik Cilt Bakımı",
           "Medikal Cilt Bakımı",
           "Hydrafacial",
           "Premium Anti-Aging",
-          "Karbon Peeling",
+          "Q-Switch Karbon Peeling",
+          "Tüy Sarartma",
           "Akne & Leke Programı",
           "Gözenek Sıkılaştırma",
         ],
         pitch:
-          "Cildinizin ihtiyacına özel; nemlendiren, arındıran ve canlandıran profesyonel bakım protokolleri. Her seans; analiz, temizlik, arındırma ve besleme aşamalarını içerir.",
+          "Cildinizin ihtiyacına özel; nemlendiren, arındıran ve canlandıran profesyonel bakım protokolleri. Her seans; analiz, temizlik, arındırma ve besleme aşamalarını içerir. Q-Switch karbon peeling ve tüy sarartma uygulamaları da bu başlık altında planlanır.",
         benefits: [
           "Anında parlaklık ve nem hissi",
           "Gözeneklerde belirgin sıkılaşma",
@@ -199,13 +202,15 @@ export const tr = {
       {
         key: "kirpik",
         title: "Kirpik & Kaş",
-        subtitle: "Ekstensiyon · Lifting · Tinting",
+        subtitle: "Ekstensiyon · Lifting · Laminasyon",
+        imageAlt: "Kirpik ekstensiyon ve kaş tasarımı uygulaması yakın plan",
         items: [
           "İpek Kirpik Ekstensiyon",
           "Volume · Mega Volume",
           "Kirpik Lifting",
           "Kirpik Boyama",
           "Kaş Tasarımı",
+          "Kaş Laminasyonu",
           "Kaş Lifting",
           "Kaş Boyama · Kına",
         ],
@@ -242,6 +247,7 @@ export const tr = {
         key: "nail",
         title: "Manikür · Pedikür · Nail Art",
         subtitle: "Kalıcı oje, protez tırnak, tasarım",
+        imageAlt: "Manikür sonrası bakımlı tırnaklar ve nail art tasarımı",
         items: [
           "Klasik Manikür",
           "Klasik Pedikür",
@@ -285,6 +291,7 @@ export const tr = {
         key: "pilates",
         title: "Özel Reformer Pilates",
         subtitle: "Birebir ders · Duet · Küçük grup",
+        imageAlt: "Reformer pilates stüdyosunda birebir ders",
         items: [
           "Birebir Ders",
           "Duet Ders (2 kişi)",
@@ -320,6 +327,148 @@ export const tr = {
           { label: "Küçük Grup (Kişi Başı)", price: "600 ₺" },
           { label: "Küçük Grup 8'li (Kişi Başı)", price: "4.000 ₺" },
           { label: "Prenatal Birebir", price: "1.700 ₺" },
+        ],
+      },
+      {
+        key: "vucut",
+        title: "Vücut Şekillendirme",
+        subtitle: "Slim-X · EMS Pro · G5",
+        imageAlt: "G5 selülit masajı başlığı ile vücut şekillendirme uygulaması",
+        items: [
+          "Slim-X Bölgesel İncelme",
+          "EMS Pro Sıkılaşma",
+          "G5 Selülit Masajı",
+          "Karın · Basen · Bacak Bölgesi",
+          "Kombine Vücut Programı",
+        ],
+        pitch:
+          "Üç teknoloji tek program içinde: Slim-X ile bölgesel incelme, EMS Pro ile elektriksel kas uyarımına dayalı sıkılaşma, G5 ile derin dokuyu çalışan selülit masajı. Vücut analiziniz sonrası hangi kombinasyonun size uygun olduğunu birlikte planlıyoruz.",
+        benefits: [
+          "Slim-X: bölgesel incelmeye odaklı uygulama",
+          "EMS Pro: kas uyarımıyla sıkılaşma desteği",
+          "G5: selülit görünümüne yönelik derin masaj",
+          "Seans planı vücut analizine göre kişiye özel",
+        ],
+        duration: "30–60 dk",
+        effect: "Seans serisi boyunca kademeli",
+        interval: "Haftada 2–3 seans",
+        closing:
+          "Bedeninizi zorlamadan, düzenli bir ritimle destekleyen bir program.",
+        faqs: [
+          { q: "Slim-X, EMS Pro ve G5 arasındaki fark nedir?", a: "Slim-X bölgesel incelmeye, EMS Pro elektriksel kas uyarımıyla sıkılaşmaya, G5 ise mekanik masajla selülit görünümüne odaklanır. Üçü çoğu zaman birbirini tamamlayacak şekilde birlikte planlanır." },
+          { q: "Uygulama sırasında ne hissedilir?", a: "Slim-X'te ılık bir his, EMS Pro'da ritmik kas kasılmaları, G5'te ise derin masaj hissi olur. Şiddet, konforunuza göre ayarlanır." },
+          { q: "Kaç seanslık program planlanır?", a: "Vücut analizi ve hedefinize göre değişir; genellikle haftada 2–3 seanstan oluşan seriler halinde planlanır." },
+          { q: "Spor ve beslenme ile birlikte mi uygulanmalı?", a: "Düzenli hareket ve dengeli beslenme, uygulamaların etkisini destekler. Ekibimiz seans planınızın yanında bu konuda da öneri paylaşır." },
+        ],
+        pricing: [
+          { label: "Güncel fiyat bilgisi için bize ulaşın", price: "" },
+        ],
+      },
+      {
+        key: "dovme",
+        title: "Dövme Silme",
+        subtitle: "Q-Switch lazer teknolojisi",
+        imageAlt: "Q-Switch lazer başlığı ile dövme silme uygulaması",
+        items: [
+          "Profesyonel Dövme Silme",
+          "Amatör Dövme Silme",
+          "Kalıcı Makyaj Silme",
+          "Kaş Kontürü Silme",
+          "Bölgesel Soluklaştırma",
+        ],
+        pitch:
+          "Q-Switch lazerle dövme silme, pigmenti parçalayarak vücudun doğal yolla uzaklaştırmasını hedefler. Dövmenin rengi, derinliği ve yaşına göre seans planlaması kişiye özel yapılır. Kalıcı makyaj silme de aynı teknolojiyle uygulanır.",
+        benefits: [
+          "Q-Switch teknolojisi ile pigmente odaklı uygulama",
+          "Dövmenin rengine ve yaşına göre parametre ayarı",
+          "Seans planlaması kişiye özel belirlenir",
+          "Kalıcı makyaj ve kaş kontürü silme de uygulanır",
+        ],
+        duration: "10–40 dk",
+        effect: "Seanslar ilerledikçe kademeli",
+        interval: "6–8 hafta",
+        closing:
+          "Acele etmeden, cildinizin ritmine saygılı bir silme süreci.",
+        faqs: [
+          { q: "Kaç seans gerekir?", a: "Dövmenin boyutu, rengi, mürekkep yoğunluğu ve yaşına göre değişir. İlk görüşmede dövmeniz değerlendirilerek size özel bir seans planı çıkarılır." },
+          { q: "Seans aralığı neden uzun tutuluyor?", a: "Parçalanan pigmentin vücut tarafından uzaklaştırılması zaman alır. Cildin toparlanması için genellikle 6–8 hafta aralık tercih edilir." },
+          { q: "Kalıcı makyaj da silinebiliyor mu?", a: "Evet. Kaş kontürü ve dudak gibi kalıcı makyaj uygulamaları da Q-Switch lazerle değerlendirilir; renk pigmentine göre planlama yapılır." },
+          { q: "Uygulama sonrası nelere dikkat etmeliyim?", a: "Bölgeyi güneşten korumak, SPF kullanmak ve ekibimizin önerdiği bakım adımlarını uygulamak süreci destekler." },
+        ],
+        pricing: [
+          { label: "Güncel fiyat bilgisi için bize ulaşın", price: "" },
+        ],
+      },
+      {
+        key: "kalicimakyaj",
+        title: "Kalıcı Makyaj",
+        subtitle: "Dudak · Eyeliner · Kaş",
+        imageAlt: "Kalıcı makyaj uygulaması sonrası doğal kaş ve dudak görünümü",
+        items: [
+          "Dudak Renklendirme",
+          "Eyeliner (Klasik · Kalın)",
+          "Kaş Kontür",
+          "Pudra Kaş",
+          "Kıl Tekniği Kaş",
+          "Renk Tazeleme (Rötuş)",
+        ],
+        pitch:
+          "Dudak renklendirme, eyeliner ve kaş uygulamalarında yüz hatlarınıza ve cilt alt tonunuza göre renk seçimi yapılır. Tek kullanımlık steril iğne uçları ve hijyen protokolü her seansın standardıdır.",
+        benefits: [
+          "Cilt alt tonunuza göre kişiye özel renk seçimi",
+          "Tek kullanımlık iğne ucu, steril çalışma alanı",
+          "Uygulama öncesi çizim ve birlikte onay",
+          "İyileşme sonrası rötuş ile renk dengeleme",
+        ],
+        duration: "60–150 dk",
+        effect: "İyileşme tamamlandıkça netleşir",
+        interval: "Rötuş 4–6 hafta sonra",
+        closing:
+          "Sabah rutininizi kısaltan, sizin çizginize saygılı bir dokunuş.",
+        faqs: [
+          { q: "Renge nasıl karar veriliyor?", a: "Cilt alt tonunuz, doğal kaş ve dudak renginiz ile günlük tarzınız birlikte değerlendirilir. Uygulamadan önce çizim yapılır ve onayınız alınır." },
+          { q: "Hijyen nasıl sağlanıyor?", a: "Her uygulamada tek kullanımlık iğne ucu ve steril ekipman kullanılır; çalışma alanı her seans öncesi dezenfekte edilir." },
+          { q: "Ne kadar kalıcı oluyor?", a: "Cilt tipi, bakım alışkanlıkları ve güneşe maruz kalma süresine göre kişiden kişiye değişir. Renk zamanla açılır, rötuş ile tazelenir." },
+          { q: "Rötuş seansı gerekli mi?", a: "İyileşme sonrası renk oturmasını dengelemek için genellikle 4–6 hafta sonra bir rötuş seansı öneriyoruz." },
+        ],
+        pricing: [
+          { label: "Güncel fiyat bilgisi için bize ulaşın", price: "" },
+        ],
+      },
+      {
+        key: "kuafor",
+        title: "Kuaför Hizmetleri",
+        subtitle: "Kesim · Bakım · Şekillendirme",
+        imageAlt: "Güler Ayaz Beauty salon içi bakım alanı",
+        items: [
+          "Saç Kesim",
+          "Fön & Şekillendirme",
+          "Saç Bakımı",
+          "Maşa · Dalga",
+          "Topuz & Özel Gün Saçı",
+          "Saç Yıkama & Masaj",
+        ],
+        pitch:
+          "Güzellik merkezi ve kuaför tek çatı altında: saç kesimi, bakımı ve şekillendirmesi için ayrı bir adrese gitmenize gerek kalmıyor. Saç tipinize ve günlük rutininize uygun kesim ve bakım planı birlikte belirlenir.",
+        benefits: [
+          "Bakım, tırnak ve saç randevusu tek ziyarette",
+          "Saç tipine ve yüz hattına göre kesim planı",
+          "Fön, dalga ve topuz ile özel gün hazırlığı",
+          "Yıpranmış saça yönelik bakım seçenekleri",
+        ],
+        duration: "30–90 dk",
+        effect: "Anında",
+        interval: "6–8 haftada bir kesim",
+        closing:
+          "Bakımınızı bölmeden, aynı çatı altında tamamlanan bir ritüel.",
+        faqs: [
+          { q: "Diğer hizmetlerle aynı gün randevu alabilir miyim?", a: "Evet. Cilt bakımı, tırnak veya lazer randevunuzla aynı güne kuaför işlemlerinizi de planlayabiliriz." },
+          { q: "Kesim öncesi danışma yapılıyor mu?", a: "Saç yapınız, günlük şekillendirme alışkanlığınız ve beklentiniz konuşulur; ardından kesim planı birlikte netleştirilir." },
+          { q: "Özel gün için saç yapıyor musunuz?", a: "Topuz, dalga ve özel gün şekillendirmeleri için randevu oluşturabilirsiniz. Yoğun günlerde önceden planlama öneriyoruz." },
+          { q: "Saç bakımı seçenekleri neler?", a: "Saçınızın ihtiyacına göre nem, onarım ve yıpranmaya yönelik bakım seçenekleri değerlendirilir." },
+        ],
+        pricing: [
+          { label: "Güncel fiyat bilgisi için bize ulaşın", price: "" },
         ],
       },
     ],
@@ -380,7 +529,7 @@ export const tr = {
     date: "Tercih Edilen Tarih",
     service: "İlgilendiğiniz Hizmet",
     selectPlaceholder: "Seçiniz (opsiyonel)",
-    services: ["Lazer Epilasyon", "Cilt Bakımı", "Kirpik & Kaş", "Manikür & Pedikür", "Pilates", "Diğer"],
+    services: ["Lazer Epilasyon", "Cilt Bakımı", "Kirpik & Kaş", "Manikür & Pedikür", "Pilates", "Vücut Şekillendirme", "Dövme Silme", "Kalıcı Makyaj", "Kuaför Hizmetleri", "Diğer"],
     message: "Mesajınız",
     messagePh: "Beklentileriniz, sorularınız veya notlarınız...",
     required: "Zorunlu alan",

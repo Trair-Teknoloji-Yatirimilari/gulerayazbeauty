@@ -6,7 +6,7 @@ export const en: typeof tr = {
     home: {
       title: "Güler Ayaz Beauty | Maslak Beauty Clinic",
       description:
-        "Laser hair removal, skincare, lash & brow, mani-pedi and private Pilates. Güler Ayaz Beauty offers a cinematic beauty experience at Maslak 1453.",
+        "Laser hair removal, skincare, body contouring, tattoo removal, permanent makeup, hair salon and reformer Pilates at Maslak 1453.",
       ogTitle: "Güler Ayaz Beauty | Maslak Beauty Center",
       ogDescription:
         "Expert team, premium technology, inviting atmosphere. Beauty rituals crafted with care.",
@@ -113,6 +113,7 @@ export const en: typeof tr = {
         key: "lazer",
         title: "Laser Hair Removal",
         subtitle: "Alma & Alpha diode technology",
+        imageAlt: "Cooled diode laser handpiece during a laser hair removal session",
         items: [
           "Bikini · Genital · Buttocks",
           "Underarm",
@@ -160,17 +161,19 @@ export const en: typeof tr = {
         key: "cilt",
         title: "Skincare",
         subtitle: "Hydrafacial · Medical · Carbon Peeling",
+        imageAlt: "Facial treatment during a skincare session",
         items: [
           "Classic Facial",
           "Medical Facial",
           "Hydrafacial",
           "Premium Anti-Aging",
-          "Carbon Peeling",
+          "Q-Switch Carbon Peeling",
+          "Hair Bleaching",
           "Acne & Pigment Program",
           "Pore Tightening",
         ],
         pitch:
-          "Professional care protocols that hydrate, purify and revitalize according to your skin's needs. Each session includes analysis, cleansing, exfoliation and nourishment.",
+          "Professional care protocols that hydrate, purify and revitalize according to your skin's needs. Each session includes analysis, cleansing, exfoliation and nourishment. Q-Switch carbon peeling and hair bleaching are also planned under this heading.",
         benefits: [
           "Immediate glow and hydration",
           "Visibly tightened pores",
@@ -201,13 +204,15 @@ export const en: typeof tr = {
       {
         key: "kirpik",
         title: "Lash & Brow",
-        subtitle: "Extensions · Lifting · Tinting",
+        subtitle: "Extensions · Lifting · Lamination",
+        imageAlt: "Close-up of lash extensions and brow design",
         items: [
           "Silk Lash Extensions",
           "Volume · Mega Volume",
           "Lash Lifting",
           "Lash Tinting",
           "Brow Design",
+          "Brow Lamination",
           "Brow Lifting",
           "Brow Tint · Henna",
         ],
@@ -244,6 +249,7 @@ export const en: typeof tr = {
         key: "nail",
         title: "Manicure · Pedicure · Nail Art",
         subtitle: "Gel polish, extensions, design",
+        imageAlt: "Groomed nails and nail art after a manicure",
         items: [
           "Classic Manicure",
           "Classic Pedicure",
@@ -287,6 +293,7 @@ export const en: typeof tr = {
         key: "pilates",
         title: "Private Reformer Pilates",
         subtitle: "1-on-1 · Duet · Small Group",
+        imageAlt: "One-on-one class in the reformer pilates studio",
         items: [
           "1-on-1 Lesson",
           "Duet Lesson (2 people)",
@@ -322,6 +329,148 @@ export const en: typeof tr = {
           { label: "Small Group (per person)", price: "₺600" },
           { label: "Small Group 8-Pack (per person)", price: "₺4,000" },
           { label: "Prenatal 1-on-1", price: "₺1,700" },
+        ],
+      },
+      {
+        key: "vucut",
+        title: "Body Contouring",
+        subtitle: "Slim-X · EMS Pro · G5",
+        imageAlt: "Body contouring session with the G5 cellulite massage head",
+        items: [
+          "Slim-X Targeted Slimming",
+          "EMS Pro Firming",
+          "G5 Cellulite Massage",
+          "Abdomen · Hips · Legs",
+          "Combined Body Program",
+        ],
+        pitch:
+          "Three technologies in one program: Slim-X for targeted slimming, EMS Pro for firming based on electrical muscle stimulation, and G5 for a cellulite massage that works the deeper tissue. After your body analysis we plan together which combination suits you.",
+        benefits: [
+          "Slim-X: application focused on targeted slimming",
+          "EMS Pro: firming support through muscle stimulation",
+          "G5: deep massage addressing the appearance of cellulite",
+          "Session plan tailored to you based on body analysis",
+        ],
+        duration: "30–60 min",
+        effect: "Gradual across the session series",
+        interval: "2–3 sessions per week",
+        closing:
+          "A program that supports your body with a steady rhythm, without pushing it.",
+        faqs: [
+          { q: "What is the difference between Slim-X, EMS Pro and G5?", a: "Slim-X focuses on targeted slimming, EMS Pro on firming through electrical muscle stimulation, and G5 on the appearance of cellulite through mechanical massage. They are usually planned together so they complement each other." },
+          { q: "What does the application feel like?", a: "A warm sensation with Slim-X, rhythmic muscle contractions with EMS Pro, and a deep massage sensation with G5. Intensity is adjusted to your comfort." },
+          { q: "How many sessions are planned?", a: "It depends on your body analysis and your goal; it is usually planned as a series of 2–3 sessions per week." },
+          { q: "Should it be combined with exercise and nutrition?", a: "Regular movement and balanced nutrition support the effect of the applications. Alongside your session plan, our team also shares guidance on this." },
+        ],
+        pricing: [
+          { label: "Contact us for current pricing", price: "" },
+        ],
+      },
+      {
+        key: "dovme",
+        title: "Tattoo Removal",
+        subtitle: "Q-Switch laser technology",
+        imageAlt: "Tattoo removal treatment with a Q-Switch laser handpiece",
+        items: [
+          "Professional Tattoo Removal",
+          "Amateur Tattoo Removal",
+          "Permanent Makeup Removal",
+          "Brow Contour Removal",
+          "Partial Lightening",
+        ],
+        pitch:
+          "Laser tattoo removal with a Q-Switch laser aims to break up the pigment so the body can clear it naturally. Session planning is tailored to you according to the colour, depth and age of the tattoo. Permanent makeup removal is carried out with the same technology.",
+        benefits: [
+          "Pigment-focused application with Q-Switch technology",
+          "Parameters adjusted to the colour and age of the tattoo",
+          "Session planning determined individually",
+          "Permanent makeup and brow contour removal also available",
+        ],
+        duration: "10–40 min",
+        effect: "Gradual as sessions progress",
+        interval: "6–8 weeks",
+        closing:
+          "An unhurried removal process that respects your skin's own rhythm.",
+        faqs: [
+          { q: "How many sessions are needed?", a: "It varies with the size, colour, ink density and age of the tattoo. At the first consultation your tattoo is assessed and a session plan is prepared for you." },
+          { q: "Why are the intervals so long?", a: "It takes time for the body to clear the fragmented pigment. Intervals of 6–8 weeks are usually preferred so the skin can recover." },
+          { q: "Can permanent makeup be removed too?", a: "Yes. Permanent makeup such as brow contour and lip work is also assessed with the Q-Switch laser; planning is based on the colour pigment." },
+          { q: "What should I pay attention to afterwards?", a: "Protecting the area from the sun, using SPF and following the aftercare steps our team recommends all support the process." },
+        ],
+        pricing: [
+          { label: "Contact us for current pricing", price: "" },
+        ],
+      },
+      {
+        key: "kalicimakyaj",
+        title: "Permanent Makeup",
+        subtitle: "Lips · Eyeliner · Brows",
+        imageAlt: "Natural brow and lip look after a permanent makeup application",
+        items: [
+          "Lip Blush",
+          "Eyeliner (Classic · Bold)",
+          "Brow Contour",
+          "Powder Brows",
+          "Hair-Stroke Brows",
+          "Colour Refresh (Touch-Up)",
+        ],
+        pitch:
+          "For lip blush, eyeliner and brow work, the colour is chosen according to your facial features and skin undertone. Single-use sterile needle tips and a hygiene protocol are the standard for every session.",
+        benefits: [
+          "Colour chosen individually for your skin undertone",
+          "Single-use needle tip, sterile working area",
+          "Mapping before the application and approval together",
+          "Colour balanced with a touch-up after healing",
+        ],
+        duration: "60–150 min",
+        effect: "Becomes clearer as healing completes",
+        interval: "Touch-up after 4–6 weeks",
+        closing:
+          "A touch that shortens your morning routine and respects your own lines.",
+        faqs: [
+          { q: "How is the colour decided?", a: "Your skin undertone, natural brow and lip colour and your everyday style are considered together. Mapping is done before the application and your approval is taken." },
+          { q: "How is hygiene ensured?", a: "A single-use needle tip and sterile equipment are used for every application; the working area is disinfected before each session." },
+          { q: "How long does it last?", a: "It varies from person to person depending on skin type, care habits and sun exposure. The colour softens over time and is refreshed with a touch-up." },
+          { q: "Is a touch-up session necessary?", a: "To balance how the colour settles after healing, we usually recommend a touch-up session after 4–6 weeks." },
+        ],
+        pricing: [
+          { label: "Contact us for current pricing", price: "" },
+        ],
+      },
+      {
+        key: "kuafor",
+        title: "Hair Salon",
+        subtitle: "Cut · Care · Styling",
+        imageAlt: "Interior of the Güler Ayaz Beauty care area",
+        items: [
+          "Haircut",
+          "Blow-Dry & Styling",
+          "Hair Care",
+          "Curls · Waves",
+          "Updo & Special Occasion Hair",
+          "Hair Wash & Massage",
+        ],
+        pitch:
+          "Beauty centre and hair salon under one roof: no need to go to a separate address for your cut, care and styling. A cut and care plan suited to your hair type and daily routine is decided together.",
+        benefits: [
+          "Care, nail and hair appointments in a single visit",
+          "Cut planned for your hair type and face shape",
+          "Blow-dry, waves and updos for special occasions",
+          "Care options for damaged hair",
+        ],
+        duration: "30–90 min",
+        effect: "Immediate",
+        interval: "A cut every 6–8 weeks",
+        closing:
+          "A ritual completed under the same roof, without interrupting your care.",
+        faqs: [
+          { q: "Can I book it on the same day as other services?", a: "Yes. We can plan your hair services on the same day as your skincare, nail or laser appointment." },
+          { q: "Is there a consultation before the cut?", a: "We talk through your hair type, your everyday styling habits and what you have in mind, then finalise the cut plan together." },
+          { q: "Do you do hair for special occasions?", a: "You can book for updos, waves and special-occasion styling. We recommend planning ahead on busy days." },
+          { q: "What hair care options are there?", a: "Depending on what your hair needs, moisture, repair and damage-focused care options are considered." },
+        ],
+        pricing: [
+          { label: "Contact us for current pricing", price: "" },
         ],
       },
     ],
@@ -382,7 +531,7 @@ export const en: typeof tr = {
     date: "Preferred Date",
     service: "Service of Interest",
     selectPlaceholder: "Select (optional)",
-    services: ["Laser Hair Removal", "Skincare", "Lash & Brow", "Manicure & Pedicure", "Pilates", "Other"],
+    services: ["Laser Hair Removal", "Skincare", "Lash & Brow", "Manicure & Pedicure", "Pilates", "Body Contouring", "Tattoo Removal", "Permanent Makeup", "Hair Salon", "Other"],
     message: "Your Message",
     messagePh: "Your expectations, questions or notes...",
     required: "Required field",

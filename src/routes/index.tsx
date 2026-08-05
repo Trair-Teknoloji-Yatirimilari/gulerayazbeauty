@@ -21,6 +21,10 @@ import {
   ShieldCheck,
   HelpCircle,
   Tag,
+  Waves,
+  Eraser,
+  Brush,
+  Scissors,
 } from "lucide-react";
 import {
   Dialog,
@@ -43,6 +47,10 @@ import serviceCilt from "@/assets/beauty-center.jpg";
 import serviceKirpik from "@/assets/service-kirpik.jpg";
 import serviceNail from "@/assets/service-nail.jpg";
 import servicePilates from "@/assets/service-pilates.jpg";
+import serviceVucut from "@/assets/service-vucut.jpg";
+import serviceDovme from "@/assets/service-dovme-silme.jpg";
+import serviceKaliciMakyaj from "@/assets/service-kalici-makyaj.jpg";
+import serviceKuafor from "@/assets/service-kuafor.jpg";
 import { AppointmentForm } from "@/components/AppointmentForm";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useT } from "@/i18n/context";
@@ -52,7 +60,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Güler Ayaz Beauty | Maslak Güzellik & Estetik Merkezi" },
-      { name: "description", content: "Lazer epilasyon, cilt bakımı, kirpik & kaş, manikür-pedikür ve özel Pilates. Güler Ayaz Beauty, Maslak 1453'te sinematik bir güzellik deneyimi sunar." },
+      { name: "description", content: "Lazer epilasyon, cilt bakımı, vücut şekillendirme, dövme silme, kalıcı makyaj, kuaför ve reformer pilates. Maslak 1453'te Güler Ayaz Beauty." },
       { property: "og:title", content: "Güler Ayaz Beauty | Maslak Güzellik Merkezi" },
       { property: "og:description", content: "Uzman kadro, premium teknoloji, davetkar atmosfer." },
       { property: "og:type", content: "website" },
@@ -78,6 +86,31 @@ export const Route = createFileRoute("/")({
           },
           sameAs: ["https://www.instagram.com/gulerayaz_beautycenter/"],
           priceRange: "₺₺",
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Güler Ayaz Beauty — Hizmetler",
+            itemListElement: [
+              "Lazer Epilasyon",
+              "Cilt Bakımı",
+              "Hydrafacial",
+              "Q-Switch Karbon Peeling",
+              "Tüy Sarartma",
+              "Reformer Pilates",
+              "Slim-X Bölgesel İncelme",
+              "EMS Pro Sıkılaşma",
+              "G5 Selülit Masajı",
+              "Kuaför Hizmetleri",
+              "Protez Tırnak",
+              "İpek Kirpik",
+              "Kaş Laminasyonu",
+              "Kirpik Lifting",
+              "Kalıcı Makyaj",
+              "Dövme Silme",
+            ].map((n) => ({
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: n },
+            })),
+          },
         }),
       },
     ],
@@ -98,6 +131,10 @@ const SERVICE_ICONS: Record<string, typeof Zap> = {
   kirpik: Eye,
   nail: Hand,
   pilates: Dumbbell,
+  vucut: Waves,
+  dovme: Eraser,
+  kalicimakyaj: Brush,
+  kuafor: Scissors,
 };
 const SERVICE_IMAGES: Record<string, string> = {
   lazer: serviceLazer,
@@ -105,6 +142,10 @@ const SERVICE_IMAGES: Record<string, string> = {
   kirpik: serviceKirpik,
   nail: serviceNail,
   pilates: servicePilates,
+  vucut: serviceVucut,
+  dovme: serviceDovme,
+  kalicimakyaj: serviceKaliciMakyaj,
+  kuafor: serviceKuafor,
 };
 
 function Index() {
@@ -669,7 +710,7 @@ function ServiceRow({ service, reversed, index }: { service: ServiceItem; revers
         <div className="relative aspect-[5/4] overflow-hidden rounded-sm">
           <motion.img
             src={image}
-            alt={service.title}
+            alt={service.imageAlt}
             className="w-full h-full object-cover"
             width={1200}
             height={960}
