@@ -85,7 +85,7 @@ function AdminPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border/60 bg-card/40 backdrop-blur sticky top-0 z-10">
+      <header className="border-b border-border/60 bg-card/80 backdrop-blur sticky top-0 z-10">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <div>
             <Link to="/" className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground hover:text-primary">
@@ -160,7 +160,7 @@ function AdminPage() {
           {filtered.map((a) => (
             <article
               key={a.id}
-              className="bg-card/60 backdrop-blur border border-border/60 rounded-sm p-5 md:p-6"
+              className="bg-card/85 backdrop-blur border border-border/60 rounded-sm p-5 md:p-6"
             >
               <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
@@ -209,7 +209,7 @@ function AdminPage() {
               </div>
 
               {a.message && (
-                <div className="mt-4 p-4 bg-background/40 border border-border/40 rounded-sm text-sm text-foreground/75 flex gap-3">
+                <div className="mt-4 p-4 bg-background/70 border border-border/40 rounded-sm text-sm text-foreground/75 flex gap-3">
                   <MessageSquare className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                   <p className="whitespace-pre-wrap">{a.message}</p>
                 </div>

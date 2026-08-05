@@ -279,7 +279,7 @@ export function BlogPostForm({ initial }: Props) {
         </div>
 
         <div className="rounded-2xl border border-border/40 bg-card/40 p-5 space-y-4">
-          <p className="text-xs uppercase tracking-widest text-primary/70">{f.seo}</p>
+          <p className="text-xs uppercase tracking-widest text-primary">{f.seo}</p>
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className={`${label} mb-0`}>{f.seoTitle}</label>

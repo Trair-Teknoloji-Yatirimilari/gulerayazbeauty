@@ -107,7 +107,7 @@ function AdminGalleryPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border/60 bg-card/40 backdrop-blur sticky top-0 z-10">
+      <header className="border-b border-border/60 bg-card/80 backdrop-blur sticky top-0 z-10">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <Link
             to="/admin"
@@ -275,7 +275,7 @@ function AdminGalleryPage() {
                         deleteMut.mutate(item.id);
                       }
                     }}
-                    className="absolute top-2 right-2 p-2 rounded-full bg-background/80 backdrop-blur border border-border/60 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-500/20 hover:border-rose-500/40"
+                    className="absolute top-2 right-2 p-2 rounded-full bg-background/90 backdrop-blur border border-border/60 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-500/20 hover:border-rose-500/40"
                     aria-label={t.galleryAdmin.delete}
                   >
                     <Trash2 className="w-4 h-4 text-rose-400" />

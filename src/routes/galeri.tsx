@@ -39,7 +39,7 @@ function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border/60 bg-card/40 backdrop-blur">
+      <header className="border-b border-border/60 bg-card/80 backdrop-blur">
         <div className="mx-auto max-w-7xl px-6 py-6 flex items-center justify-between">
           <Link
             to="/"

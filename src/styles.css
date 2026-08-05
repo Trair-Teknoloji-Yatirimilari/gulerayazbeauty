@@ -41,35 +41,35 @@
 :root {
   --radius: 0.5rem;
 
-  --background: oklch(0.14 0.022 310);
-  --foreground: oklch(0.95 0.012 310);
-  --card: oklch(0.17 0.028 310);
-  --card-foreground: oklch(0.95 0.012 310);
-  --popover: oklch(0.17 0.028 310);
-  --popover-foreground: oklch(0.95 0.012 310);
-  --primary: oklch(0.74 0.105 48);
-  --primary-foreground: oklch(0.14 0.022 310);
-  --secondary: oklch(0.24 0.045 305);
-  --secondary-foreground: oklch(0.95 0.012 310);
-  --muted: oklch(0.21 0.03 308);
-  --muted-foreground: oklch(0.72 0.035 310);
-  --accent: oklch(0.74 0.105 48);
-  --accent-foreground: oklch(0.14 0.022 310);
+  --background: oklch(0.96 0.015 305);
+  --foreground: oklch(0.25 0.06 310);
+  --card: oklch(0.985 0.008 305);
+  --card-foreground: oklch(0.25 0.06 310);
+  --popover: oklch(0.985 0.008 305);
+  --popover-foreground: oklch(0.25 0.06 310);
+  --primary: oklch(0.58 0.11 45);
+  --primary-foreground: oklch(0.98 0.005 305);
+  --secondary: oklch(0.90 0.045 305);
+  --secondary-foreground: oklch(0.25 0.06 310);
+  --muted: oklch(0.92 0.03 305);
+  --muted-foreground: oklch(0.45 0.05 308);
+  --accent: oklch(0.58 0.11 45);
+  --accent-foreground: oklch(0.98 0.005 305);
   --destructive: oklch(0.60 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.34 0.05 308 / 60%);
-  --input: oklch(0.26 0.04 308);
-  --ring: oklch(0.74 0.105 48);
+  --border: oklch(0.85 0.04 305 / 70%);
+  --input: oklch(0.90 0.03 305);
+  --ring: oklch(0.58 0.11 45);
 
-  --gold: oklch(0.76 0.11 50);
-  --gold-soft: oklch(0.66 0.085 45);
-  --ivory: oklch(0.96 0.01 310);
-  --onyx: oklch(0.10 0.015 310);
+  --gold: oklch(0.62 0.11 48);
+  --gold-soft: oklch(0.70 0.08 45);
+  --ivory: oklch(0.98 0.008 305);
+  --onyx: oklch(0.22 0.05 310);
 
-  --gradient-gold: linear-gradient(135deg, oklch(0.84 0.10 55), oklch(0.60 0.10 35));
-  --gradient-radial-gold: radial-gradient(circle at 50% 0%, oklch(0.74 0.105 48 / 0.25), transparent 60%);
-  --shadow-gold: 0 20px 60px -20px oklch(0.74 0.105 48 / 0.35);
-  --shadow-elegant: 0 40px 80px -30px oklch(0 0 0 / 0.7);
+  --gradient-gold: linear-gradient(135deg, oklch(0.68 0.11 52), oklch(0.48 0.10 35));
+  --gradient-radial-gold: radial-gradient(circle at 50% 0%, oklch(0.58 0.11 45 / 0.15), transparent 60%);
+  --shadow-gold: 0 20px 60px -20px oklch(0.58 0.11 45 / 0.25);
+  --shadow-elegant: 0 40px 80px -30px oklch(0.30 0.06 310 / 0.25);
 }
 
 @layer base {
@@ -103,9 +103,19 @@
   color: transparent;
 }
 
+/* Görsel üstünde kullanılacak açık rose gold gradyan. Sayfa geneli açık
+   temaya geçtiği için --gradient-gold koyulaştırıldı; koyu overlay'li
+   görsellerin üstünde okunmuyor. Bu varyant yalnızca oraya. */
+@utility text-gold-gradient-light {
+  background: linear-gradient(135deg, oklch(0.92 0.07 60), oklch(0.78 0.10 42));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 @utility hairline {
   height: 1px;
-  background: linear-gradient(90deg, transparent, oklch(0.74 0.105 48 / 0.6), transparent);
+  background: linear-gradient(90deg, transparent, oklch(0.58 0.11 45 / 0.6), transparent);
 }
 
 @utility glow-gold {
@@ -191,7 +201,7 @@
 }
 
 @utility animate-shimmer {
-  background: linear-gradient(90deg, transparent, oklch(0.84 0.10 55 / 0.4), transparent);
+  background: linear-gradient(90deg, transparent, oklch(0.58 0.11 45 / 0.4), transparent);
   background-size: 200% 100%;
   animation: shimmer 3s linear infinite;
 }
@@ -287,15 +297,15 @@
 
 
 /* Blog yazı içeriği */
-.blog-content { max-width: none; color: hsl(var(--foreground) / 0.85); line-height: 1.8; }
-.blog-content h2, .blog-content h3, .blog-content h4 { font-family: var(--font-display, inherit); color: hsl(var(--foreground)); margin: 1.6em 0 0.6em; line-height: 1.3; }
+.blog-content { max-width: none; color: color-mix(in oklab, var(--foreground) 85%, transparent); line-height: 1.8; }
+.blog-content h2, .blog-content h3, .blog-content h4 { font-family: var(--font-display, inherit); color: var(--foreground); margin: 1.6em 0 0.6em; line-height: 1.3; }
 .blog-content h2 { font-size: 1.5rem; }
 .blog-content h3 { font-size: 1.25rem; }
 .blog-content p { margin: 0.9em 0; }
-.blog-content a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 3px; }
-.blog-content strong { color: hsl(var(--foreground)); }
+.blog-content a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+.blog-content strong { color: var(--foreground); }
 .blog-content ul, .blog-content ol { margin: 0.9em 0; padding-inline-start: 1.4em; }
 .blog-content li { margin: 0.35em 0; }
-.blog-content li::marker { color: hsl(var(--primary)); }
-.blog-content blockquote { border-inline-start: 3px solid hsl(var(--primary)); padding-inline-start: 1em; margin: 1.2em 0; color: hsl(var(--foreground) / 0.75); font-style: italic; }
+.blog-content li::marker { color: var(--primary); }
+.blog-content blockquote { border-inline-start: 3px solid var(--primary); padding-inline-start: 1em; margin: 1.2em 0; color: color-mix(in oklab, var(--foreground) 75%, transparent); font-style: italic; }
 .blog-content img { border-radius: 0.75rem; margin: 1.2em 0; max-width: 100%; height: auto; }

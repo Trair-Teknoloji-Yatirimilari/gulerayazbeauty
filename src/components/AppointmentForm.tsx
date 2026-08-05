@@ -36,7 +36,7 @@ export function AppointmentForm() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-card/60 backdrop-blur border border-primary/40 rounded-sm p-10 text-center"
+        className="bg-card/85 backdrop-blur border border-primary/40 rounded-sm p-10 text-center"
       >
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/15 text-primary mb-6">
           <Check className="w-8 h-8" strokeWidth={1.5} />
@@ -45,7 +45,7 @@ export function AppointmentForm() {
         <p className="mt-4 text-foreground/70 max-w-md mx-auto">{t.form.successBody}</p>
         <button
           onClick={() => setSent(false)}
-          className="mt-8 text-xs uppercase tracking-[0.35em] text-primary hover:text-primary/80"
+          className="mt-8 text-xs uppercase tracking-[0.35em] text-primary hover:text-primary"
         >
           {t.form.newRequest}
         </button>
@@ -54,13 +54,13 @@ export function AppointmentForm() {
   }
 
   const inputCls =
-    "w-full bg-background/40 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors";
+    "w-full bg-background/70 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors";
   const labelCls = "block text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2";
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-card/60 backdrop-blur border border-border/60 rounded-sm p-6 md:p-10 space-y-5"
+      className="bg-card/85 backdrop-blur border border-border/60 rounded-sm p-6 md:p-10 space-y-5"
     >
       <div className="grid md:grid-cols-2 gap-5">
         <div>
@@ -133,7 +133,7 @@ export function AppointmentForm() {
             {...register("consent_given", { required: t.form.consentRequired })}
             className="sr-only peer"
           />
-          <span className="mt-0.5 w-5 h-5 flex-shrink-0 rounded border border-border/70 bg-background/40 peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
+          <span className="mt-0.5 w-5 h-5 flex-shrink-0 rounded border border-border/70 bg-background/70 peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
             <Check className="w-3.5 h-3.5 text-primary-foreground opacity-0 peer-checked:opacity-100 transition-opacity" />
           </span>
           <span className="text-sm text-foreground/80 leading-relaxed group-hover:text-foreground/90 transition-colors">
@@ -142,7 +142,7 @@ export function AppointmentForm() {
               to="/kvkk"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors"
+              className="text-primary underline underline-offset-2 hover:text-primary transition-colors"
             >
               {t.form.consentLink}
             </Link>
@@ -168,7 +168,7 @@ export function AppointmentForm() {
             t.form.submit
           )}
         </button>
-        <p className="mt-4 text-xs text-muted-foreground/70">{t.form.footer}</p>
+        <p className="mt-4 text-xs text-muted-foreground">{t.form.footer}</p>
       </div>
     </form>
   );

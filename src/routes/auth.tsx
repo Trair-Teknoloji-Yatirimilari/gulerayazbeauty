@@ -45,7 +45,7 @@ function AuthPage() {
         <Link to="/" className="block text-center mb-8 text-xs uppercase tracking-[0.4em] text-muted-foreground hover:text-primary">
           {t.auth.backHome}
         </Link>
-        <div className="bg-card/60 backdrop-blur border border-border/60 rounded-sm p-8 md:p-10">
+        <div className="bg-card/85 backdrop-blur border border-border/60 rounded-sm p-8 md:p-10">
           <div className="flex flex-col items-center text-center mb-8">
             <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
               <Lock className="w-6 h-6" strokeWidth={1.2} />
@@ -62,7 +62,7 @@ function AuthPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-background/40 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm outline-none"
+                className="w-full bg-background/70 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm outline-none"
               />
             </div>
             <div>
@@ -73,7 +73,7 @@ function AuthPage() {
                 minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-background/40 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm outline-none"
+                className="w-full bg-background/70 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm outline-none"
               />
             </div>
             <button
@@ -86,7 +86,7 @@ function AuthPage() {
             </button>
           </form>
 
-          <p className="mt-6 text-[10px] text-muted-foreground/70 text-center leading-relaxed">
+          <p className="mt-6 text-[10px] text-muted-foreground text-center leading-relaxed">
             {t.auth.notice}
           </p>
         </div>

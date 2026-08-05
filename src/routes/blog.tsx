@@ -34,14 +34,14 @@ function BlogListPage() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <p className="text-xs uppercase tracking-[0.4em] text-primary/70 mb-4">{t.blog.badge}</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-primary mb-4">{t.blog.badge}</p>
           <h1 className="font-display text-4xl md:text-6xl text-gold-gradient mb-6">{t.blog.title}</h1>
           <p className="max-w-2xl mx-auto text-foreground/70 leading-relaxed">
             {t.blog.subtitle}
           </p>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 mt-6 text-xs uppercase tracking-widest text-primary/80 hover:text-primary transition"
+            className="inline-flex items-center gap-2 mt-6 text-xs uppercase tracking-widest text-primary hover:text-primary transition"
           >
             {t.blog.backHome}
           </Link>
@@ -64,7 +64,7 @@ function BlogListPage() {
               <Link
                 to="/blog/$slug"
                 params={{ slug: post.slug }}
-                className="block h-full rounded-2xl border border-border/40 bg-card/40 backdrop-blur overflow-hidden hover:border-primary/50 transition-all duration-500 hover:-translate-y-1"
+                className="block h-full rounded-2xl border border-border/40 bg-card/80 backdrop-blur overflow-hidden hover:border-primary/50 transition-all duration-500 hover:-translate-y-1"
               >
                 <div className="aspect-[16/10] overflow-hidden bg-muted/20">
                   {post.cover_image_url ? (
@@ -75,14 +75,14 @@ function BlogListPage() {
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-primary/30 font-display text-3xl">
+                    <div className="w-full h-full flex items-center justify-center text-primary font-display text-3xl">
                       GA
                     </div>
                   )}
                 </div>
                 <div className="p-6 flex flex-col gap-3">
                   {post.category && (
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-primary/70">
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-primary">
                       {post.category}
                     </span>
                   )}

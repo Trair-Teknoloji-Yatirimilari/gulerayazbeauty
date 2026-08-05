@@ -71,7 +71,7 @@ function BlogDetailPage() {
       {post.cover_image_url && (
         <div className="relative h-[45vh] min-h-[320px] w-full overflow-hidden">
           <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/40 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
         </div>
       )}
 
@@ -80,17 +80,17 @@ function BlogDetailPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-2xl border border-border/40 bg-card/70 backdrop-blur-xl p-8 md:p-12"
+          className="rounded-2xl border border-border/40 bg-card/85 backdrop-blur-xl p-8 md:p-12"
         >
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary/80 hover:text-primary transition mb-6"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary hover:text-primary transition mb-6"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> {t.blog.allPosts}
           </Link>
 
           {post.category && (
-            <span className="text-[10px] uppercase tracking-[0.4em] text-primary/70">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-primary">
               {post.category}
             </span>
           )}

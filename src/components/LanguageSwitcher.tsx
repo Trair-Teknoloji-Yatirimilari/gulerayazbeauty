@@ -33,7 +33,7 @@ export function LanguageSwitcher({ variant = "header" }: { variant?: "header" | 
         {localeLabels[locale]}
       </button>
       {open && (
-        <div className="absolute right-0 mt-2 min-w-[110px] rounded-md border border-border/60 bg-background/95 backdrop-blur py-1 shadow-lg z-50">
+        <div className="absolute right-0 mt-2 min-w-[110px] rounded-md border border-border/60 bg-popover backdrop-blur py-1 shadow-lg z-50">
           {LOCALES.map((l) => (
             <button
               key={l}

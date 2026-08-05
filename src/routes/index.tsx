@@ -185,14 +185,14 @@ function Nav() {
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl bg-background/60 border-b border-border/40"
+      className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl bg-background/90 border-b border-border/40"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
         <a href="#top" className="flex flex-col items-start leading-none group">
           <span className="text-gold-gradient font-display text-base md:text-lg tracking-wide whitespace-nowrap">
             {t.nav.brand}
           </span>
-          <span className="text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-muted-foreground/70">
+          <span className="text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
             {t.nav.tagline}
           </span>
         </a>
@@ -265,8 +265,9 @@ function Hero() {
         className="absolute inset-0"
       >
         <img src={heroBeauty} alt={t.hero.heroAlt} className="w-full h-full object-cover" width={1920} height={1280} />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/65" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent" />
       </motion.div>
 
       <div className="pointer-events-none absolute inset-0 z-[5]">
@@ -285,11 +286,11 @@ function Hero() {
             transition={{ delay: 0.2, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center gap-3 mb-6"
           >
-            <div className="h-px w-12 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.4em] text-primary">{t.hero.badge}</span>
+            <div className="h-px w-12 bg-white/70" />
+            <span className="text-xs uppercase tracking-[0.4em] text-white/90">{t.hero.badge}</span>
           </motion.div>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl text-white">
             <span dir="ltr" className="inline-block" style={{ unicodeBidi: "isolate" }}>
               {t.hero.firstName.split("").map((c, i) => (
                 <motion.span
@@ -308,7 +309,7 @@ function Hero() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 1 }}
-              className="text-gold-gradient italic"
+              className="text-gold-gradient-light italic"
             >
               {t.hero.lastName}
             </motion.span>
@@ -318,7 +319,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4, duration: 1 }}
-            className="mt-8 max-w-xl text-lg text-foreground/70 leading-relaxed"
+            className="mt-8 max-w-xl text-lg text-white/85 leading-relaxed"
           >
             {t.hero.subtitle}
           </motion.p>
@@ -333,7 +334,7 @@ function Hero() {
               {t.hero.ctaConsult}
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
-            <a href="#hizmetler" className="inline-flex items-center gap-3 rounded-full border border-border px-8 py-3.5 text-sm uppercase tracking-widest text-foreground/80 hover:border-primary hover:text-primary transition-all">
+            <a href="#hizmetler" className="inline-flex items-center gap-3 rounded-full border border-white/50 px-8 py-3.5 text-sm uppercase tracking-widest text-white/90 hover:bg-white/10 hover:border-white transition-all">
               {t.hero.ctaServices}
             </a>
           </motion.div>
@@ -344,7 +345,7 @@ function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-primary/80"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/80"
       >
         <span className="text-[10px] uppercase tracking-[0.4em]">{t.hero.discover}</span>
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
@@ -367,12 +368,12 @@ function HeroCta() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-          className="pointer-events-auto flex flex-col sm:flex-row items-center justify-between gap-6 bg-card/70 backdrop-blur-xl border border-primary/30 rounded-sm px-6 py-6 md:px-10 md:py-8 shadow-elegant"
+          className="pointer-events-auto flex flex-col sm:flex-row items-center justify-between gap-6 bg-card/85 backdrop-blur-xl border border-primary/30 rounded-sm px-6 py-6 md:px-10 md:py-8 shadow-elegant"
         >
           <div className="text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start gap-3 mb-2">
               <div className="h-px w-8 bg-primary/60" />
-              <span className="text-[10px] uppercase tracking-[0.35em] text-primary/80">{t.nav.ctaAppointment}</span>
+              <span className="text-[10px] uppercase tracking-[0.35em] text-primary">{t.nav.ctaAppointment}</span>
             </div>
             <p className="text-foreground/80 text-sm md:text-base max-w-md leading-relaxed">
               {t.hero.appointmentCtaDesc}
@@ -394,7 +395,7 @@ function Marquee() {
   const { t } = useT();
   const items = t.marquee;
   return (
-    <div className="border-y border-border/40 bg-card/40 backdrop-blur overflow-hidden py-6">
+    <div className="border-y border-border/40 bg-card/80 backdrop-blur overflow-hidden py-6">
       <div className="flex whitespace-nowrap animate-marquee">
         {[...items, ...items, ...items].map((it, i) => (
           <div key={i} className="flex items-center gap-8 px-8">
@@ -420,7 +421,7 @@ function About() {
           <motion.div {...fadeUp} className="lg:col-span-5 relative lg:sticky lg:top-28">
             <div className="relative aspect-square overflow-hidden rounded-sm">
               <img src={beautyCenter} alt={t.about.portraitAlt} className="w-full h-full object-cover" width={800} height={800} loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
             </div>
             <div className="absolute -bottom-6 -right-6 hidden md:block border border-primary/40 bg-background/90 backdrop-blur px-6 py-4 rounded-sm">
               <div className="text-gold-gradient font-display text-4xl">{t.about.experienceYears}</div>
@@ -540,7 +541,7 @@ const DetailDialog = memo(function DetailDialog({
                 <span className="text-[10px] uppercase tracking-[0.4em] text-primary">{L.detail}</span>
               </div>
               <DialogTitle className="font-display text-3xl md:text-4xl font-normal">{title}</DialogTitle>
-              <DialogDescription className="text-primary/90 italic font-display text-lg">{subtitle}</DialogDescription>
+              <DialogDescription className="text-primary italic font-display text-lg">{subtitle}</DialogDescription>
             </DialogHeader>
 
             <p className="mt-5 text-foreground/80 leading-relaxed text-sm">{detail.pitch}</p>
@@ -580,7 +581,7 @@ const DetailDialog = memo(function DetailDialog({
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <Tag className="w-4 h-4 text-primary" strokeWidth={1.2} />
-                    <span className="text-[10px] uppercase tracking-[0.35em] text-primary/90">{L.areas === "Uygulama Alanları" ? "Fiyat Listesi" : L.areas}</span>
+                    <span className="text-[10px] uppercase tracking-[0.35em] text-primary">{L.areas === "Uygulama Alanları" ? "Fiyat Listesi" : L.areas}</span>
                   </div>
                   <div className="divide-y divide-border/40 border border-border/40 rounded-sm bg-card/30">
                     {detail.pricing.map((p) => (
@@ -639,7 +640,7 @@ const DetailDialog = memo(function DetailDialog({
                 {L.appointmentCta} <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
               <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <ShieldCheck className="w-3.5 h-3.5 text-primary/70" strokeWidth={1.5} />
+                <ShieldCheck className="w-3.5 h-3.5 text-primary" strokeWidth={1.5} />
                 {L.doctorSupervised}
               </div>
             </div>
@@ -721,16 +722,16 @@ function ServiceRow({ service, reversed, index }: { service: ServiceItem; revers
             transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-          <div className="absolute top-6 left-6 flex items-center gap-2 text-primary/80">
+          <div className="absolute top-6 left-6 flex items-center gap-2 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
             <span className="font-display text-sm">0{index + 1}</span>
-            <div className="h-px w-8 bg-primary/60" />
+            <div className="h-px w-8 bg-white/80" />
           </div>
         </div>
       </div>
       <div className="lg:col-span-6">
         <Icon className="w-10 h-10 text-primary mb-6" strokeWidth={1} />
         <h3 className="font-display text-4xl md:text-5xl">{service.title}</h3>
-        <p className="mt-3 text-primary/90 italic font-display text-xl">{service.subtitle}</p>
+        <p className="mt-3 text-primary italic font-display text-xl">{service.subtitle}</p>
         <div className="hairline my-6 max-w-xs" />
         <p className="text-foreground/75 leading-relaxed text-sm md:text-base">{service.pitch}</p>
 
@@ -744,7 +745,7 @@ function ServiceRow({ service, reversed, index }: { service: ServiceItem; revers
           {remaining > 0 && (
             <button
               onClick={() => setOpen(true)}
-              className="w-full flex items-center justify-between gap-4 px-4 py-3 text-xs uppercase tracking-widest text-primary/80 hover:text-primary hover:bg-card/60 transition-colors"
+              className="w-full flex items-center justify-between gap-4 px-4 py-3 text-xs uppercase tracking-widest text-primary hover:text-primary hover:bg-card/60 transition-colors"
             >
               <span>+{remaining} · {t.detailLabels.moreInfo}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -904,14 +905,14 @@ function Contact() {
               href={c.href}
               target={c.href.startsWith("http") ? "_blank" : undefined}
               rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="group relative bg-card/60 backdrop-blur border border-border/60 hover:border-primary/60 rounded-sm p-8 transition-all duration-500"
+              className="group relative bg-card/85 backdrop-blur border border-border/60 hover:border-primary/60 rounded-sm p-8 transition-all duration-500"
             >
               <c.icon className="w-8 h-8 text-primary mb-6" strokeWidth={1} />
               <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">{c.label}</div>
               <div className="font-display text-lg mt-2 text-foreground/90 group-hover:text-primary transition-colors break-words">
                 {c.value}
               </div>
-              <ArrowUpRight className="absolute top-6 right-6 w-4 h-4 text-primary/50 group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
+              <ArrowUpRight className="absolute top-6 right-6 w-4 h-4 text-primary group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
             </a>
           ))}
         </motion.div>
@@ -920,7 +921,7 @@ function Contact() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="h-px w-8 bg-primary/60" />
-              <span className="text-[10px] uppercase tracking-[0.4em] text-primary/80">{t.contact.formBadge}</span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-primary">{t.contact.formBadge}</span>
               <div className="h-px w-8 bg-primary/60" />
             </div>
             <h3 className="font-display text-2xl md:text-3xl text-foreground">
@@ -1006,7 +1007,7 @@ function Footer() {
           <p className="text-xs text-muted-foreground text-center">
             © {new Date().getFullYear()} {t.nav.brand}. {t.footer.copyright}
           </p>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground/60">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground">
             <Link to="/galeri" className="hover:text-primary transition-colors underline underline-offset-2">
               {t.footer.galleryLink}
             </Link>
@@ -1021,7 +1022,7 @@ function Footer() {
             <span className="hidden sm:inline">·</span>
             <span>{t.footer.disclaimer}</span>
           </div>
-          <p className="mt-2 text-[10px] text-muted-foreground/60 text-center max-w-3xl mx-auto leading-relaxed">
+          <p className="mt-2 text-[10px] text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
             {t.footer.resultDisclaimer}
           </p>
         </div>

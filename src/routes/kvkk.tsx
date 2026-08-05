@@ -36,7 +36,7 @@ function KvkkPage() {
   const legal = t.legal;
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border/40 bg-background/80 backdrop-blur sticky top-0 z-10">
+      <header className="border-b border-border/40 bg-background/90 backdrop-blur sticky top-0 z-10">
         <div className="mx-auto max-w-4xl px-6 py-5 flex items-center gap-4">
           <Link
             to="/"
@@ -52,7 +52,7 @@ function KvkkPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
             <Shield className="w-8 h-8" strokeWidth={1.5} />
           </div>
-          <p className="text-xs uppercase tracking-[0.4em] text-primary/70 mb-4">{legal.heroBadge}</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-primary mb-4">{legal.heroBadge}</p>
           <h1 className="font-display text-4xl md:text-5xl leading-tight text-gold-gradient italic">
             {legal.title}
           </h1>
