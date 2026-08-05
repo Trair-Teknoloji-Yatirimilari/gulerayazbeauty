@@ -14,7 +14,7 @@ export const en: typeof tr = {
     gallery: {
       title: "Gallery | Güler Ayaz Beauty",
       description:
-        "Explore moments from our center, treatments in progress and our atmosphere.",
+        "Photos and videos from our centre: our skincare room, silk lash application, nail art and treatments in progress.",
     },
     legal: {
       title: "Privacy & Data Protection Notice | Güler Ayaz Beauty",
@@ -60,7 +60,7 @@ export const en: typeof tr = {
     lastName: "Beauty",
     experienceBadge: "Years of Care",
     experienceYears: "10+",
-    portraitAlt: "Güler Ayaz Beauty clinic atmosphere",
+    portraitAlt: "Treatment room at Güler Ayaz Beauty: our specialist at the EMS Pro device",
     paragraphs: [
       "Güler Ayaz Beauty was designed at Maslak 1453 to make beauty, care and well-being a holistic experience. Our expert team, premium device infrastructure and inviting interior turn every visit into a ritual.",
       "From laser hair removal to medical skincare, from lash design to reformer Pilates sessions — each service is planned after a personal assessment. We only work with safe, clinically approved brands.",
@@ -161,7 +161,7 @@ export const en: typeof tr = {
         key: "cilt",
         title: "Skincare",
         subtitle: "Hydrafacial · Medical · Carbon Peeling",
-        imageAlt: "Facial treatment during a skincare session",
+        imageAlt: "Steam-assisted facial session at our centre",
         items: [
           "Classic Facial",
           "Medical Facial",
@@ -249,7 +249,7 @@ export const en: typeof tr = {
         key: "nail",
         title: "Manicure · Pedicure · Nail Art",
         subtitle: "Gel polish, extensions, design",
-        imageAlt: "Groomed nails and nail art after a manicure",
+        imageAlt: "Manicure session with gel polish being applied at our centre",
         items: [
           "Classic Manicure",
           "Classic Pedicure",
@@ -569,6 +569,11 @@ export const en: typeof tr = {
     empty: "No images added yet.",
     loadError: "Could not load the gallery.",
     dateLocale: "en-US",
+    videosTitle: "Videos",
+    videosSubtitle: "Short glimpses from our centre.",
+    videoSkin: "Our Skincare Room",
+    videoLash: "Silk Lash Application",
+    videoFallback: "Your browser does not support video playback.",
   },
   legal: {
     backHome: "Home",

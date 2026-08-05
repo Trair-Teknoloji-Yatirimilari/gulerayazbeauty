@@ -12,7 +12,7 @@ export const tr = {
     gallery: {
       title: "Galeri | Güler Ayaz Beauty",
       description:
-        "Merkezimizden kareler, uygulama anları ve atmosferimizi keşfedin.",
+        "Merkezimizden kareler ve videolar: cilt bakımı kabinimiz, ipek kirpik uygulaması, nail art ve uygulama anları.",
     },
     legal: {
       title: "KVKK Aydınlatma Metni | Güler Ayaz Beauty",
@@ -58,7 +58,7 @@ export const tr = {
     lastName: "Beauty",
     experienceBadge: "Yıllık Deneyim",
     experienceYears: "10+",
-    portraitAlt: "Güler Ayaz Beauty klinik atmosferi",
+    portraitAlt: "Güler Ayaz Beauty uygulama odası: uzman kadromuz EMS Pro cihazı başında",
     paragraphs: [
       "Güler Ayaz Beauty, Maslak 1453'te; güzellik, bakım ve iyi hissetmeyi bütünsel bir deneyim olarak sunmak için tasarlandı. Merkezimiz; uzman kadrosu, premium cihaz altyapısı ve davetkar iç mimarisiyle her ziyareti ritüele dönüştürüyor.",
       "Lazer epilasyondan medikal cilt bakımına, kirpik tasarımından reformer Pilates seanslarına kadar her hizmetimiz; kişiye özel değerlendirme sonrası planlanır. Ürün ve teknoloji seçimlerinde yalnızca güvenli, klinik onaylı markalarla çalışırız.",
@@ -159,7 +159,7 @@ export const tr = {
         key: "cilt",
         title: "Cilt Bakımı",
         subtitle: "Hydrafacial · Medikal · Karbon Peeling",
-        imageAlt: "Cilt bakımı seansında yüz bakım uygulaması",
+        imageAlt: "Merkezimizde buhar destekli cilt bakımı seansı",
         items: [
           "Klasik Cilt Bakımı",
           "Medikal Cilt Bakımı",
@@ -247,7 +247,7 @@ export const tr = {
         key: "nail",
         title: "Manikür · Pedikür · Nail Art",
         subtitle: "Kalıcı oje, protez tırnak, tasarım",
-        imageAlt: "Manikür sonrası bakımlı tırnaklar ve nail art tasarımı",
+        imageAlt: "Merkezimizde kalıcı oje uygulaması yapılan manikür seansı",
         items: [
           "Klasik Manikür",
           "Klasik Pedikür",
@@ -567,6 +567,11 @@ export const tr = {
     empty: "Henüz görsel eklenmemiş.",
     loadError: "Galeri yüklenemedi.",
     dateLocale: "tr-TR",
+    videosTitle: "Videolar",
+    videosSubtitle: "Merkezimizden kısa kareler.",
+    videoSkin: "Cilt Bakımı Kabinimiz",
+    videoLash: "İpek Kirpik Uygulaması",
+    videoFallback: "Tarayıcınız video oynatmayı desteklemiyor.",
   },
   legal: {
     backHome: "Ana Sayfa",

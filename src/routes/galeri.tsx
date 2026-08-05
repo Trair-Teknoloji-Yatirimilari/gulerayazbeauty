@@ -13,7 +13,7 @@ export const Route = createFileRoute("/galeri")({
       {
         name: "description",
         content:
-          "Güler Ayaz Beauty merkezinden kareler, uygulama anları ve atmosferimizi keşfedin.",
+          "Güler Ayaz Beauty merkezinden kareler ve videolar: cilt bakımı kabinimiz, ipek kirpik uygulaması, nail art ve uygulama anları.",
       },
       { property: "og:title", content: "Galeri | Güler Ayaz Beauty" },
       {
@@ -117,7 +117,76 @@ function GalleryPage() {
             ))}
           </div>
         )}
+
+        <VideoSection />
       </section>
+    </div>
+  );
+}
+
+/* ---------------- VİDEOLAR ---------------- */
+
+function VideoSection() {
+  const { t } = useT();
+  const videos = [
+    {
+      src: "/videos/cilt-bakimi.mp4",
+      poster: "/videos/cilt-bakimi-poster.jpg",
+      title: t.gallery.videoSkin,
+    },
+    {
+      src: "/videos/ipek-kirpik.mp4",
+      poster: "/videos/ipek-kirpik-poster.jpg",
+      title: t.gallery.videoLash,
+    },
+  ];
+
+  return (
+    <div className="mt-20 md:mt-28">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7 }}
+        className="text-center mb-10"
+      >
+        <h2 className="font-display text-3xl md:text-4xl text-gold-gradient">
+          {t.gallery.videosTitle}
+        </h2>
+        <p className="mt-3 text-muted-foreground">{t.gallery.videosSubtitle}</p>
+      </motion.div>
+
+      {/* Dikey (9:16) videolar: mobilde alt alta, sm'den itibaren yan yana */}
+      <div className="flex flex-col sm:flex-row items-start justify-center gap-6 md:gap-8">
+        {videos.map((v, i) => (
+          <motion.figure
+            key={v.src}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: i * 0.08 }}
+            className="w-full max-w-[360px] mx-auto sm:mx-0 overflow-hidden rounded-lg border border-border/60 bg-card"
+          >
+            <video
+              controls
+              muted
+              playsInline
+              loop
+              preload="metadata"
+              poster={v.poster}
+              width={720}
+              height={1280}
+              className="w-full h-auto block aspect-[9/16] bg-muted"
+            >
+              <source src={v.src} type="video/mp4" />
+              {t.gallery.videoFallback}
+            </video>
+            <figcaption className="px-4 py-3 font-display text-lg text-foreground">
+              {v.title}
+            </figcaption>
+          </motion.figure>
+        ))}
+      </div>
     </div>
   );
 }

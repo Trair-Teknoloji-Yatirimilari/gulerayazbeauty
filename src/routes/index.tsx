@@ -42,10 +42,11 @@ import {
 
 import heroBeauty from "@/assets/hero-beauty.jpg";
 import beautyCenter from "@/assets/beauty-center.jpg";
+import merkezGercek from "@/assets/merkez-gercek.jpg";
 import serviceLazer from "@/assets/service-lazer.jpg";
-import serviceCilt from "@/assets/beauty-center.jpg";
+import serviceCilt from "@/assets/service-cilt-gercek.jpg";
 import serviceKirpik from "@/assets/service-kirpik.jpg";
-import serviceNail from "@/assets/service-nail.jpg";
+import serviceNail from "@/assets/service-nail-gercek.jpg";
 import servicePilates from "@/assets/service-pilates.jpg";
 import serviceVucut from "@/assets/service-vucut.jpg";
 import serviceDovme from "@/assets/service-dovme-silme.jpg";
@@ -420,7 +421,7 @@ function About() {
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           <motion.div {...fadeUp} className="lg:col-span-5 relative lg:sticky lg:top-28">
             <div className="relative aspect-square overflow-hidden rounded-sm">
-              <img src={beautyCenter} alt={t.about.portraitAlt} className="w-full h-full object-cover" width={800} height={800} loading="lazy" />
+              <img src={merkezGercek} alt={t.about.portraitAlt} className="w-full h-full object-cover" width={900} height={900} loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
             </div>
             <div className="absolute -bottom-6 -right-6 hidden md:block border border-primary/40 bg-background/90 backdrop-blur px-6 py-4 rounded-sm">
