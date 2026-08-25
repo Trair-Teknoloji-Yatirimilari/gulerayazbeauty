@@ -1036,6 +1036,16 @@ function Footer() {
             {t.footer.resultDisclaimer}
           </p>
         </div>
+        <p className="text-[11px] text-muted-foreground text-center mt-8">
+          Web tasarım &amp; geliştirme:{" "}
+          <a
+            href="https://www.trairx.com"
+            rel="noopener"
+            className="font-medium hover:text-foreground transition-colors"
+          >
+            TrairX Technology
+          </a>
+        </p>
       </div>
     </footer>
   );
