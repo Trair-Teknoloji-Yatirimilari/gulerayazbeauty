@@ -77,14 +77,23 @@ export const Route = createFileRoute("/")({
           name: "Güler Ayaz Beauty",
           url: SITE_URL,
           image: `${SITE_URL}/og-image.jpg`,
-          telephone: "+905010274777",
+          telephone: "+902122234777",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Maslak 1453",
+            streetAddress: "Maslak Mah. Taşyoncası Sk. No:1R",
             addressLocality: "Sarıyer",
             addressRegion: "İstanbul",
+            postalCode: "34485",
             addressCountry: "TR",
           },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              opens: "08:30",
+              closes: "21:00",
+            },
+          ],
           sameAs: ["https://www.instagram.com/gulerayaz_beautycenter/"],
           priceRange: "₺₺",
           hasOfferCatalog: {
