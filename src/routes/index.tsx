@@ -95,7 +95,6 @@ export const Route = createFileRoute("/")({
             },
           ],
           sameAs: ["https://www.instagram.com/gulerayaz_beautycenter/"],
-          priceRange: "₺₺",
           hasOfferCatalog: {
             "@type": "OfferCatalog",
             name: "Güler Ayaz Beauty — Hizmetler",
@@ -591,7 +590,7 @@ const DetailDialog = memo(function DetailDialog({
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <Tag className="w-4 h-4 text-primary" strokeWidth={1.2} />
-                    <span className="text-[10px] uppercase tracking-[0.35em] text-primary">{L.areas === "Uygulama Alanları" ? "Fiyat Listesi" : L.areas}</span>
+                    <span className="text-[10px] uppercase tracking-[0.35em] text-primary">{L.pricingTitle}</span>
                   </div>
                   <div className="divide-y divide-border/40 border border-border/40 rounded-sm bg-card/30">
                     {detail.pricing.map((p) => (
@@ -661,7 +660,7 @@ const DetailDialog = memo(function DetailDialog({
   );
 });
 
-/* ---------------- SERVICES (with pricing) ---------------- */
+/* ---------------- SERVICES ---------------- */
 
 function Services() {
   const { t } = useT();
