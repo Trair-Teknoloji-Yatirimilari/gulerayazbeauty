@@ -41,6 +41,12 @@ export const en = {
     ctaPrimary: "Get Free Demo",
     ctaSecondary: "How It Works",
   },
+  stats: [
+    { value: 24, suffix: "/7", label: "Always-on replies" },
+    { value: 92, suffix: "%", label: "Chats resolved by AI" },
+    { value: 3, suffix: " min", label: "Setup time" },
+    { value: 40, suffix: "%", label: "More bookings" },
+  ],
   trusted: {
     title: "Trusted by businesses in every sector",
     items: ["Beauty & SPA", "Restaurants & Cafés", "Education & Courses", "Travel & Hotels", "Retail & E-commerce", "Health & Clinics"],
