@@ -29,6 +29,7 @@ function PayPage() {
   const { token } = Route.useParams();
   const orderFn = useServerFn(getPublicOrder);
   const submitFn = useServerFn(submitCheckout);
+  const stripeFn = useServerFn(createOrderCheckout);
 
   const { data: order, isLoading } = useQuery({
     queryKey: ["public-order", token],
