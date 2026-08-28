@@ -32,6 +32,7 @@ import { Route as LangIletisimRouteImport } from './routes/$lang.iletisim'
 import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandirma'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminUrunlerRouteImport } from './routes/_authenticated/admin.urunler'
+import { Route as AuthenticatedAdminSuperadminRouteImport } from './routes/_authenticated/admin.superadmin'
 import { Route as AuthenticatedAdminSiparislerRouteImport } from './routes/_authenticated/admin.siparisler'
 import { Route as AuthenticatedAdminSaatlerRouteImport } from './routes/_authenticated/admin.saatler'
 import { Route as AuthenticatedAdminRezervasyonlarRouteImport } from './routes/_authenticated/admin.rezervasyonlar'
@@ -156,6 +157,12 @@ const AuthenticatedAdminUrunlerRoute =
     path: '/urunler',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminSuperadminRoute =
+  AuthenticatedAdminSuperadminRouteImport.update({
+    id: '/superadmin',
+    path: '/superadmin',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminSiparislerRoute =
   AuthenticatedAdminSiparislerRouteImport.update({
     id: '/siparisler',
@@ -233,6 +240,7 @@ export interface FileRoutesByFullPath {
   '/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
   '/admin/saatler': typeof AuthenticatedAdminSaatlerRoute
   '/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
+  '/admin/superadmin': typeof AuthenticatedAdminSuperadminRoute
   '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -263,6 +271,7 @@ export interface FileRoutesByTo {
   '/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
   '/admin/saatler': typeof AuthenticatedAdminSaatlerRoute
   '/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
+  '/admin/superadmin': typeof AuthenticatedAdminSuperadminRoute
   '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -297,6 +306,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
   '/_authenticated/admin/saatler': typeof AuthenticatedAdminSaatlerRoute
   '/_authenticated/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
+  '/_authenticated/admin/superadmin': typeof AuthenticatedAdminSuperadminRoute
   '/_authenticated/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -331,6 +341,7 @@ export interface FileRouteTypes {
     | '/admin/rezervasyonlar'
     | '/admin/saatler'
     | '/admin/siparisler'
+    | '/admin/superadmin'
     | '/admin/urunler'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -361,6 +372,7 @@ export interface FileRouteTypes {
     | '/admin/rezervasyonlar'
     | '/admin/saatler'
     | '/admin/siparisler'
+    | '/admin/superadmin'
     | '/admin/urunler'
     | '/admin'
   id:
@@ -394,6 +406,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/rezervasyonlar'
     | '/_authenticated/admin/saatler'
     | '/_authenticated/admin/siparisler'
+    | '/_authenticated/admin/superadmin'
     | '/_authenticated/admin/urunler'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -577,6 +590,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUrunlerRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/superadmin': {
+      id: '/_authenticated/admin/superadmin'
+      path: '/superadmin'
+      fullPath: '/admin/superadmin'
+      preLoaderRoute: typeof AuthenticatedAdminSuperadminRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/siparisler': {
       id: '/_authenticated/admin/siparisler'
       path: '/siparisler'
@@ -645,6 +665,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminRezervasyonlarRoute: typeof AuthenticatedAdminRezervasyonlarRoute
   AuthenticatedAdminSaatlerRoute: typeof AuthenticatedAdminSaatlerRoute
   AuthenticatedAdminSiparislerRoute: typeof AuthenticatedAdminSiparislerRoute
+  AuthenticatedAdminSuperadminRoute: typeof AuthenticatedAdminSuperadminRoute
   AuthenticatedAdminUrunlerRoute: typeof AuthenticatedAdminUrunlerRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -658,6 +679,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminRezervasyonlarRoute: AuthenticatedAdminRezervasyonlarRoute,
   AuthenticatedAdminSaatlerRoute: AuthenticatedAdminSaatlerRoute,
   AuthenticatedAdminSiparislerRoute: AuthenticatedAdminSiparislerRoute,
+  AuthenticatedAdminSuperadminRoute: AuthenticatedAdminSuperadminRoute,
   AuthenticatedAdminUrunlerRoute: AuthenticatedAdminUrunlerRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
