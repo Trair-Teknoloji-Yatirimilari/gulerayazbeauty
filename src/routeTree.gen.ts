@@ -26,6 +26,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as LangSektorlerRouteImport } from './routes/$lang.sektorler'
 import { Route as LangOzelliklerRouteImport } from './routes/$lang.ozellikler'
 import { Route as LangNasilCalisirRouteImport } from './routes/$lang.nasil-calisir'
+import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandirma'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -111,6 +112,11 @@ const LangNasilCalisirRoute = LangNasilCalisirRouteImport.update({
   path: '/nasil-calisir',
   getParentRoute: () => LangRoute,
 } as any)
+const LangFiyatlandirmaRoute = LangFiyatlandirmaRouteImport.update({
+  id: '/fiyatlandirma',
+  path: '/fiyatlandirma',
+  getParentRoute: () => LangRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/fiyatlandirma': typeof LangFiyatlandirmaRoute
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/fiyatlandirma': typeof LangFiyatlandirmaRoute
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/fiyatlandirma': typeof LangFiyatlandirmaRoute
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/fiyatlandirma'
     | '/$lang/nasil-calisir'
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/fiyatlandirma'
     | '/$lang/nasil-calisir'
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
@@ -217,6 +228,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/fiyatlandirma'
     | '/$lang/nasil-calisir'
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
@@ -360,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangNasilCalisirRouteImport
       parentRoute: typeof LangRoute
     }
+    '/$lang/fiyatlandirma': {
+      id: '/$lang/fiyatlandirma'
+      path: '/fiyatlandirma'
+      fullPath: '/$lang/fiyatlandirma'
+      preLoaderRoute: typeof LangFiyatlandirmaRouteImport
+      parentRoute: typeof LangRoute
+    }
   }
 }
 
@@ -375,6 +394,7 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface LangRouteChildren {
+  LangFiyatlandirmaRoute: typeof LangFiyatlandirmaRoute
   LangNasilCalisirRoute: typeof LangNasilCalisirRoute
   LangOzelliklerRoute: typeof LangOzelliklerRoute
   LangSektorlerRoute: typeof LangSektorlerRoute
@@ -382,6 +402,7 @@ interface LangRouteChildren {
 }
 
 const LangRouteChildren: LangRouteChildren = {
+  LangFiyatlandirmaRoute: LangFiyatlandirmaRoute,
   LangNasilCalisirRoute: LangNasilCalisirRoute,
   LangOzelliklerRoute: LangOzelliklerRoute,
   LangSektorlerRoute: LangSektorlerRoute,
