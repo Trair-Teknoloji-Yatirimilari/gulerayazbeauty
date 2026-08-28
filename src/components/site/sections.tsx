@@ -63,6 +63,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <Header />
       <main>{children}</main>
       <Footer />
+      <WhatsAppFab />
     </div>
   );
 }
