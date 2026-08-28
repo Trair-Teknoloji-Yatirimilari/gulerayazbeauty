@@ -35,13 +35,41 @@ function SettingsPage() {
   };
 
   return (
-    <AdminShell title="Ayarlar" description="Hesap güvenliği ve oturum bilgileri.">
+    <AdminShell title="Ayarlar" description="Hesap güvenliği, plan ve oturum bilgileri.">
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
           <h2 className="font-display text-lg mb-4">Hesap</h2>
           <p className="text-sm text-muted-foreground">E-posta</p>
           <p className="text-sm">{session?.email ?? "—"}</p>
         </Card>
+
+        <Card>
+          <h2 className="font-display text-lg mb-1">Plan & abonelik</h2>
+          <p className="text-sm text-muted-foreground mb-4">Tüm fiyatlar USD üzerinden faturalandırılır.</p>
+          <ul className="space-y-3">
+            {PLAN_KEYS.map((k) => {
+              const p = PLANS[k];
+              return (
+                <li key={k} className="flex items-center justify-between gap-4 rounded-xl border border-border/60 px-4 py-3">
+                  <div>
+                    <p className="text-sm font-medium">
+                      {p.name} · {p.key === "custom" ? "Teklife göre" : `${formatUsd(p.amountCents)}${p.interval ? "/ay" : ""}`}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{p.description}</p>
+                  </div>
+                  {p.checkout ? (
+                    <PrimaryButton type="button" disabled={planBusy} onClick={() => startCheckout(p.key)}>
+                      Yükselt
+                    </PrimaryButton>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">{p.key === "free" ? "Varsayılan" : "Satışla görüş"}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </Card>
+
 
         <Card>
           <h2 className="font-display text-lg mb-4">Şifre değiştir</h2>
