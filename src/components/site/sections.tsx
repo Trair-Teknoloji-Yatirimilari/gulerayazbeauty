@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   MessageCircle,
   Calendar,
@@ -17,9 +17,20 @@ import {
   Facebook,
   Phone,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useT } from "@/i18n/context";
 import { BRAND } from "@/lib/site";
+import {
+  Aurora,
+  Reveal,
+  AnimatedHeadline,
+  CountUp,
+  Marquee,
+  TiltCard,
+  Magnetic,
+  ScrollProgress,
+  useParallax,
+} from "./motion";
 
 const ICONS: Record<string, React.ElementType> = {
   MessageCircle,
@@ -37,21 +48,11 @@ export const fadeUp = {
   transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-const stagger = {
-  initial: {},
-  whileInView: { transition: { staggerChildren: 0.1 } },
-  viewport: { once: true, margin: "-80px" },
-};
-
-const itemFade = {
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
-};
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <ScrollProgress />
       <Header />
       <main>{children}</main>
       <Footer />
@@ -61,20 +62,31 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
 export function PageHero({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle: string }) {
   return (
-    <section className="relative pt-32 md:pt-40 pb-12 md:pb-16 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-primary/5 rounded-full blur-[120px]" />
+    <section className="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-16">
+      <Aurora />
+      <div className="relative mx-auto max-w-3xl px-6 text-center lg:px-10">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-4 text-xs uppercase tracking-[0.25em] text-primary"
+        >
+          {eyebrow}
+        </motion.p>
+        <AnimatedHeadline
+          text={title}
+          delay={0.1}
+          className="text-4xl font-semibold tracking-[-0.04em] md:text-5xl"
+        />
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-5 text-muted-foreground"
+        >
+          {subtitle}
+        </motion.p>
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto max-w-3xl px-6 lg:px-10 text-center"
-      >
-        <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{eyebrow}</p>
-        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-5 text-muted-foreground">{subtitle}</p>
-      </motion.div>
     </section>
   );
 }
@@ -165,84 +177,187 @@ export function Header() {
   );
 }
 
-export function Hero() {
+function LiveChat() {
   const { t } = useT();
+  const w = t.hero.widget;
+  const bubbles = [
+    { from: "bot" as const, text: w.msg1 },
+    { from: "user" as const, text: w.msg2 },
+    { from: "bot" as const, text: w.msg3 },
+  ];
+  const [visible, setVisible] = useState(0);
+
+  useEffect(() => {
+    if (visible >= bubbles.length) {
+      const reset = setTimeout(() => setVisible(0), 5200);
+      return () => clearTimeout(reset);
+    }
+    const timer = setTimeout(() => setVisible((v) => v + 1), 1100 + visible * 350);
+    return () => clearTimeout(timer);
+  }, [visible, bubbles.length]);
+
   return (
-    <section id="top" className="relative pt-32 md:pt-44 pb-20 md:pb-32 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[400px] bg-accent/5 rounded-full blur-[100px]" />
+    <div className="widget-mock rounded-[28px] p-5 md:p-6">
+      <div className="mb-5 flex items-center gap-3">
+        <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary animate-pulse-ring">
+          <Sparkles className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-foreground">{BRAND}</p>
+          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            {w.status}
+          </p>
+        </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      <div className="min-h-[210px] space-y-3">
+        <AnimatePresence initial={false}>
+          {bubbles.slice(0, visible).map((b, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 14, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className={
+                b.from === "bot"
+                  ? "max-w-[85%] rounded-2xl rounded-tl-md bg-secondary p-3"
+                  : "ml-auto max-w-[78%] rounded-2xl rounded-tr-md bg-primary p-3 text-primary-foreground"
+              }
+            >
+              <p className="text-sm leading-relaxed">{b.text}</p>
+            </motion.div>
+          ))}
+          {visible < bubbles.length && (
+            <motion.div
+              key="typing"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex w-14 items-center justify-center gap-1 rounded-2xl rounded-tl-md bg-secondary p-3"
+            >
+              {[0, 1, 2].map((d) => (
+                <motion.span
+                  key={d}
+                  animate={{ opacity: [0.25, 1, 0.25], y: [0, -3, 0] }}
+                  transition={{ duration: 1.1, repeat: Infinity, delay: d * 0.15 }}
+                  className="h-1.5 w-1.5 rounded-full bg-muted-foreground"
+                />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <div className="mt-5 flex items-center gap-3 border-t border-border/50 pt-4 text-xs text-muted-foreground">
+        {[Instagram, Facebook, Phone].map((Icon, i) => (
+          <motion.span
+            key={i}
+            animate={{ y: [0, -3, 0] }}
+            transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
+            className="flex h-7 w-7 items-center justify-center rounded-full bg-secondary text-foreground/70"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/70 px-4 py-1.5 text-xs font-medium text-primary mb-6">
-              <Sparkles className="w-3.5 h-3.5" />
+            <Icon className="h-3.5 w-3.5" />
+          </motion.span>
+        ))}
+        <span className="ml-auto">{w.channels}</span>
+      </div>
+    </div>
+  );
+}
+
+export function Hero() {
+  const { t } = useT();
+  const { ref, y } = useParallax(50);
+
+  return (
+    <section id="top" className="relative overflow-hidden pt-32 pb-20 md:pt-44 md:pb-32">
+      <Aurora />
+
+      <div ref={ref} className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-7 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/70 px-4 py-1.5 text-xs font-medium text-primary backdrop-blur"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
               {t.hero.badge}
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight whitespace-pre-line">
-              {t.hero.title}
-            </h1>
-            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+            </motion.div>
+
+            <AnimatedHeadline
+              text={t.hero.title}
+              delay={0.15}
+              className="text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.04em] md:text-6xl lg:text-[4.2rem]"
+            />
+
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
+            >
               {t.hero.subtitle}
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                to="/iletisim"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-              >
-                {t.hero.ctaPrimary} <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/nasil-calisir"
-                className="inline-flex items-center justify-center rounded-full border border-border/60 bg-card px-6 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-              >
-                {t.hero.ctaSecondary}
-              </Link>
-            </div>
-          </motion.div>
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-9 flex flex-wrap items-center gap-4"
+            >
+              <Magnetic>
+                <Link
+                  to="/iletisim"
+                  className="shine inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                >
+                  {t.hero.ctaPrimary} <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <Link
+                  to="/nasil-calisir"
+                  className="inline-flex items-center justify-center rounded-full border border-border/60 bg-card/70 px-7 py-3.5 text-sm font-medium text-foreground backdrop-blur transition-colors hover:bg-secondary"
+                >
+                  {t.hero.ctaSecondary}
+                </Link>
+              </Magnetic>
+            </motion.div>
+          </div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
+            style={{ y }}
+            initial={{ opacity: 0, scale: 0.94, rotateX: 8 }}
+            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+            transition={{ duration: 1.1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative [transform-perspective:1200px]"
           >
-            <div className="widget-mock rounded-2xl p-4 md:p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">{BRAND}</p>
-                  <p className="text-xs text-muted-foreground">{t.hero.widget.status}</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="bg-muted/60 rounded-2xl rounded-tl-none p-3 max-w-[85%]">
-                  <p className="text-sm text-foreground">{t.hero.widget.msg1}</p>
-                </div>
-                <div className="ml-auto bg-primary text-primary-foreground rounded-2xl rounded-tr-none p-3 max-w-[75%]">
-                  <p className="text-sm">{t.hero.widget.msg2}</p>
-                </div>
-                <div className="bg-muted/60 rounded-2xl rounded-tl-none p-3 max-w-[85%]">
-                  <p className="text-sm text-foreground">{t.hero.widget.msg3}</p>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-                <Instagram className="w-3.5 h-3.5" />
-                <Facebook className="w-3.5 h-3.5" />
-                <Phone className="w-3.5 h-3.5" />
-                <span className="ml-auto">{t.hero.widget.channels}</span>
-              </div>
-            </div>
+            <div className="absolute -inset-8 -z-10 rounded-[40px] bg-primary/10 blur-3xl" />
+            <TiltCard>
+              <LiveChat />
+            </TiltCard>
           </motion.div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function Stats() {
+  const { t } = useT();
+  return (
+    <section className="border-y border-border/40 bg-card/50 py-14">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 lg:grid-cols-4 lg:px-10">
+        {t.stats.map((s, i) => (
+          <Reveal key={s.label} delay={i * 0.08} className="text-center">
+            <p className="font-display text-4xl font-semibold tracking-tight text-gradient md:text-5xl">
+              <CountUp to={s.value} suffix={s.suffix} />
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
@@ -251,18 +366,12 @@ export function Hero() {
 export function Trusted() {
   const { t } = useT();
   return (
-    <section className="py-12 border-y border-border/30 bg-card/30">
+    <section className="border-b border-border/30 bg-background py-12">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <p className="text-center text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8">
+        <p className="mb-8 text-center text-xs uppercase tracking-[0.25em] text-muted-foreground">
           {t.trusted.title}
         </p>
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
-          {t.trusted.items.map((item) => (
-            <span key={item} className="text-sm font-medium text-foreground/70">
-              {item}
-            </span>
-          ))}
-        </div>
+        <Marquee items={[...t.trusted.items]} />
       </div>
     </section>
   );
@@ -271,40 +380,32 @@ export function Trusted() {
 export function Features({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
   return (
-    <section id="ozellikler" className="py-24 md:py-32">
+    <section id="ozellikler" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.features}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.features.title}</h2>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.features}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.features.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.features.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <motion.div
-          variants={stagger}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {t.features.items.map((f) => {
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {t.features.items.map((f, i) => {
             const Icon = ICONS[f.icon] ?? Sparkles;
             return (
-              <motion.div
-                key={f.title}
-                variants={itemFade}
-                className="group rounded-2xl border border-border/40 bg-card p-6 hover:shadow-lg transition-shadow"
-              >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-105 transition-transform">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </motion.div>
+              <Reveal key={f.title} delay={i * 0.07}>
+                <TiltCard className="group h-full rounded-3xl border border-border/50 bg-card p-7 card-shadow transition-shadow duration-500 hover:shadow-[var(--shadow-soft)]">
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold tracking-tight">{f.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                </TiltCard>
+              </Reveal>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -313,30 +414,35 @@ export function Features({ withHeading = true }: { withHeading?: boolean }) {
 export function HowItWorks({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
   return (
-    <section id="nasil-calisir" className="py-24 md:py-32 bg-card/30">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section id="nasil-calisir" className="relative overflow-hidden bg-ink py-24 text-ink-foreground md:py-32">
+      <div className="pointer-events-none absolute inset-0 opacity-40">
+        <div className="aurora absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
+      </div>
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.howItWorks}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.howItWorks.title}</h2>
-            <p className="mt-4 text-muted-foreground">{t.howItWorks.subtitle}</p>
-          </motion.div>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-ink-foreground/60">{t.nav.howItWorks}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.howItWorks.title}</h2>
+            <p className="mt-4 text-ink-foreground/70">{t.howItWorks.subtitle}</p>
+          </Reveal>
         )}
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="relative grid gap-10 md:grid-cols-3">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 right-0 top-7 hidden h-px origin-left bg-[image:var(--gradient-primary)] md:block"
+          />
           {t.howItWorks.steps.map((step, i) => (
-            <motion.div
-              key={step.number}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="relative"
-            >
-              <span className="text-5xl font-semibold text-primary/10">{step.number}</span>
-              <h3 className="mt-4 text-xl font-semibold">{step.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-            </motion.div>
+            <Reveal key={step.number} delay={i * 0.15} className="relative">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 font-display text-xl font-semibold backdrop-blur">
+                {step.number}
+              </div>
+              <h3 className="text-xl font-semibold tracking-tight">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-foreground/70">{step.desc}</p>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -344,37 +450,34 @@ export function HowItWorks({ withHeading = true }: { withHeading?: boolean }) {
   );
 }
 
+
 export function UseCases({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
   return (
     <section id="sektorler" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.useCases}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.useCases.title}</h2>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.useCases}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.useCases.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.useCases.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <motion.div
-          variants={stagger}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-        >
-          {t.useCases.cases.map((c) => (
-            <motion.div
-              key={c.title}
-              variants={itemFade}
-              className="rounded-2xl border border-border/40 bg-card/50 p-5 hover:bg-card transition-colors"
-            >
-              <h3 className="text-base font-semibold mb-1">{c.title}</h3>
-              <p className="text-sm text-muted-foreground">{c.desc}</p>
-            </motion.div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {t.useCases.cases.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.06}>
+              <motion.div
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="shine h-full rounded-3xl border border-border/50 bg-secondary/60 p-6 transition-colors hover:bg-card"
+              >
+                <h3 className="mb-1 text-base font-semibold tracking-tight">{c.title}</h3>
+                <p className="text-sm text-muted-foreground">{c.desc}</p>
+              </motion.div>
+            </Reveal>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -383,26 +486,28 @@ export function UseCases({ withHeading = true }: { withHeading?: boolean }) {
 export function Pricing({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
   return (
-    <section id="fiyatlandirma" className="py-24 md:py-32 bg-card/30">
+    <section id="fiyatlandirma" className="bg-secondary/50 py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.pricing}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.pricing.title}</h2>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.pricing}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.pricing.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.pricing.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {t.pricing.tiers.map((tier) => (
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
+          {t.pricing.tiers.map((tier, i) => (
             <motion.div
               key={tier.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              whileHover={{ y: -8 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative rounded-2xl border p-6 ${tier.popular ? "border-primary bg-card shadow-lg" : "border-border/40 bg-card/60"}`}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className={`relative rounded-3xl border p-7 ${tier.popular ? "border-primary/50 bg-card shadow-[var(--shadow-soft)] md:scale-[1.03]" : "border-border/50 bg-card/70"}`}
             >
+
               {tier.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[10px] uppercase tracking-widest text-primary-foreground">
                   {t.pricing.popular}
@@ -443,38 +548,52 @@ export function FAQ({ withHeading = true }: { withHeading?: boolean }) {
     <section id="sss" className="py-24 md:py-32">
       <div className="mx-auto max-w-3xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.faq}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.faq.title}</h2>
+          <Reveal className="mb-16 text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.faq}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.faq.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.faq.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {t.faq.items.map((item, i) => (
             <motion.div
               key={item.q}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="rounded-2xl border border-border/40 bg-card/50 overflow-hidden"
+              transition={{ duration: 0.55, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden rounded-2xl border border-border/50 bg-card/70"
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 text-left"
+                className="flex w-full items-center justify-between p-5 text-left"
               >
-                <span className="text-sm font-medium pr-4">{item.q}</span>
-                <ChevronDown className={`w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
+                <span className="pr-4 text-sm font-medium">{item.q}</span>
+                <motion.span animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.35 }}>
+                  <ChevronDown className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                </motion.span>
               </button>
-              {open === i && (
-                <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/30 pt-4">
-                  {item.a}
-                </div>
-              )}
+              <AnimatePresence initial={false}>
+                {open === i && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="border-t border-border/40 px-5 pb-5 pt-4 text-sm leading-relaxed text-muted-foreground">
+                      {item.a}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );

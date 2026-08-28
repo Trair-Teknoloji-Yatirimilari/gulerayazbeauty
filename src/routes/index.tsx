@@ -3,6 +3,7 @@ import {
   SiteLayout,
   Hero,
   Trusted,
+  Stats,
   Features,
   HowItWorks,
   UseCases,
@@ -32,6 +33,7 @@ function LandingPage() {
     <SiteLayout>
       <Hero />
       <Trusted />
+      <Stats />
       <Features />
       <HowItWorks />
       <UseCases />

@@ -41,6 +41,12 @@ export const tr = {
     ctaPrimary: "Ücretsiz Demo Al",
     ctaSecondary: "Nasıl Çalışır?",
   },
+  stats: [
+    { value: 24, suffix: "/7", label: "Kesintisiz yanıt" },
+    { value: 92, suffix: "%", label: "Otomatik çözülen sohbet" },
+    { value: 3, suffix: " dk", label: "Kurulum süresi" },
+    { value: 40, suffix: "%", label: "Artan rezervasyon" },
+  ],
   trusted: {
     title: "Her sektörden işletme güveniyor",
     items: ["Güzellik & SPA", "Restoran & Kafe", "Eğitim & Kurs", "Seyahat & Otel", "Perakende & E-ticaret", "Sağlık & Klinik"],
