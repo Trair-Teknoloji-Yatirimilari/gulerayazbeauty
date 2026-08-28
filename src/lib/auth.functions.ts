@@ -48,7 +48,7 @@ const loginSchema = z.object({
 });
 
 export const login = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => loginSchema.parse(d))
+  .validator((d: unknown) => loginSchema.parse(d))
   .handler(async ({ data }) => {
     const pool = db();
     const email = data.email.toLowerCase();
@@ -108,7 +108,7 @@ const changePasswordSchema = z.object({
 
 export const changeAdminPassword = createServerFn({ method: "POST" })
   .middleware([requireAdmin])
-  .inputValidator((d: unknown) => changePasswordSchema.parse(d))
+  .validator((d: unknown) => changePasswordSchema.parse(d))
   .handler(async ({ data, context }) => {
     const pool = db();
     const res = await pool.query(
