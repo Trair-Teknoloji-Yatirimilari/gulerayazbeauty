@@ -30,6 +30,7 @@ import { Route as LangKvkkRouteImport } from './routes/$lang.kvkk'
 import { Route as LangIletisimRouteImport } from './routes/$lang.iletisim'
 import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandirma'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminUrunlerRouteImport } from './routes/_authenticated/admin.urunler'
 import { Route as AuthenticatedAdminIsletmeRouteImport } from './routes/_authenticated/admin.isletme'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -136,6 +137,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminUrunlerRoute =
+  AuthenticatedAdminUrunlerRouteImport.update({
+    id: '/urunler',
+    path: '/urunler',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminIsletmeRoute =
   AuthenticatedAdminIsletmeRouteImport.update({
     id: '/isletme',
@@ -164,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
+  '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -185,6 +193,7 @@ export interface FileRoutesByTo {
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/$lang': typeof LangIndexRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
+  '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -210,6 +219,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
   '/_authenticated/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
+  '/_authenticated/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/$lang/'
     | '/admin/isletme'
+    | '/admin/urunler'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/$lang'
     | '/admin/isletme'
+    | '/admin/urunler'
     | '/admin'
   id:
     | '__root__'
@@ -280,6 +292,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/$lang/'
     | '/_authenticated/admin/isletme'
+    | '/_authenticated/admin/urunler'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -447,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/urunler': {
+      id: '/_authenticated/admin/urunler'
+      path: '/urunler'
+      fullPath: '/admin/urunler'
+      preLoaderRoute: typeof AuthenticatedAdminUrunlerRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/isletme': {
       id: '/_authenticated/admin/isletme'
       path: '/isletme'
@@ -459,11 +479,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminIsletmeRoute: typeof AuthenticatedAdminIsletmeRoute
+  AuthenticatedAdminUrunlerRoute: typeof AuthenticatedAdminUrunlerRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminIsletmeRoute: AuthenticatedAdminIsletmeRoute,
+  AuthenticatedAdminUrunlerRoute: AuthenticatedAdminUrunlerRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
