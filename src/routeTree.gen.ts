@@ -23,6 +23,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang.index'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as LangOzelliklerRouteImport } from './routes/$lang.ozellikler'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -93,6 +94,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const LangOzelliklerRoute = LangOzelliklerRouteImport.update({
+  id: '/ozellikler',
+  path: '/ozellikler',
+  getParentRoute: () => LangRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/$lang/': typeof LangIndexRoute
 }
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/$lang': typeof LangIndexRoute
 }
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/$lang/': typeof LangIndexRoute
 }
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/ozellikler'
     | '/admin'
     | '/$lang/'
   fileRoutesByTo: FileRoutesByTo
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/ozellikler'
     | '/admin'
     | '/$lang'
   id:
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/ozellikler'
     | '/_authenticated/admin'
     | '/$lang/'
   fileRoutesById: FileRoutesById
@@ -303,6 +315,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/$lang/ozellikler': {
+      id: '/$lang/ozellikler'
+      path: '/ozellikler'
+      fullPath: '/$lang/ozellikler'
+      preLoaderRoute: typeof LangOzelliklerRouteImport
+      parentRoute: typeof LangRoute
+    }
   }
 }
 
@@ -318,10 +337,12 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface LangRouteChildren {
+  LangOzelliklerRoute: typeof LangOzelliklerRoute
   LangIndexRoute: typeof LangIndexRoute
 }
 
 const LangRouteChildren: LangRouteChildren = {
+  LangOzelliklerRoute: LangOzelliklerRoute,
   LangIndexRoute: LangIndexRoute,
 }
 
