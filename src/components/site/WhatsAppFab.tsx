@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { MessageCircle, X } from "lucide-react";
 
 export const WHATSAPP_NUMBER = "905346408888";
