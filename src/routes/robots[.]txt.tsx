@@ -7,7 +7,7 @@ export const Route = createFileRoute("/robots.txt")({
         const host =
           request.headers.get("x-forwarded-host") ??
           request.headers.get("host") ??
-          "gulerayaz.trairx.com";
+          "trairxconnect.com";
         const body = [
           "User-agent: *",
           "Allow: /",
