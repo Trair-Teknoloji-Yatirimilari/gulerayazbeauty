@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useT } from "@/i18n/context";
+import { LocaleLink, LanguageSwitcher } from "@/components/site/LocaleLink";
 import { BRAND } from "@/lib/site";
 import {
   Aurora,
@@ -110,31 +111,32 @@ export function Header() {
       className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border/40"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
-        <Link to="/" className="flex flex-col items-start leading-none">
+        <LocaleLink to="/" className="flex flex-col items-start leading-none">
           <span className="text-lg md:text-xl font-semibold tracking-tight text-foreground">{t.nav.brand}</span>
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{t.nav.tagline}</span>
-        </Link>
+        </LocaleLink>
 
         <nav className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <Link
+            <LocaleLink
               key={l.to}
               to={l.to}
               activeProps={{ className: "text-foreground" }}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {l.label}
-            </Link>
+            </LocaleLink>
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
-          <Link
+        <div className="hidden md:flex items-center gap-3">
+          <LanguageSwitcher />
+          <LocaleLink
             to="/iletisim"
             className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
           >
             {t.nav.ctaDemo}
-          </Link>
+          </LocaleLink>
         </div>
 
         <button
@@ -154,22 +156,23 @@ export function Header() {
         >
           <div className="px-6 py-4 space-y-3">
             {links.map((l) => (
-              <Link
+              <LocaleLink
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
                 className="block text-sm text-muted-foreground hover:text-foreground"
               >
                 {l.label}
-              </Link>
+              </LocaleLink>
             ))}
-            <Link
+            <LocaleLink
               to="/iletisim"
               onClick={() => setOpen(false)}
               className="block w-full text-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
             >
               {t.nav.ctaDemo}
-            </Link>
+            </LocaleLink>
+            <div className="pt-2"><LanguageSwitcher /></div>
           </div>
         </motion.div>
       )}
@@ -309,20 +312,20 @@ export function Hero() {
               className="mt-9 flex flex-wrap items-center gap-4"
             >
               <Magnetic>
-                <Link
+                <LocaleLink
                   to="/iletisim"
                   className="shine inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                 >
                   {t.hero.ctaPrimary} <ArrowRight className="h-4 w-4" />
-                </Link>
+                </LocaleLink>
               </Magnetic>
               <Magnetic>
-                <Link
+                <LocaleLink
                   to="/nasil-calisir"
                   className="inline-flex items-center justify-center rounded-full border border-border/60 bg-card/70 px-7 py-3.5 text-sm font-medium text-foreground backdrop-blur transition-colors hover:bg-secondary"
                 >
                   {t.hero.ctaSecondary}
-                </Link>
+                </LocaleLink>
               </Magnetic>
             </motion.div>
           </div>
@@ -527,12 +530,12 @@ export function Pricing({ withHeading = true }: { withHeading?: boolean }) {
                   </li>
                 ))}
               </ul>
-              <Link
+              <LocaleLink
                 to="/iletisim"
                 className={`mt-6 block w-full text-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${tier.popular ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-border/60 text-foreground hover:bg-accent hover:text-accent-foreground"}`}
               >
                 {tier.cta}
-              </Link>
+              </LocaleLink>
             </motion.div>
           ))}
         </div>
@@ -677,17 +680,17 @@ export function Footer() {
           <div>
             <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">{t.footer.pages}</p>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/ozellikler" className="text-foreground/70 hover:text-foreground">{t.nav.features}</Link></li>
-              <li><Link to="/nasil-calisir" className="text-foreground/70 hover:text-foreground">{t.nav.howItWorks}</Link></li>
-              <li><Link to="/sektorler" className="text-foreground/70 hover:text-foreground">{t.nav.useCases}</Link></li>
-              <li><Link to="/fiyatlandirma" className="text-foreground/70 hover:text-foreground">{t.nav.pricing}</Link></li>
+              <li><LocaleLink to="/ozellikler" className="text-foreground/70 hover:text-foreground">{t.nav.features}</LocaleLink></li>
+              <li><LocaleLink to="/nasil-calisir" className="text-foreground/70 hover:text-foreground">{t.nav.howItWorks}</LocaleLink></li>
+              <li><LocaleLink to="/sektorler" className="text-foreground/70 hover:text-foreground">{t.nav.useCases}</LocaleLink></li>
+              <li><LocaleLink to="/fiyatlandirma" className="text-foreground/70 hover:text-foreground">{t.nav.pricing}</LocaleLink></li>
             </ul>
           </div>
           <div>
             <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">{t.footer.legal}</p>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/kvkk" className="text-foreground/70 hover:text-foreground">{t.footer.links.privacy}</Link></li>
-              <li><Link to="/iletisim" className="text-foreground/70 hover:text-foreground">{t.footer.links.contact}</Link></li>
+              <li><LocaleLink to="/kvkk" className="text-foreground/70 hover:text-foreground">{t.footer.links.privacy}</LocaleLink></li>
+              <li><LocaleLink to="/iletisim" className="text-foreground/70 hover:text-foreground">{t.footer.links.contact}</LocaleLink></li>
             </ul>
           </div>
         </div>
