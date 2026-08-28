@@ -27,6 +27,13 @@ export const tr = {
     menuAria: "Menü",
   },
   hero: {
+    widget: {
+      status: "Çevrimiçi",
+      msg1: "Merhaba! Size nasıl yardımcı olabilirim? Randevu, ürün veya bilgi almak için yazmanız yeterli.",
+      msg2: "Cuma günü 14:00 için randevu alabilir miyim?",
+      msg3: "Tabii, 14:00 için boş yerimiz var. Onaylamamı ister misiniz?",
+      channels: "Tüm kanallar bağlı",
+    },
     badge: "Yapay Zeka Destekli İş Asistanı",
     title: "Web sitenize entegre edin,\nher kanaldan satış yapmaya başlayın.",
     subtitle:
@@ -108,6 +115,7 @@ export const tr = {
     ],
   },
   pricing: {
+    popular: "Popüler",
     title: "İşletmeniz büyüdükçe büyüyen fiyatlandırma",
     subtitle: "Başlangıç için ücretsiz deneme; ilerledikçe ihtiyacınıza göre paket seçin.",
     tiers: [
@@ -165,6 +173,8 @@ export const tr = {
     },
   },
   footer: {
+    pages: "Sayfalar",
+    legal: "Yasal",
     tagline: "Her kanaldan, her zaman bağlı.",
     copyright: "© {year} TrairX Connect. Tüm hakları saklıdır.",
     links: {

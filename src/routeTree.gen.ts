@@ -10,8 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SektorlerRouteImport } from './routes/sektorler'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as OzelliklerRouteImport } from './routes/ozellikler'
+import { Route as NasilCalisirRouteImport } from './routes/nasil-calisir'
 import { Route as KvkkRouteImport } from './routes/kvkk'
+import { Route as IletisimRouteImport } from './routes/iletisim'
+import { Route as FiyatlandirmaRouteImport } from './routes/fiyatlandirma'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,14 +27,39 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SektorlerRoute = SektorlerRouteImport.update({
+  id: '/sektorler',
+  path: '/sektorler',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OzelliklerRoute = OzelliklerRouteImport.update({
+  id: '/ozellikler',
+  path: '/ozellikler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NasilCalisirRoute = NasilCalisirRouteImport.update({
+  id: '/nasil-calisir',
+  path: '/nasil-calisir',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KvkkRoute = KvkkRouteImport.update({
   id: '/kvkk',
   path: '/kvkk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IletisimRoute = IletisimRouteImport.update({
+  id: '/iletisim',
+  path: '/iletisim',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FiyatlandirmaRoute = FiyatlandirmaRouteImport.update({
+  id: '/fiyatlandirma',
+  path: '/fiyatlandirma',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -55,16 +85,26 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/fiyatlandirma': typeof FiyatlandirmaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
+  '/nasil-calisir': typeof NasilCalisirRoute
+  '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/fiyatlandirma': typeof FiyatlandirmaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
+  '/nasil-calisir': typeof NasilCalisirRoute
+  '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
@@ -73,23 +113,55 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/fiyatlandirma': typeof FiyatlandirmaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
+  '/nasil-calisir': typeof NasilCalisirRoute
+  '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/kvkk' | '/robots.txt' | '/sitemap.xml' | '/admin'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/fiyatlandirma'
+    | '/iletisim'
+    | '/kvkk'
+    | '/nasil-calisir'
+    | '/ozellikler'
+    | '/robots.txt'
+    | '/sektorler'
+    | '/sitemap.xml'
+    | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/kvkk' | '/robots.txt' | '/sitemap.xml' | '/admin'
+  to:
+    | '/'
+    | '/auth'
+    | '/fiyatlandirma'
+    | '/iletisim'
+    | '/kvkk'
+    | '/nasil-calisir'
+    | '/ozellikler'
+    | '/robots.txt'
+    | '/sektorler'
+    | '/sitemap.xml'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/fiyatlandirma'
+    | '/iletisim'
     | '/kvkk'
+    | '/nasil-calisir'
+    | '/ozellikler'
     | '/robots.txt'
+    | '/sektorler'
     | '/sitemap.xml'
     | '/_authenticated/admin'
   fileRoutesById: FileRoutesById
@@ -98,8 +170,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  FiyatlandirmaRoute: typeof FiyatlandirmaRoute
+  IletisimRoute: typeof IletisimRoute
   KvkkRoute: typeof KvkkRoute
+  NasilCalisirRoute: typeof NasilCalisirRoute
+  OzelliklerRoute: typeof OzelliklerRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SektorlerRoute: typeof SektorlerRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -112,6 +189,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sektorler': {
+      id: '/sektorler'
+      path: '/sektorler'
+      fullPath: '/sektorler'
+      preLoaderRoute: typeof SektorlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/robots.txt': {
       id: '/robots.txt'
       path: '/robots.txt'
@@ -119,11 +203,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ozellikler': {
+      id: '/ozellikler'
+      path: '/ozellikler'
+      fullPath: '/ozellikler'
+      preLoaderRoute: typeof OzelliklerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nasil-calisir': {
+      id: '/nasil-calisir'
+      path: '/nasil-calisir'
+      fullPath: '/nasil-calisir'
+      preLoaderRoute: typeof NasilCalisirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kvkk': {
       id: '/kvkk'
       path: '/kvkk'
       fullPath: '/kvkk'
       preLoaderRoute: typeof KvkkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iletisim': {
+      id: '/iletisim'
+      path: '/iletisim'
+      fullPath: '/iletisim'
+      preLoaderRoute: typeof IletisimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fiyatlandirma': {
+      id: '/fiyatlandirma'
+      path: '/fiyatlandirma'
+      fullPath: '/fiyatlandirma'
+      preLoaderRoute: typeof FiyatlandirmaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -172,8 +284,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  FiyatlandirmaRoute: FiyatlandirmaRoute,
+  IletisimRoute: IletisimRoute,
   KvkkRoute: KvkkRoute,
+  NasilCalisirRoute: NasilCalisirRoute,
+  OzelliklerRoute: OzelliklerRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
+  SektorlerRoute: SektorlerRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport

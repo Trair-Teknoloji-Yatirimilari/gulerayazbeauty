@@ -2,6 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 
 const STATIC_PAGES = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
+  { path: "/ozellikler", changefreq: "monthly", priority: "0.8" },
+  { path: "/nasil-calisir", changefreq: "monthly", priority: "0.8" },
+  { path: "/sektorler", changefreq: "monthly", priority: "0.7" },
+  { path: "/fiyatlandirma", changefreq: "monthly", priority: "0.9" },
+  { path: "/iletisim", changefreq: "monthly", priority: "0.7" },
   { path: "/kvkk", changefreq: "yearly", priority: "0.3" },
 ];
 
