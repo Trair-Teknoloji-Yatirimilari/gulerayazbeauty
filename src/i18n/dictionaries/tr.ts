@@ -31,6 +31,9 @@ export const tr = {
       status: "Çevrimiçi",
       aiLabel: "TrairX AI",
       typing: "yanıt yazıyor",
+      inbox: "Gelen Kutusu",
+      resolvedBy: "TrairX AI yanıtladı",
+      replyTime: "Ort. yanıt 2 sn",
       conversations: [
         {
           channel: "Instagram",
