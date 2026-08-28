@@ -1020,10 +1020,6 @@ function Footer() {
             <Link to="/galeri" className="hover:text-primary transition-colors underline underline-offset-2">
               {t.footer.galleryLink}
             </Link>
-            ·
-            <Link to="/blog" className="hover:text-primary transition-colors underline underline-offset-2">
-              Blog
-            </Link>
             <span className="hidden sm:inline">·</span>
             <Link to="/kvkk" className="hover:text-primary transition-colors underline underline-offset-2">
               {t.footer.legalLink}
