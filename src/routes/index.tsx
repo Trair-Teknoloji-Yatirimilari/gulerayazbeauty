@@ -184,7 +184,6 @@ function Nav() {
     { href: "#hizmetler", label: t.nav.services },
     { href: "#deneyim", label: t.nav.journey },
     { href: "/galeri", label: t.nav.gallery, route: true },
-    { href: "/blog", label: t.nav.blog, route: true },
     { href: "#sss", label: t.nav.faq },
     { href: "#iletisim", label: t.nav.contact },
   ];
@@ -1019,10 +1018,6 @@ function Footer() {
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground">
             <Link to="/galeri" className="hover:text-primary transition-colors underline underline-offset-2">
               {t.footer.galleryLink}
-            </Link>
-            ·
-            <Link to="/blog" className="hover:text-primary transition-colors underline underline-offset-2">
-              Blog
             </Link>
             <span className="hidden sm:inline">·</span>
             <Link to="/kvkk" className="hover:text-primary transition-colors underline underline-offset-2">
