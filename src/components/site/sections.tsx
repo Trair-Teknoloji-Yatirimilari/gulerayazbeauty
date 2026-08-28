@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   MessageCircle,
   Calendar,
@@ -17,9 +17,20 @@ import {
   Facebook,
   Phone,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useT } from "@/i18n/context";
 import { BRAND } from "@/lib/site";
+import {
+  Aurora,
+  Reveal,
+  AnimatedHeadline,
+  CountUp,
+  Marquee,
+  TiltCard,
+  Magnetic,
+  ScrollProgress,
+  useParallax,
+} from "./motion";
 
 const ICONS: Record<string, React.ElementType> = {
   MessageCircle,
