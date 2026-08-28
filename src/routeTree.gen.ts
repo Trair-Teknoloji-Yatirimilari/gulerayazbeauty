@@ -32,6 +32,7 @@ import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandi
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminUrunlerRouteImport } from './routes/_authenticated/admin.urunler'
 import { Route as AuthenticatedAdminIsletmeRouteImport } from './routes/_authenticated/admin.isletme'
+import { Route as AuthenticatedAdminHizmetlerRouteImport } from './routes/_authenticated/admin.hizmetler'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -149,6 +150,12 @@ const AuthenticatedAdminIsletmeRoute =
     path: '/isletme',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminHizmetlerRoute =
+  AuthenticatedAdminHizmetlerRouteImport.update({
+    id: '/hizmetler',
+    path: '/hizmetler',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -170,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
+  '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -192,6 +200,7 @@ export interface FileRoutesByTo {
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/$lang': typeof LangIndexRoute
+  '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -218,6 +227,7 @@ export interface FileRoutesById {
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
+  '/_authenticated/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/_authenticated/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/_authenticated/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -244,6 +254,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/admin'
     | '/$lang/'
+    | '/admin/hizmetler'
     | '/admin/isletme'
     | '/admin/urunler'
     | '/admin/'
@@ -266,6 +277,7 @@ export interface FileRouteTypes {
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
     | '/$lang'
+    | '/admin/hizmetler'
     | '/admin/isletme'
     | '/admin/urunler'
     | '/admin'
@@ -291,6 +303,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/_authenticated/admin'
     | '/$lang/'
+    | '/_authenticated/admin/hizmetler'
     | '/_authenticated/admin/isletme'
     | '/_authenticated/admin/urunler'
     | '/_authenticated/admin/'
@@ -474,16 +487,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIsletmeRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/hizmetler': {
+      id: '/_authenticated/admin/hizmetler'
+      path: '/hizmetler'
+      fullPath: '/admin/hizmetler'
+      preLoaderRoute: typeof AuthenticatedAdminHizmetlerRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminHizmetlerRoute: typeof AuthenticatedAdminHizmetlerRoute
   AuthenticatedAdminIsletmeRoute: typeof AuthenticatedAdminIsletmeRoute
   AuthenticatedAdminUrunlerRoute: typeof AuthenticatedAdminUrunlerRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminHizmetlerRoute: AuthenticatedAdminHizmetlerRoute,
   AuthenticatedAdminIsletmeRoute: AuthenticatedAdminIsletmeRoute,
   AuthenticatedAdminUrunlerRoute: AuthenticatedAdminUrunlerRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
