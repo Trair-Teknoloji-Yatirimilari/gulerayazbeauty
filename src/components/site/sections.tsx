@@ -62,7 +62,8 @@ const itemFade = {
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <ScrollProgress />
       <Header />
       <main>{children}</main>
       <Footer />
@@ -72,20 +73,31 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
 export function PageHero({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle: string }) {
   return (
-    <section className="relative pt-32 md:pt-40 pb-12 md:pb-16 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-primary/5 rounded-full blur-[120px]" />
+    <section className="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-16">
+      <Aurora />
+      <div className="relative mx-auto max-w-3xl px-6 text-center lg:px-10">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-4 text-xs uppercase tracking-[0.25em] text-primary"
+        >
+          {eyebrow}
+        </motion.p>
+        <AnimatedHeadline
+          text={title}
+          delay={0.1}
+          className="text-4xl font-semibold tracking-[-0.04em] md:text-5xl"
+        />
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-5 text-muted-foreground"
+        >
+          {subtitle}
+        </motion.p>
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto max-w-3xl px-6 lg:px-10 text-center"
-      >
-        <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{eyebrow}</p>
-        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-5 text-muted-foreground">{subtitle}</p>
-      </motion.div>
     </section>
   );
 }
