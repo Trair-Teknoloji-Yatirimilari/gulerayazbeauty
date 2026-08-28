@@ -211,120 +211,178 @@ function LiveChat() {
   const ChannelIcon = channel.icon;
 
   return (
-    <div className="widget-mock rounded-[28px] p-5 md:p-6">
-      <div className="mb-5 flex items-center gap-3">
-        <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary animate-pulse-ring">
-          <Sparkles className="h-5 w-5" />
-        </div>
-        <div>
-          <p className="text-sm font-medium text-foreground">{BRAND}</p>
-          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            {w.status}
+    <div className="widget-mock overflow-hidden rounded-[28px]">
+      <div className="grid grid-cols-[112px_1fr] sm:grid-cols-[190px_1fr]">
+        {/* Inbox list */}
+        <aside className="border-r border-border/50 bg-secondary/40 p-3 sm:p-4">
+          <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            {w.inbox}
           </p>
-        </div>
-        <motion.span
-          key={convo.channel}
-          initial={{ opacity: 0, y: -6, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className={`ml-auto inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium ${channel.badge}`}
-        >
-          <ChannelIcon className="h-3 w-3" />
-          {convo.channel}
-        </motion.span>
-      </div>
+          <div className="space-y-1.5">
+            {convos.map((c, i) => {
+              const s = CHANNEL_STYLES[c.channel] ?? CHANNEL_STYLES.Instagram;
+              const Icon = s.icon;
+              const active = i === index;
+              return (
+                <button
+                  key={c.name}
+                  type="button"
+                  onClick={() => {
+                    setIndex(i);
+                    setStep(0);
+                  }}
+                  className="relative flex w-full items-center gap-2 rounded-xl px-2 py-2 text-left"
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="inbox-active"
+                      transition={{ type: "spring", stiffness: 320, damping: 30 }}
+                      className="absolute inset-0 rounded-xl bg-card shadow-sm ring-1 ring-border/60"
+                    />
+                  )}
+                  <span className="relative">
+                    <span
+                      className={`flex h-7 w-7 items-center justify-center rounded-full ${s.badge}`}
+                    >
+                      <Icon className="h-3.5 w-3.5" />
+                    </span>
+                    {!active && (
+                      <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-primary ring-2 ring-secondary" />
+                    )}
+                  </span>
+                  <span className="relative hidden min-w-0 flex-1 sm:block">
+                    <span className="block truncate text-xs font-medium text-foreground">
+                      {c.name}
+                    </span>
+                    <span className="block truncate text-[10px] text-muted-foreground">
+                      {c.user}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </aside>
 
-      <div className="min-h-[210px] space-y-3">
-        <AnimatePresence mode="popLayout" initial={false}>
-          <motion.div
-            key={`u-${index}`}
-            layout
-            initial={{ opacity: 0, x: -18, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.96 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="flex max-w-[88%] items-start gap-2"
-          >
-            <span
-              className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${channel.badge}`}
-            >
-              <ChannelIcon className="h-3.5 w-3.5" />
-            </span>
-            <div className="rounded-2xl rounded-tl-md bg-secondary p-3">
-              <p className="text-[11px] font-medium text-muted-foreground">{convo.name}</p>
-              <p className="text-sm leading-relaxed">{convo.user}</p>
+        {/* Conversation */}
+        <div className="p-4 md:p-5">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary animate-pulse-ring">
+              <Sparkles className="h-4.5 w-4.5" />
             </div>
-          </motion.div>
-
-          {step === 1 && (
-            <motion.div
-              key={`typing-${index}`}
-              layout
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              className="ml-auto flex items-center gap-2"
-            >
-              <span className="text-[11px] text-muted-foreground">
-                {w.aiLabel} {w.typing}
-              </span>
-              <span className="flex items-center gap-1 rounded-2xl rounded-tr-md bg-primary/12 px-3 py-2.5">
-                {[0, 1, 2].map((d) => (
-                  <motion.span
-                    key={d}
-                    animate={{ opacity: [0.25, 1, 0.25], y: [0, -3, 0] }}
-                    transition={{ duration: 1.1, repeat: Infinity, delay: d * 0.15 }}
-                    className="h-1.5 w-1.5 rounded-full bg-primary"
-                  />
-                ))}
-              </span>
-            </motion.div>
-          )}
-
-          {step === 2 && (
-            <motion.div
-              key={`b-${index}`}
-              layout
-              initial={{ opacity: 0, x: 18, scale: 0.96 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.96 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="ml-auto max-w-[86%] rounded-2xl rounded-tr-md bg-primary p-3 text-primary-foreground"
-            >
-              <p className="mb-0.5 flex items-center gap-1 text-[11px] opacity-80">
-                <Sparkles className="h-3 w-3" />
-                {w.aiLabel}
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium text-foreground">{convo.name}</p>
+              <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                {w.status}
               </p>
-              <p className="text-sm leading-relaxed">{convo.bot}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <div className="mt-5 flex items-center gap-3 border-t border-border/50 pt-4 text-xs text-muted-foreground">
-        {(["Instagram", "Facebook", "WhatsApp"] as const).map((c, i) => {
-          const s = CHANNEL_STYLES[c];
-          const Icon = s.icon;
-          const active = convo.channel === c;
-          return (
+            </div>
             <motion.span
-              key={c}
-              animate={active ? { scale: [1, 1.15, 1] } : { scale: 1, y: [0, -3, 0] }}
-              transition={
-                active
-                  ? { duration: 0.6, ease: "easeOut" }
-                  : { duration: 3, repeat: Infinity, delay: i * 0.4 }
-              }
-              className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
-                active ? s.badge : "bg-secondary text-foreground/60"
-              }`}
+              key={convo.channel}
+              initial={{ opacity: 0, y: -6, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className={`ml-auto inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium ${channel.badge}`}
             >
-              <Icon className="h-3.5 w-3.5" />
+              <ChannelIcon className="h-3 w-3" />
+              <span className="hidden sm:inline">{convo.channel}</span>
             </motion.span>
-          );
-        })}
-        <span className="ml-auto">{w.channels}</span>
+          </div>
+
+          <div className="min-h-[210px] space-y-3">
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div
+                key={`u-${index}`}
+                layout
+                initial={{ opacity: 0, x: -18, scale: 0.96 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.96 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="flex max-w-[88%] items-start gap-2"
+              >
+                <span
+                  className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${channel.badge}`}
+                >
+                  <ChannelIcon className="h-3.5 w-3.5" />
+                </span>
+                <div className="rounded-2xl rounded-tl-md bg-secondary p-3">
+                  <p className="text-[11px] font-medium text-muted-foreground">{convo.name}</p>
+                  <p className="text-sm leading-relaxed">{convo.user}</p>
+                </div>
+              </motion.div>
+
+              {step === 1 && (
+                <motion.div
+                  key={`typing-${index}`}
+                  layout
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className="ml-auto flex items-center gap-2"
+                >
+                  <span className="text-[11px] text-muted-foreground">
+                    {w.aiLabel} {w.typing}
+                  </span>
+                  <span className="flex items-center gap-1 rounded-2xl rounded-tr-md bg-primary/12 px-3 py-2.5">
+                    {[0, 1, 2].map((d) => (
+                      <motion.span
+                        key={d}
+                        animate={{ opacity: [0.25, 1, 0.25], y: [0, -3, 0] }}
+                        transition={{ duration: 1.1, repeat: Infinity, delay: d * 0.15 }}
+                        className="h-1.5 w-1.5 rounded-full bg-primary"
+                      />
+                    ))}
+                  </span>
+                </motion.div>
+              )}
+
+              {step === 2 && (
+                <motion.div
+                  key={`b-${index}`}
+                  layout
+                  initial={{ opacity: 0, x: 18, scale: 0.96 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.96 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="ml-auto max-w-[86%] rounded-2xl rounded-tr-md bg-primary p-3 text-primary-foreground"
+                >
+                  <p className="mb-0.5 flex items-center gap-1 text-[11px] opacity-80">
+                    <Sparkles className="h-3 w-3" />
+                    {w.aiLabel}
+                  </p>
+                  <p className="text-sm leading-relaxed">{convo.bot}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="mt-4 flex items-center gap-2 border-t border-border/50 pt-3 text-[11px] text-muted-foreground">
+            <AnimatePresence mode="wait" initial={false}>
+              {step === 2 ? (
+                <motion.span
+                  key="resolved"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-medium text-emerald-600"
+                >
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  {w.resolvedBy}
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="channels"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                >
+                  {w.channels}
+                </motion.span>
+              )}
+            </AnimatePresence>
+            <span className="ml-auto">{w.replyTime}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
