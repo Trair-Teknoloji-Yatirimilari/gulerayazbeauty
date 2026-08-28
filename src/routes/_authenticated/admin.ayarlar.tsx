@@ -5,6 +5,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { AdminShell, Card, Field, inputClass, PrimaryButton } from "@/components/admin/shell";
 import { changeAdminPassword, getAdminSession } from "@/lib/auth.functions";
+import { createPlanCheckout } from "@/lib/billing.functions";
+import { PLANS, PLAN_KEYS, formatUsd, type PlanKey } from "@/lib/plans";
 
 export const Route = createFileRoute("/_authenticated/admin/ayarlar")({
   component: SettingsPage,
@@ -18,6 +20,21 @@ function SettingsPage() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const [planBusy, setPlanBusy] = useState(false);
+  const checkoutFn = useServerFn(createPlanCheckout);
+
+  const startCheckout = async (plan: PlanKey) => {
+    setPlanBusy(true);
+    try {
+      const { url } = await checkoutFn({ data: { plan } });
+      if (url) window.location.href = url;
+      else toast.error("Ödeme bağlantısı oluşturulamadı.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Ödeme başlatılamadı.");
+    } finally {
+      setPlanBusy(false);
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
