@@ -198,6 +198,89 @@ const OUTCOME_ICONS: Record<string, React.ElementType> = {
   sale: BarChart3,
 };
 
+const MEDIA_ICONS: Record<string, React.ElementType> = {
+  voice: Mic,
+  image: ImageIcon,
+  file: Paperclip,
+};
+
+type MediaInfo = { type: string; label: string; detail: string; duration: string };
+
+function MediaAttachment({ media }: { media: MediaInfo }) {
+  if (!media || media.type === "text") return null;
+  const Icon = MEDIA_ICONS[media.type] ?? Paperclip;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="mb-2 rounded-xl bg-background/70 p-2 ring-1 ring-border/60"
+    >
+      {media.type === "voice" ? (
+        <div className="flex items-center gap-2">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <Play className="h-3 w-3" />
+          </span>
+          <span className="flex h-6 flex-1 items-end gap-[3px]">
+            {[6, 12, 8, 16, 10, 18, 9, 14, 7, 13, 8, 11].map((h, i) => (
+              <motion.span
+                key={i}
+                animate={{ scaleY: [0.4, 1, 0.4] }}
+                transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.07, ease: "easeInOut" }}
+                style={{ height: h }}
+                className="w-[3px] origin-bottom rounded-full bg-primary/60"
+              />
+            ))}
+          </span>
+          <span className="text-[10px] font-medium tabular-nums text-muted-foreground">
+            {media.duration}
+          </span>
+        </div>
+      ) : media.type === "image" ? (
+        <div className="flex items-center gap-2">
+          <span className="relative flex h-11 w-14 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-primary/25 via-primary/10 to-secondary">
+            <ImageIcon className="h-4 w-4 text-primary" />
+            <motion.span
+              animate={{ y: [-14, 14, -14] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-x-0 h-[2px] bg-primary/70"
+            />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-[11px] font-medium text-foreground">{media.label}</span>
+            <span className="block text-[10px] text-muted-foreground">{media.detail}</span>
+          </span>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <FileText className="h-4 w-4" />
+          </span>
+          <span className="min-w-0">
+            <span className="block truncate text-[11px] font-medium text-foreground">
+              {media.duration || media.label}
+            </span>
+            <span className="block text-[10px] text-muted-foreground">{media.detail}</span>
+          </span>
+        </div>
+      )}
+
+      {media.type !== "image" && media.detail ? (
+        <p className="mt-1.5 flex items-center gap-1 text-[10px] text-muted-foreground">
+          <Sparkles className="h-2.5 w-2.5 text-primary" />
+          {media.detail}
+        </p>
+      ) : null}
+    </motion.div>
+  );
+}
+
+const Icon_unused = null;
+void Icon_unused;
+
+
+
 function LiveChat() {
   const { t } = useT();
   const w = t.hero.widget;
