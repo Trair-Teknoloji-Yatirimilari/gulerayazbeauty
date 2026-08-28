@@ -21,6 +21,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LangRouteImport } from './routes/$lang'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LangIndexRouteImport } from './routes/$lang.index'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -82,6 +83,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangIndexRoute = LangIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LangRoute,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -90,7 +96,7 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$lang': typeof LangRoute
+  '/$lang': typeof LangRouteWithChildren
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
   '/iletisim': typeof IletisimRoute
@@ -101,10 +107,10 @@ export interface FileRoutesByFullPath {
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/$lang/': typeof LangIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$lang': typeof LangRoute
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
   '/iletisim': typeof IletisimRoute
@@ -115,12 +121,13 @@ export interface FileRoutesByTo {
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/$lang': typeof LangIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/$lang': typeof LangRoute
+  '/$lang': typeof LangRouteWithChildren
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
   '/iletisim': typeof IletisimRoute
@@ -131,6 +138,7 @@ export interface FileRoutesById {
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/$lang/': typeof LangIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,10 +155,10 @@ export interface FileRouteTypes {
     | '/sektorler'
     | '/sitemap.xml'
     | '/admin'
+    | '/$lang/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/$lang'
     | '/auth'
     | '/fiyatlandirma'
     | '/iletisim'
@@ -161,6 +169,7 @@ export interface FileRouteTypes {
     | '/sektorler'
     | '/sitemap.xml'
     | '/admin'
+    | '/$lang'
   id:
     | '__root__'
     | '/'
@@ -176,12 +185,13 @@ export interface FileRouteTypes {
     | '/sektorler'
     | '/sitemap.xml'
     | '/_authenticated/admin'
+    | '/$lang/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  LangRoute: typeof LangRoute
+  LangRoute: typeof LangRouteWithChildren
   AuthRoute: typeof AuthRoute
   FiyatlandirmaRoute: typeof FiyatlandirmaRoute
   IletisimRoute: typeof IletisimRoute
@@ -279,6 +289,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang/': {
+      id: '/$lang/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -300,10 +317,20 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface LangRouteChildren {
+  LangIndexRoute: typeof LangIndexRoute
+}
+
+const LangRouteChildren: LangRouteChildren = {
+  LangIndexRoute: LangIndexRoute,
+}
+
+const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  LangRoute: LangRoute,
+  LangRoute: LangRouteWithChildren,
   AuthRoute: AuthRoute,
   FiyatlandirmaRoute: FiyatlandirmaRoute,
   IletisimRoute: IletisimRoute,
