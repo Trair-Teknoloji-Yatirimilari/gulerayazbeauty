@@ -51,7 +51,7 @@ async function buildSystemPrompt(businessId: string): Promise<string> {
   if (services.rows.length) {
     lines.push("", "HİZMETLER:");
     for (const v of services.rows)
-      lines.push(`- ${v.name} — ${v.price} ${v.currency}, ${v.duration_min} dk${v.description ? ` (${v.description})` : ""}`);
+      lines.push(`- ${v.name} — ${v.price} USD, ${v.duration_min} dk${v.description ? ` (${v.description})` : ""}`);
   }
   if (hours.rows.length) {
     lines.push("", "ÇALIŞMA SAATLERİ:");
