@@ -31,6 +31,7 @@ import { Route as LangKvkkRouteImport } from './routes/$lang.kvkk'
 import { Route as LangIletisimRouteImport } from './routes/$lang.iletisim'
 import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandirma'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as AuthenticatedAdminUrunlerRouteImport } from './routes/_authenticated/admin.urunler'
 import { Route as AuthenticatedAdminSuperadminRouteImport } from './routes/_authenticated/admin.superadmin'
 import { Route as AuthenticatedAdminSiparislerRouteImport } from './routes/_authenticated/admin.siparisler'
@@ -152,6 +153,11 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe-webhook',
+  path: '/api/public/stripe-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminUrunlerRoute =
   AuthenticatedAdminUrunlerRouteImport.update({
     id: '/urunler',
@@ -249,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
   '/admin/superadmin': typeof AuthenticatedAdminSuperadminRoute
   '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -281,6 +288,7 @@ export interface FileRoutesByTo {
   '/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
   '/admin/superadmin': typeof AuthenticatedAdminSuperadminRoute
   '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -317,6 +325,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
   '/_authenticated/admin/superadmin': typeof AuthenticatedAdminSuperadminRoute
   '/_authenticated/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -353,6 +362,7 @@ export interface FileRouteTypes {
     | '/admin/siparisler'
     | '/admin/superadmin'
     | '/admin/urunler'
+    | '/api/public/stripe-webhook'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -385,6 +395,7 @@ export interface FileRouteTypes {
     | '/admin/siparisler'
     | '/admin/superadmin'
     | '/admin/urunler'
+    | '/api/public/stripe-webhook'
     | '/admin'
   id:
     | '__root__'
@@ -420,6 +431,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/siparisler'
     | '/_authenticated/admin/superadmin'
     | '/_authenticated/admin/urunler'
+    | '/api/public/stripe-webhook'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -437,6 +449,7 @@ export interface RootRouteChildren {
   SektorlerRoute: typeof SektorlerRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PayTokenRoute: typeof PayTokenRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -594,6 +607,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/api/public/stripe-webhook': {
+      id: '/api/public/stripe-webhook'
+      path: '/api/public/stripe-webhook'
+      fullPath: '/api/public/stripe-webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/urunler': {
       id: '/_authenticated/admin/urunler'
@@ -755,6 +775,7 @@ const rootRouteChildren: RootRouteChildren = {
   SektorlerRoute: SektorlerRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PayTokenRoute: PayTokenRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
