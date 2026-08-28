@@ -184,7 +184,6 @@ function Nav() {
     { href: "#hizmetler", label: t.nav.services },
     { href: "#deneyim", label: t.nav.journey },
     { href: "/galeri", label: t.nav.gallery, route: true },
-    { href: "/blog", label: t.nav.blog, route: true },
     { href: "#sss", label: t.nav.faq },
     { href: "#iletisim", label: t.nav.contact },
   ];
