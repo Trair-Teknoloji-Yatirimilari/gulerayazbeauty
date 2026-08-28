@@ -16,8 +16,9 @@ async function buildSystemPrompt(businessId: string): Promise<string> {
     pool.query("SELECT name, sector, description FROM businesses WHERE id=$1", [businessId]),
     pool.query("SELECT tone, language, greeting, fallback_message, handoff_rules FROM ai_settings WHERE business_id=$1", [businessId]),
     pool.query("SELECT name, price, currency, description FROM products WHERE business_id=$1 AND is_active LIMIT 100", [businessId]),
-    pool.query("SELECT name, price, currency, duration_min, description FROM services WHERE business_id=$1 AND is_active LIMIT 100", [businessId]),
-    pool.query("SELECT weekday, open_time, close_time FROM working_hours WHERE business_id=$1 ORDER BY weekday", [businessId]),
+    pool.query("SELECT name, price, duration_min, description FROM services WHERE business_id=$1 AND is_active LIMIT 100", [businessId]),
+    pool.query("SELECT weekday, open_time, close_time, is_closed FROM business_hours WHERE business_id=$1 ORDER BY weekday", [businessId]),
+
     pool.query("SELECT type, question, answer FROM knowledge_items WHERE business_id=$1 LIMIT 200", [businessId]),
   ]);
 
