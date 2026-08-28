@@ -41,7 +41,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
         <AnyLink
           key={l}
           to={localePath(l, path)}
-          hreflang={l}
+          hrefLang={l}
           className={`rounded-full px-2.5 py-1 text-[11px] font-medium tracking-wide transition-colors ${
             l === locale ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
           }`}
