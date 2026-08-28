@@ -185,7 +185,7 @@ export const tr = {
     tiers: [
       {
         name: "Starter",
-        price: "0",
+        price: "$0",
         period: "/ay",
         description: "Küçük işletmeler ve ilk deneme için.",
         features: ["500 sohbet/mesaj", "1 web sitesi", "WhatsApp bağlantısı", "Temel analizler"],
@@ -194,7 +194,7 @@ export const tr = {
       },
       {
         name: "Pro",
-        price: "49",
+        price: "$49",
         period: "/ay",
         description: "Büyüyen işletmeler için tam özellik seti.",
         features: ["Sınırsız sohbet", "3 kanal (IG + FB + WA)", "Partner sayfaları", "Rezervasyon modülü", "Gelişmiş raporlar"],

@@ -149,7 +149,7 @@ export const en = {
     tiers: [
       {
         name: "Starter",
-        price: "0",
+        price: "$0",
         period: "/month",
         description: "For small businesses and first trials.",
         features: ["500 chats/messages", "1 website", "WhatsApp connection", "Basic analytics"],
@@ -158,7 +158,7 @@ export const en = {
       },
       {
         name: "Pro",
-        price: "49",
+        price: "$49",
         period: "/month",
         description: "Full feature set for growing businesses.",
         features: ["Unlimited chats", "3 channels (IG + FB + WA)", "Partner pages", "Booking module", "Advanced reports"],
