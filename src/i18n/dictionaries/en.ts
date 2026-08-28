@@ -27,6 +27,13 @@ export const en = {
     menuAria: "Menu",
   },
   hero: {
+    widget: {
+      status: "Online",
+      msg1: "Hi! How can I help? Ask about bookings, products or anything else.",
+      msg2: "Can I book an appointment for Friday at 2 PM?",
+      msg3: "Sure, 2 PM is available. Shall I confirm it for you?",
+      channels: "All channels connected",
+    },
     badge: "AI-Powered Business Assistant",
     title: "Embed on your website,\nsell across every channel.",
     subtitle:
@@ -72,6 +79,7 @@ export const en = {
     ],
   },
   pricing: {
+    popular: "Popular",
     title: "Pricing that grows with your business",
     subtitle: "Start free; upgrade as your needs grow.",
     tiers: [
@@ -129,6 +137,8 @@ export const en = {
     },
   },
   footer: {
+    pages: "Pages",
+    legal: "Legal",
     tagline: "Connected on every channel, always.",
     copyright: "© {year} TrairX Connect. All rights reserved.",
     links: {
