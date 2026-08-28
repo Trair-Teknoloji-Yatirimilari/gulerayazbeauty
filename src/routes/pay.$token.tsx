@@ -3,8 +3,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { CheckCircle2, Lock, ShieldCheck } from "lucide-react";
+import { CheckCircle2, CreditCard, Lock, ShieldCheck } from "lucide-react";
 import { getPublicOrder, submitCheckout, type PublicOrder } from "@/lib/commerce.functions";
+import { createOrderCheckout } from "@/lib/billing.functions";
 
 export const Route = createFileRoute("/pay/$token")({
   head: () => ({
