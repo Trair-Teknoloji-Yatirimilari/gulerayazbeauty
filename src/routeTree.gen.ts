@@ -37,6 +37,7 @@ import { Route as AuthenticatedAdminRezervasyonlarRouteImport } from './routes/_
 import { Route as AuthenticatedAdminKanallarRouteImport } from './routes/_authenticated/admin.kanallar'
 import { Route as AuthenticatedAdminIsletmeRouteImport } from './routes/_authenticated/admin.isletme'
 import { Route as AuthenticatedAdminHizmetlerRouteImport } from './routes/_authenticated/admin.hizmetler'
+import { Route as AuthenticatedAdminAyarlarRouteImport } from './routes/_authenticated/admin.ayarlar'
 import { Route as AuthenticatedAdminAiRouteImport } from './routes/_authenticated/admin.ai'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -185,6 +186,12 @@ const AuthenticatedAdminHizmetlerRoute =
     path: '/hizmetler',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminAyarlarRoute =
+  AuthenticatedAdminAyarlarRouteImport.update({
+    id: '/ayarlar',
+    path: '/ayarlar',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAiRoute = AuthenticatedAdminAiRouteImport.update({
   id: '/ai',
   path: '/ai',
@@ -212,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
   '/admin/ai': typeof AuthenticatedAdminAiRoute
+  '/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
   '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/admin/kanallar': typeof AuthenticatedAdminKanallarRoute
@@ -240,6 +248,7 @@ export interface FileRoutesByTo {
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/$lang': typeof LangIndexRoute
   '/admin/ai': typeof AuthenticatedAdminAiRoute
+  '/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
   '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/admin/kanallar': typeof AuthenticatedAdminKanallarRoute
@@ -272,6 +281,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
   '/_authenticated/admin/ai': typeof AuthenticatedAdminAiRoute
+  '/_authenticated/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
   '/_authenticated/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/_authenticated/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/_authenticated/admin/kanallar': typeof AuthenticatedAdminKanallarRoute
@@ -304,6 +314,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/$lang/'
     | '/admin/ai'
+    | '/admin/ayarlar'
     | '/admin/hizmetler'
     | '/admin/isletme'
     | '/admin/kanallar'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/$lang'
     | '/admin/ai'
+    | '/admin/ayarlar'
     | '/admin/hizmetler'
     | '/admin/isletme'
     | '/admin/kanallar'
@@ -363,6 +375,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/$lang/'
     | '/_authenticated/admin/ai'
+    | '/_authenticated/admin/ayarlar'
     | '/_authenticated/admin/hizmetler'
     | '/_authenticated/admin/isletme'
     | '/_authenticated/admin/kanallar'
@@ -586,6 +599,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminHizmetlerRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/ayarlar': {
+      id: '/_authenticated/admin/ayarlar'
+      path: '/ayarlar'
+      fullPath: '/admin/ayarlar'
+      preLoaderRoute: typeof AuthenticatedAdminAyarlarRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/ai': {
       id: '/_authenticated/admin/ai'
       path: '/ai'
@@ -598,6 +618,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAiRoute: typeof AuthenticatedAdminAiRoute
+  AuthenticatedAdminAyarlarRoute: typeof AuthenticatedAdminAyarlarRoute
   AuthenticatedAdminHizmetlerRoute: typeof AuthenticatedAdminHizmetlerRoute
   AuthenticatedAdminIsletmeRoute: typeof AuthenticatedAdminIsletmeRoute
   AuthenticatedAdminKanallarRoute: typeof AuthenticatedAdminKanallarRoute
@@ -610,6 +631,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAiRoute: AuthenticatedAdminAiRoute,
+  AuthenticatedAdminAyarlarRoute: AuthenticatedAdminAyarlarRoute,
   AuthenticatedAdminHizmetlerRoute: AuthenticatedAdminHizmetlerRoute,
   AuthenticatedAdminIsletmeRoute: AuthenticatedAdminIsletmeRoute,
   AuthenticatedAdminKanallarRoute: AuthenticatedAdminKanallarRoute,
