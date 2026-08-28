@@ -224,6 +224,17 @@ export const tr = {
       "TrairX Connect, KVKK ve GDPR ilkelerine uygun hareket eder. Daha fazla bilgi için bizimle iletişime geçebilirsiniz.",
     backHome: "Ana sayfaya dön",
   },
+  auth: {
+    badge: "Yönetici Girişi",
+    subtitleSignin: "TrairX Connect yönetim paneline erişmek için giriş yapın.",
+    emailLabel: "E-posta",
+    passwordLabel: "Şifre",
+    signIn: "Giriş Yap",
+    successSignin: "Giriş başarılı.",
+    failed: "Giriş başarısız.",
+    backHome: "Ana sayfaya dön",
+    notice: "Bu alan yalnızca yetkili kullanıcılar içindir.",
+  },
   admin: {
     title: "Yönetim Paneli",
     backSite: "Siteye dön",

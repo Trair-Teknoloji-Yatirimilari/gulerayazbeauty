@@ -170,6 +170,17 @@ export const en = {
     footerNote2: "TrairX Connect operates in accordance with GDPR and KVKK principles. Contact us for more information.",
     backHome: "Back to home",
   },
+  auth: {
+    badge: "Admin Sign In",
+    subtitleSignin: "Sign in to access the TrairX Connect admin dashboard.",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    signIn: "Sign In",
+    successSignin: "Signed in successfully.",
+    failed: "Sign in failed.",
+    backHome: "Back to home",
+    notice: "This area is for authorized users only.",
+  },
   admin: {
     title: "Admin Dashboard",
     backSite: "Back to site",

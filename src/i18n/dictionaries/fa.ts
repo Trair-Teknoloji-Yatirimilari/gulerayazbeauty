@@ -170,6 +170,17 @@ export const fa = {
     footerNote2: "TrairX Connect مطابق با اصول GDPR و KVKK عمل می‌کند. برای اطلاعات بیشتر با ما تماس بگیرید.",
     backHome: "بازگشت به صفحه اصلی",
   },
+  auth: {
+    badge: "ورود مدیر",
+    subtitleSignin: "برای دسترسی به داشبورد مدیریت TrairX Connect وارد شوید.",
+    emailLabel: "ایمیل",
+    passwordLabel: "رمز عبور",
+    signIn: "ورود",
+    successSignin: "ورود با موفقیت انجام شد.",
+    failed: "ورود ناموفق بود.",
+    backHome: "بازگشت به صفحه اصلی",
+    notice: "این بخش فقط برای کاربران مجاز است.",
+  },
   admin: {
     title: "داشبورد مدیریت",
     backSite: "بازگشت به سایت",
