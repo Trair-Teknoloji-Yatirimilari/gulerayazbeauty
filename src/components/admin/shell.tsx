@@ -14,6 +14,7 @@ import {
   Share2,
   Settings,
   ShieldCheck,
+  Users,
   LogOut,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -26,6 +27,7 @@ const NAV = [
   { to: "/admin/hizmetler", label: "Hizmetler", icon: Sparkles },
   { to: "/admin/saatler", label: "Çalışma saatleri", icon: Clock },
   { to: "/admin/rezervasyonlar", label: "Rezervasyonlar", icon: CalendarDays },
+  { to: "/admin/crm", label: "CRM", icon: Users },
   { to: "/admin/siparisler", label: "Siparişler & ödeme", icon: ShoppingCart },
   { to: "/admin/ai", label: "AI eğitimi", icon: Brain },
   { to: "/admin/kanallar", label: "Kanallar & widget", icon: Share2 },
