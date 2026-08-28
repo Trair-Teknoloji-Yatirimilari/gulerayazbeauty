@@ -391,40 +391,32 @@ export function Trusted() {
 export function Features({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
   return (
-    <section id="ozellikler" className="py-24 md:py-32">
+    <section id="ozellikler" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.features}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.features.title}</h2>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.features}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.features.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.features.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <motion.div
-          variants={stagger}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {t.features.items.map((f) => {
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {t.features.items.map((f, i) => {
             const Icon = ICONS[f.icon] ?? Sparkles;
             return (
-              <motion.div
-                key={f.title}
-                variants={itemFade}
-                className="group rounded-2xl border border-border/40 bg-card p-6 hover:shadow-lg transition-shadow"
-              >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-105 transition-transform">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </motion.div>
+              <Reveal key={f.title} delay={i * 0.07}>
+                <TiltCard className="group h-full rounded-3xl border border-border/50 bg-card p-7 card-shadow transition-shadow duration-500 hover:shadow-[var(--shadow-soft)]">
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold tracking-tight">{f.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                </TiltCard>
+              </Reveal>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -433,36 +425,42 @@ export function Features({ withHeading = true }: { withHeading?: boolean }) {
 export function HowItWorks({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
   return (
-    <section id="nasil-calisir" className="py-24 md:py-32 bg-card/30">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section id="nasil-calisir" className="relative overflow-hidden bg-ink py-24 text-ink-foreground md:py-32">
+      <div className="pointer-events-none absolute inset-0 opacity-40">
+        <div className="aurora absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
+      </div>
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.howItWorks}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.howItWorks.title}</h2>
-            <p className="mt-4 text-muted-foreground">{t.howItWorks.subtitle}</p>
-          </motion.div>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-ink-foreground/60">{t.nav.howItWorks}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.howItWorks.title}</h2>
+            <p className="mt-4 text-ink-foreground/70">{t.howItWorks.subtitle}</p>
+          </Reveal>
         )}
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="relative grid gap-10 md:grid-cols-3">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 right-0 top-7 hidden h-px origin-left bg-[image:var(--gradient-primary)] md:block"
+          />
           {t.howItWorks.steps.map((step, i) => (
-            <motion.div
-              key={step.number}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="relative"
-            >
-              <span className="text-5xl font-semibold text-primary/10">{step.number}</span>
-              <h3 className="mt-4 text-xl font-semibold">{step.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-            </motion.div>
+            <Reveal key={step.number} delay={i * 0.15} className="relative">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 font-display text-xl font-semibold backdrop-blur">
+                {step.number}
+              </div>
+              <h3 className="text-xl font-semibold tracking-tight">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-foreground/70">{step.desc}</p>
+            </Reveal>
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 
 export function UseCases({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
