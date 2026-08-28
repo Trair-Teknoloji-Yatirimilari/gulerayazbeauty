@@ -29,9 +29,28 @@ export const tr = {
   hero: {
     widget: {
       status: "Çevrimiçi",
-      msg1: "Merhaba! Size nasıl yardımcı olabilirim? Randevu, ürün veya bilgi almak için yazmanız yeterli.",
-      msg2: "Cuma günü 14:00 için randevu alabilir miyim?",
-      msg3: "Tabii, 14:00 için boş yerimiz var. Onaylamamı ister misiniz?",
+      aiLabel: "TrairX AI",
+      typing: "yanıt yazıyor",
+      conversations: [
+        {
+          channel: "Instagram",
+          name: "Elif K.",
+          user: "Cuma 14:00 için randevu alabilir miyim?",
+          bot: "Tabii Elif Hanım, Cuma 14:00 uygun. Onaylıyorum ve hatırlatma göndereceğim.",
+        },
+        {
+          channel: "WhatsApp",
+          name: "Murat A.",
+          user: "Siparişim ne zaman kargoya verilir?",
+          bot: "Siparişiniz bugün 17:00'ye kadar kargoda. Takip numarasını buraya iletiyorum.",
+        },
+        {
+          channel: "Facebook",
+          name: "Ayşe D.",
+          user: "Cilt bakımı paketiniz kaç TL?",
+          bot: "Bakım paketimiz 1.200 TL. İsterseniz size hemen uygun bir saat ayırabilirim.",
+        },
+      ],
       channels: "Tüm kanallar bağlı",
     },
     badge: "Yapay Zeka Destekli İş Asistanı",

@@ -29,9 +29,28 @@ export const en = {
   hero: {
     widget: {
       status: "Online",
-      msg1: "Hi! How can I help? Ask about bookings, products or anything else.",
-      msg2: "Can I book an appointment for Friday at 2 PM?",
-      msg3: "Sure, 2 PM is available. Shall I confirm it for you?",
+      aiLabel: "TrairX AI",
+      typing: "is typing",
+      conversations: [
+        {
+          channel: "Instagram",
+          name: "Emma K.",
+          user: "Can I book an appointment for Friday at 2 PM?",
+          bot: "Of course Emma, Friday 2 PM is open. I've confirmed it and will send a reminder.",
+        },
+        {
+          channel: "WhatsApp",
+          name: "Marcus A.",
+          user: "When will my order ship?",
+          bot: "Your order ships today before 5 PM. Here's your tracking number.",
+        },
+        {
+          channel: "Facebook",
+          name: "Sophie D.",
+          user: "How much is your skincare package?",
+          bot: "The package is $89. I can reserve a slot for you right now if you'd like.",
+        },
+      ],
       channels: "All channels connected",
     },
     badge: "AI-Powered Business Assistant",

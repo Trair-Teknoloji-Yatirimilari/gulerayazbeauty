@@ -179,24 +179,36 @@ export function Header() {
   );
 }
 
+const CHANNEL_STYLES: Record<string, { icon: typeof Instagram; badge: string }> = {
+  Instagram: { icon: Instagram, badge: "bg-[#E1306C]/12 text-[#E1306C]" },
+  Facebook: { icon: Facebook, badge: "bg-[#1877F2]/12 text-[#1877F2]" },
+  WhatsApp: { icon: Phone, badge: "bg-[#25D366]/14 text-[#128C4A]" },
+};
+
 function LiveChat() {
   const { t } = useT();
   const w = t.hero.widget;
-  const bubbles = [
-    { from: "bot" as const, text: w.msg1 },
-    { from: "user" as const, text: w.msg2 },
-    { from: "bot" as const, text: w.msg3 },
-  ];
-  const [visible, setVisible] = useState(0);
+  const convos = w.conversations;
+
+  // step: 0 = incoming message, 1 = AI typing, 2 = AI reply
+  const [index, setIndex] = useState(0);
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
-    if (visible >= bubbles.length) {
-      const reset = setTimeout(() => setVisible(0), 5200);
-      return () => clearTimeout(reset);
-    }
-    const timer = setTimeout(() => setVisible((v) => v + 1), 1100 + visible * 350);
+    const delays = [1500, 1200, 2600];
+    const timer = setTimeout(() => {
+      if (step < 2) setStep((s) => s + 1);
+      else {
+        setStep(0);
+        setIndex((i) => (i + 1) % convos.length);
+      }
+    }, delays[step]);
     return () => clearTimeout(timer);
-  }, [visible, bubbles.length]);
+  }, [step, convos.length]);
+
+  const convo = convos[index];
+  const channel = CHANNEL_STYLES[convo.channel] ?? CHANNEL_STYLES.Instagram;
+  const ChannelIcon = channel.icon;
 
   return (
     <div className="widget-mock rounded-[28px] p-5 md:p-6">
@@ -211,57 +223,107 @@ function LiveChat() {
             {w.status}
           </p>
         </div>
+        <motion.span
+          key={convo.channel}
+          initial={{ opacity: 0, y: -6, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className={`ml-auto inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium ${channel.badge}`}
+        >
+          <ChannelIcon className="h-3 w-3" />
+          {convo.channel}
+        </motion.span>
       </div>
 
       <div className="min-h-[210px] space-y-3">
-        <AnimatePresence initial={false}>
-          {bubbles.slice(0, visible).map((b, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 14, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className={
-                b.from === "bot"
-                  ? "max-w-[85%] rounded-2xl rounded-tl-md bg-secondary p-3"
-                  : "ml-auto max-w-[78%] rounded-2xl rounded-tr-md bg-primary p-3 text-primary-foreground"
-              }
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div
+            key={`u-${index}`}
+            layout
+            initial={{ opacity: 0, x: -18, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.96 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="flex max-w-[88%] items-start gap-2"
+          >
+            <span
+              className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${channel.badge}`}
             >
-              <p className="text-sm leading-relaxed">{b.text}</p>
+              <ChannelIcon className="h-3.5 w-3.5" />
+            </span>
+            <div className="rounded-2xl rounded-tl-md bg-secondary p-3">
+              <p className="text-[11px] font-medium text-muted-foreground">{convo.name}</p>
+              <p className="text-sm leading-relaxed">{convo.user}</p>
+            </div>
+          </motion.div>
+
+          {step === 1 && (
+            <motion.div
+              key={`typing-${index}`}
+              layout
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              className="ml-auto flex items-center gap-2"
+            >
+              <span className="text-[11px] text-muted-foreground">
+                {w.aiLabel} {w.typing}
+              </span>
+              <span className="flex items-center gap-1 rounded-2xl rounded-tr-md bg-primary/12 px-3 py-2.5">
+                {[0, 1, 2].map((d) => (
+                  <motion.span
+                    key={d}
+                    animate={{ opacity: [0.25, 1, 0.25], y: [0, -3, 0] }}
+                    transition={{ duration: 1.1, repeat: Infinity, delay: d * 0.15 }}
+                    className="h-1.5 w-1.5 rounded-full bg-primary"
+                  />
+                ))}
+              </span>
             </motion.div>
-          ))}
-          {visible < bubbles.length && (
+          )}
+
+          {step === 2 && (
             <motion.div
-              key="typing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex w-14 items-center justify-center gap-1 rounded-2xl rounded-tl-md bg-secondary p-3"
+              key={`b-${index}`}
+              layout
+              initial={{ opacity: 0, x: 18, scale: 0.96 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.96 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="ml-auto max-w-[86%] rounded-2xl rounded-tr-md bg-primary p-3 text-primary-foreground"
             >
-              {[0, 1, 2].map((d) => (
-                <motion.span
-                  key={d}
-                  animate={{ opacity: [0.25, 1, 0.25], y: [0, -3, 0] }}
-                  transition={{ duration: 1.1, repeat: Infinity, delay: d * 0.15 }}
-                  className="h-1.5 w-1.5 rounded-full bg-muted-foreground"
-                />
-              ))}
+              <p className="mb-0.5 flex items-center gap-1 text-[11px] opacity-80">
+                <Sparkles className="h-3 w-3" />
+                {w.aiLabel}
+              </p>
+              <p className="text-sm leading-relaxed">{convo.bot}</p>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
       <div className="mt-5 flex items-center gap-3 border-t border-border/50 pt-4 text-xs text-muted-foreground">
-        {[Instagram, Facebook, Phone].map((Icon, i) => (
-          <motion.span
-            key={i}
-            animate={{ y: [0, -3, 0] }}
-            transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-secondary text-foreground/70"
-          >
-            <Icon className="h-3.5 w-3.5" />
-          </motion.span>
-        ))}
+        {(["Instagram", "Facebook", "WhatsApp"] as const).map((c, i) => {
+          const s = CHANNEL_STYLES[c];
+          const Icon = s.icon;
+          const active = convo.channel === c;
+          return (
+            <motion.span
+              key={c}
+              animate={active ? { scale: [1, 1.15, 1] } : { scale: 1, y: [0, -3, 0] }}
+              transition={
+                active
+                  ? { duration: 0.6, ease: "easeOut" }
+                  : { duration: 3, repeat: Infinity, delay: i * 0.4 }
+              }
+              className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
+                active ? s.badge : "bg-secondary text-foreground/60"
+              }`}
+            >
+              <Icon className="h-3.5 w-3.5" />
+            </motion.span>
+          );
+        })}
         <span className="ml-auto">{w.channels}</span>
       </div>
     </div>
