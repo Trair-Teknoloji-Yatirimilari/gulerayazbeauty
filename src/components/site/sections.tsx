@@ -390,8 +390,14 @@ function LiveChat() {
                     <span className="block truncate text-xs font-medium text-foreground">
                       {c.name}
                     </span>
-                    <span className="block truncate text-[10px] text-muted-foreground">
-                      {c.user}
+                    <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                      {(() => {
+                        const MIcon = MEDIA_ICONS[c.media.type];
+                        return MIcon ? <MIcon className="h-2.5 w-2.5 shrink-0 text-primary" /> : null;
+                      })()}
+                      <span className="truncate">
+                        {c.media.type === "text" ? c.user : c.media.label}
+                      </span>
                     </span>
                   </span>
                 </button>
