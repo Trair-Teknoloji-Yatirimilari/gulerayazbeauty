@@ -18,9 +18,17 @@ import { Route as KvkkRouteImport } from './routes/kvkk'
 import { Route as IletisimRouteImport } from './routes/iletisim'
 import { Route as FiyatlandirmaRouteImport } from './routes/fiyatlandirma'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as LangRouteImport } from './routes/$lang'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LangIndexRouteImport } from './routes/$lang.index'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as LangSektorlerRouteImport } from './routes/$lang.sektorler'
+import { Route as LangOzelliklerRouteImport } from './routes/$lang.ozellikler'
+import { Route as LangNasilCalisirRouteImport } from './routes/$lang.nasil-calisir'
+import { Route as LangKvkkRouteImport } from './routes/$lang.kvkk'
+import { Route as LangIletisimRouteImport } from './routes/$lang.iletisim'
+import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandirma'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -67,6 +75,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangRoute = LangRouteImport.update({
+  id: '/$lang',
+  path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -76,14 +89,50 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangIndexRoute = LangIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LangRoute,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const LangSektorlerRoute = LangSektorlerRouteImport.update({
+  id: '/sektorler',
+  path: '/sektorler',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangOzelliklerRoute = LangOzelliklerRouteImport.update({
+  id: '/ozellikler',
+  path: '/ozellikler',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangNasilCalisirRoute = LangNasilCalisirRouteImport.update({
+  id: '/nasil-calisir',
+  path: '/nasil-calisir',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangKvkkRoute = LangKvkkRouteImport.update({
+  id: '/kvkk',
+  path: '/kvkk',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangIletisimRoute = LangIletisimRouteImport.update({
+  id: '/iletisim',
+  path: '/iletisim',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangFiyatlandirmaRoute = LangFiyatlandirmaRouteImport.update({
+  id: '/fiyatlandirma',
+  path: '/fiyatlandirma',
+  getParentRoute: () => LangRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteWithChildren
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
   '/iletisim': typeof IletisimRoute
@@ -93,7 +142,14 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/fiyatlandirma': typeof LangFiyatlandirmaRoute
+  '/$lang/iletisim': typeof LangIletisimRoute
+  '/$lang/kvkk': typeof LangKvkkRoute
+  '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
+  '/$lang/ozellikler': typeof LangOzelliklerRoute
+  '/$lang/sektorler': typeof LangSektorlerRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/$lang/': typeof LangIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -106,12 +162,20 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/fiyatlandirma': typeof LangFiyatlandirmaRoute
+  '/$lang/iletisim': typeof LangIletisimRoute
+  '/$lang/kvkk': typeof LangKvkkRoute
+  '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
+  '/$lang/ozellikler': typeof LangOzelliklerRoute
+  '/$lang/sektorler': typeof LangSektorlerRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/$lang': typeof LangIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/$lang': typeof LangRouteWithChildren
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
   '/iletisim': typeof IletisimRoute
@@ -121,12 +185,20 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/fiyatlandirma': typeof LangFiyatlandirmaRoute
+  '/$lang/iletisim': typeof LangIletisimRoute
+  '/$lang/kvkk': typeof LangKvkkRoute
+  '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
+  '/$lang/ozellikler': typeof LangOzelliklerRoute
+  '/$lang/sektorler': typeof LangSektorlerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/$lang/': typeof LangIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$lang'
     | '/auth'
     | '/fiyatlandirma'
     | '/iletisim'
@@ -136,7 +208,14 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/fiyatlandirma'
+    | '/$lang/iletisim'
+    | '/$lang/kvkk'
+    | '/$lang/nasil-calisir'
+    | '/$lang/ozellikler'
+    | '/$lang/sektorler'
     | '/admin'
+    | '/$lang/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -149,11 +228,19 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/fiyatlandirma'
+    | '/$lang/iletisim'
+    | '/$lang/kvkk'
+    | '/$lang/nasil-calisir'
+    | '/$lang/ozellikler'
+    | '/$lang/sektorler'
     | '/admin'
+    | '/$lang'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/$lang'
     | '/auth'
     | '/fiyatlandirma'
     | '/iletisim'
@@ -163,12 +250,20 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sektorler'
     | '/sitemap.xml'
+    | '/$lang/fiyatlandirma'
+    | '/$lang/iletisim'
+    | '/$lang/kvkk'
+    | '/$lang/nasil-calisir'
+    | '/$lang/ozellikler'
+    | '/$lang/sektorler'
     | '/_authenticated/admin'
+    | '/$lang/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LangRoute: typeof LangRouteWithChildren
   AuthRoute: typeof AuthRoute
   FiyatlandirmaRoute: typeof FiyatlandirmaRoute
   IletisimRoute: typeof IletisimRoute
@@ -245,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -259,12 +361,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang/': {
+      id: '/$lang/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/$lang/sektorler': {
+      id: '/$lang/sektorler'
+      path: '/sektorler'
+      fullPath: '/$lang/sektorler'
+      preLoaderRoute: typeof LangSektorlerRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/ozellikler': {
+      id: '/$lang/ozellikler'
+      path: '/ozellikler'
+      fullPath: '/$lang/ozellikler'
+      preLoaderRoute: typeof LangOzelliklerRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/nasil-calisir': {
+      id: '/$lang/nasil-calisir'
+      path: '/nasil-calisir'
+      fullPath: '/$lang/nasil-calisir'
+      preLoaderRoute: typeof LangNasilCalisirRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/kvkk': {
+      id: '/$lang/kvkk'
+      path: '/kvkk'
+      fullPath: '/$lang/kvkk'
+      preLoaderRoute: typeof LangKvkkRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/iletisim': {
+      id: '/$lang/iletisim'
+      path: '/iletisim'
+      fullPath: '/$lang/iletisim'
+      preLoaderRoute: typeof LangIletisimRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/fiyatlandirma': {
+      id: '/$lang/fiyatlandirma'
+      path: '/fiyatlandirma'
+      fullPath: '/$lang/fiyatlandirma'
+      preLoaderRoute: typeof LangFiyatlandirmaRouteImport
+      parentRoute: typeof LangRoute
     }
   }
 }
@@ -280,9 +431,32 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface LangRouteChildren {
+  LangFiyatlandirmaRoute: typeof LangFiyatlandirmaRoute
+  LangIletisimRoute: typeof LangIletisimRoute
+  LangKvkkRoute: typeof LangKvkkRoute
+  LangNasilCalisirRoute: typeof LangNasilCalisirRoute
+  LangOzelliklerRoute: typeof LangOzelliklerRoute
+  LangSektorlerRoute: typeof LangSektorlerRoute
+  LangIndexRoute: typeof LangIndexRoute
+}
+
+const LangRouteChildren: LangRouteChildren = {
+  LangFiyatlandirmaRoute: LangFiyatlandirmaRoute,
+  LangIletisimRoute: LangIletisimRoute,
+  LangKvkkRoute: LangKvkkRoute,
+  LangNasilCalisirRoute: LangNasilCalisirRoute,
+  LangOzelliklerRoute: LangOzelliklerRoute,
+  LangSektorlerRoute: LangSektorlerRoute,
+  LangIndexRoute: LangIndexRoute,
+}
+
+const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  LangRoute: LangRouteWithChildren,
   AuthRoute: AuthRoute,
   FiyatlandirmaRoute: FiyatlandirmaRoute,
   IletisimRoute: IletisimRoute,
