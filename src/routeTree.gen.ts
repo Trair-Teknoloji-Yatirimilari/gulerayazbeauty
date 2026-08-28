@@ -36,6 +36,7 @@ import { Route as AuthenticatedAdminSaatlerRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminRezervasyonlarRouteImport } from './routes/_authenticated/admin.rezervasyonlar'
 import { Route as AuthenticatedAdminIsletmeRouteImport } from './routes/_authenticated/admin.isletme'
 import { Route as AuthenticatedAdminHizmetlerRouteImport } from './routes/_authenticated/admin.hizmetler'
+import { Route as AuthenticatedAdminAiRouteImport } from './routes/_authenticated/admin.ai'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -177,6 +178,11 @@ const AuthenticatedAdminHizmetlerRoute =
     path: '/hizmetler',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminAiRoute = AuthenticatedAdminAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
+  '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
@@ -224,6 +231,7 @@ export interface FileRoutesByTo {
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/$lang': typeof LangIndexRoute
+  '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
@@ -254,6 +262,7 @@ export interface FileRoutesById {
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
+  '/_authenticated/admin/ai': typeof AuthenticatedAdminAiRoute
   '/_authenticated/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
   '/_authenticated/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
   '/_authenticated/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
@@ -284,6 +293,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/admin'
     | '/$lang/'
+    | '/admin/ai'
     | '/admin/hizmetler'
     | '/admin/isletme'
     | '/admin/rezervasyonlar'
@@ -310,6 +320,7 @@ export interface FileRouteTypes {
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
     | '/$lang'
+    | '/admin/ai'
     | '/admin/hizmetler'
     | '/admin/isletme'
     | '/admin/rezervasyonlar'
@@ -339,6 +350,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/_authenticated/admin'
     | '/$lang/'
+    | '/_authenticated/admin/ai'
     | '/_authenticated/admin/hizmetler'
     | '/_authenticated/admin/isletme'
     | '/_authenticated/admin/rezervasyonlar'
@@ -554,10 +566,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminHizmetlerRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/ai': {
+      id: '/_authenticated/admin/ai'
+      path: '/ai'
+      fullPath: '/admin/ai'
+      preLoaderRoute: typeof AuthenticatedAdminAiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAiRoute: typeof AuthenticatedAdminAiRoute
   AuthenticatedAdminHizmetlerRoute: typeof AuthenticatedAdminHizmetlerRoute
   AuthenticatedAdminIsletmeRoute: typeof AuthenticatedAdminIsletmeRoute
   AuthenticatedAdminRezervasyonlarRoute: typeof AuthenticatedAdminRezervasyonlarRoute
@@ -568,6 +588,7 @@ interface AuthenticatedAdminRouteChildren {
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAiRoute: AuthenticatedAdminAiRoute,
   AuthenticatedAdminHizmetlerRoute: AuthenticatedAdminHizmetlerRoute,
   AuthenticatedAdminIsletmeRoute: AuthenticatedAdminIsletmeRoute,
   AuthenticatedAdminRezervasyonlarRoute: AuthenticatedAdminRezervasyonlarRoute,
