@@ -208,7 +208,6 @@ type MediaInfo = { type: string; label: string; detail: string; duration: string
 
 function MediaAttachment({ media }: { media: MediaInfo }) {
   if (!media || media.type === "text") return null;
-  const Icon = MEDIA_ICONS[media.type] ?? Paperclip;
 
   return (
     <motion.div
@@ -275,9 +274,6 @@ function MediaAttachment({ media }: { media: MediaInfo }) {
     </motion.div>
   );
 }
-
-const Icon_unused = null;
-void Icon_unused;
 
 
 
