@@ -98,8 +98,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const { locale, dir } = useT();
   return (
-    <html lang="tr" dir="ltr">
+    <html lang={locale} dir={dir}>
       <head>
         <HeadContent />
       </head>
@@ -110,6 +111,7 @@ function RootShell({ children }: { children: ReactNode }) {
     </html>
   );
 }
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
