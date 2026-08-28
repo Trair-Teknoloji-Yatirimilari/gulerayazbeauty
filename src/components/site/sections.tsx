@@ -261,10 +261,11 @@ function LiveChat() {
                     />
                   )}
                   <span className="relative flex items-center gap-1">
-                    {Icon ? <Icon className="h-2.5 w-2.5" /> : null}
-                    <span className={Icon ? "hidden sm:inline" : ""}>
+                    {s && Icon ? <Icon className="h-2.5 w-2.5" /> : null}
+                    <span className={s ? "hidden sm:inline" : ""}>
                       {f === "all" ? w.filters.all : f}
                     </span>
+
                   </span>
                 </button>
               );
