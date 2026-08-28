@@ -1,685 +1,272 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
-import { memo, useRef, useState } from "react";
+import { motion } from "motion/react";
 import {
-  Sparkles,
-  Zap,
-  Flower2,
-  Eye,
-  Hand,
-  Dumbbell,
-  ChevronDown,
-  Phone,
-  MapPin,
-  Instagram,
-  Mail,
-  ArrowUpRight,
+  MessageCircle,
+  Calendar,
+  Share2,
+  Store,
+  Headphones,
+  BarChart3,
+  Menu,
+  X,
   Check,
-  Clock,
-  Timer,
-  Repeat,
-  ShieldCheck,
-  HelpCircle,
-  Tag,
-  Waves,
-  Eraser,
-  Brush,
-  Scissors,
+  ChevronDown,
+  ArrowRight,
+  Sparkles,
+  Instagram,
+  Facebook,
+  Phone,
 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-
-import heroBeauty from "@/assets/hero-beauty.jpg";
-import beautyCenter from "@/assets/beauty-center.jpg";
-import merkezGercek from "@/assets/merkez-gercek.jpg";
-import serviceLazer from "@/assets/service-lazer.jpg";
-import serviceCilt from "@/assets/service-cilt-gercek.jpg";
-import serviceKirpik from "@/assets/service-kirpik.jpg";
-import serviceNail from "@/assets/service-nail-gercek.jpg";
-import servicePilates from "@/assets/service-pilates.jpg";
-import serviceVucut from "@/assets/service-vucut.jpg";
-import serviceDovme from "@/assets/service-dovme-silme.jpg";
-import serviceKaliciMakyaj from "@/assets/service-kalici-makyaj.jpg";
-import serviceKuafor from "@/assets/service-kuafor.jpg";
-import { AppointmentForm } from "@/components/AppointmentForm";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useState } from "react";
 import { useT } from "@/i18n/context";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, BRAND } from "@/lib/site";
+
+const ICONS: Record<string, React.ElementType> = {
+  MessageCircle,
+  Calendar,
+  Share2,
+  Store,
+  Headphones,
+  BarChart3,
+};
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+};
+
+const stagger = {
+  initial: {},
+  whileInView: { transition: { staggerChildren: 0.1 } },
+  viewport: { once: true, margin: "-80px" },
+};
+
+const itemFade = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+};
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Güler Ayaz Beauty | Maslak Güzellik & Estetik Merkezi" },
-      { name: "description", content: "Lazer epilasyon, cilt bakımı, vücut şekillendirme, dövme silme, kalıcı makyaj, kuaför ve reformer pilates. Maslak 1453'te Güler Ayaz Beauty." },
-      { property: "og:title", content: "Güler Ayaz Beauty | Maslak Güzellik Merkezi" },
-      { property: "og:description", content: "Uzman kadro, premium teknoloji, davetkar atmosfer." },
+      { title: "TrairX Connect — AI'lı Müşteri Temsilcisi ve Rezervasyon Asistanı" },
+      { name: "description", content: "Web sitenize entegre edin; Instagram, Facebook ve WhatsApp'ı bağlayın. TrairX Connect 7/24 müşteri temsilcisi, satış danışmanı ve rezervasyon asistanı olarak çalışır." },
+      { property: "og:title", content: "TrairX Connect — AI'lı Müşteri Temsilcisi" },
+      { property: "og:description", content: "Web sitenize entegre edin; Instagram, Facebook ve WhatsApp'ı bağlayın. TrairX Connect 7/24 müşteri temsilcisi, satış danışmanı ve rezervasyon asistanı olarak çalışır." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BeautySalon",
-          name: "Güler Ayaz Beauty",
-          url: SITE_URL,
-          image: `${SITE_URL}/og-image.jpg`,
-          telephone: "+902122234777",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Maslak Mah. Taşyoncası Sk. No:1R",
-            addressLocality: "Sarıyer",
-            addressRegion: "İstanbul",
-            postalCode: "34485",
-            addressCountry: "TR",
-          },
-          openingHoursSpecification: [
-            {
-              "@type": "OpeningHoursSpecification",
-              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-              opens: "08:30",
-              closes: "21:00",
-            },
-          ],
-          sameAs: ["https://www.instagram.com/gulerayaz_beautycenter/"],
-          hasOfferCatalog: {
-            "@type": "OfferCatalog",
-            name: "Güler Ayaz Beauty — Hizmetler",
-            itemListElement: [
-              "Lazer Epilasyon",
-              "Cilt Bakımı",
-              "Hydrafacial",
-              "Q-Switch Karbon Peeling",
-              "Tüy Sarartma",
-              "Reformer Pilates",
-              "Slim-X Bölgesel İncelme",
-              "EMS Pro Sıkılaşma",
-              "G5 Selülit Masajı",
-              "Kuaför Hizmetleri",
-              "Protez Tırnak",
-              "İpek Kirpik",
-              "Kaş Laminasyonu",
-              "Kirpik Lifting",
-              "Kalıcı Makyaj",
-              "Dövme Silme",
-            ].map((n) => ({
-              "@type": "Offer",
-              itemOffered: { "@type": "Service", name: n },
-            })),
-          },
-        }),
-      },
-    ],
+    links: [{ rel: "canonical", href: SITE_URL }],
   }),
-  component: Index,
+  component: LandingPage,
 });
 
-const fadeUp = {
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
-};
-
-const SERVICE_ICONS: Record<string, typeof Zap> = {
-  lazer: Zap,
-  cilt: Flower2,
-  kirpik: Eye,
-  nail: Hand,
-  pilates: Dumbbell,
-  vucut: Waves,
-  dovme: Eraser,
-  kalicimakyaj: Brush,
-  kuafor: Scissors,
-};
-const SERVICE_IMAGES: Record<string, string> = {
-  lazer: serviceLazer,
-  cilt: serviceCilt,
-  kirpik: serviceKirpik,
-  nail: serviceNail,
-  pilates: servicePilates,
-  vucut: serviceVucut,
-  dovme: serviceDovme,
-  kalicimakyaj: serviceKaliciMakyaj,
-  kuafor: serviceKuafor,
-};
-
-function Index() {
+function LandingPage() {
+  const { t } = useT();
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Nav />
-      <Hero />
-      <HeroCta />
-      <Marquee />
-      <About />
-      <Services />
-      <Journey />
-      <Faq />
-      <Contact />
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Header />
+      <main>
+        <Hero />
+        <Trusted />
+        <Features />
+        <HowItWorks />
+        <UseCases />
+        <Pricing />
+        <FAQ />
+        <Contact />
+      </main>
       <Footer />
     </div>
   );
 }
 
-/* ---------------- NAV ---------------- */
-
-function Nav() {
-  const [open, setOpen] = useState(false);
+function Header() {
   const { t } = useT();
-  const links: { href: string; label: string; route?: boolean }[] = [
-    { href: "#merkez", label: t.nav.about },
-    { href: "#hizmetler", label: t.nav.services },
-    { href: "#deneyim", label: t.nav.journey },
-    { href: "/galeri", label: t.nav.gallery, route: true },
+  const [open, setOpen] = useState(false);
+  const links = [
+    { href: "#ozellikler", label: t.nav.features },
+    { href: "#nasil-calisir", label: t.nav.howItWorks },
+    { href: "#sektorler", label: t.nav.useCases },
+    { href: "#fiyatlandirma", label: t.nav.pricing },
     { href: "#sss", label: t.nav.faq },
     { href: "#iletisim", label: t.nav.contact },
   ];
 
   return (
     <motion.header
-      initial={{ y: -30, opacity: 0 }}
+      initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl bg-background/90 border-b border-border/40"
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border/40"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10 flex items-center justify-between h-16 md:h-20">
         <a href="#top" className="flex flex-col items-start leading-none group">
-          <span className="text-gold-gradient font-display text-base md:text-lg tracking-wide whitespace-nowrap">
-            {t.nav.brand}
-          </span>
-          <span className="text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
-            {t.nav.tagline}
-          </span>
+          <span className="text-lg md:text-xl font-semibold tracking-tight text-foreground">{t.nav.brand}</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{t.nav.tagline}</span>
         </a>
+
         <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) =>
-            l.route ? (
-              <Link key={l.href} to={l.href} className="text-sm text-foreground/80 hover:text-primary transition-colors relative group">
-                {l.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
-              </Link>
-            ) : (
-              <a key={l.href} href={l.href} className="text-sm text-foreground/80 hover:text-primary transition-colors relative group">
-                {l.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
-              </a>
-            ),
-          )}
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {l.label}
+            </a>
+          ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
-          <LanguageSwitcher />
-          <a href="#iletisim" className="inline-flex items-center gap-2 rounded-full border border-primary/60 px-5 py-2 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500">
-            {t.nav.ctaAppointment} <ArrowUpRight className="w-3.5 h-3.5" />
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="#iletisim"
+            className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            {t.nav.ctaDemo}
           </a>
         </div>
-        <div className="md:hidden flex items-center gap-2">
-          <LanguageSwitcher />
-          <button onClick={() => setOpen(!open)} className="text-primary p-2" aria-label={t.nav.menuAria}>
-            <div className="w-6 h-px bg-current mb-1.5" />
-            <div className="w-6 h-px bg-current mb-1.5" />
-            <div className="w-4 h-px bg-current ml-auto" />
-          </button>
-        </div>
+
+        <button
+          aria-label={t.nav.menuAria}
+          onClick={() => setOpen((p) => !p)}
+          className="md:hidden p-2 text-foreground"
+        >
+          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </div>
+
       {open && (
-        <div className="md:hidden border-t border-border/40 bg-background/95">
-          <div className="px-6 py-4 flex flex-col gap-4">
-            {links.map((l) =>
-              l.route ? (
-                <Link key={l.href} to={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">{l.label}</Link>
-              ) : (
-                <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-foreground/80">{l.label}</a>
-              ),
-            )}
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          className="md:hidden border-t border-border/40 bg-background/95 backdrop-blur"
+        >
+          <div className="px-6 py-4 space-y-3">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="block text-sm text-muted-foreground hover:text-foreground"
+              >
+                {l.label}
+              </a>
+            ))}
+            <a
+              href="#iletisim"
+              onClick={() => setOpen(false)}
+              className="block w-full text-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
+            >
+              {t.nav.ctaDemo}
+            </a>
           </div>
-        </div>
+        </motion.div>
       )}
     </motion.header>
   );
 }
 
-/* ---------------- HERO ---------------- */
-
 function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
   const { t } = useT();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", reduced ? "0%" : "30%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.15]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   return (
-    <section id="top" ref={ref} className="relative h-screen min-h-[720px] w-full overflow-hidden">
-      <motion.div
-        initial={{ filter: "brightness(0.72) saturate(0.85)", opacity: 0.9 }}
-        animate={{ filter: "brightness(1) saturate(1)", opacity: 1 }}
-        transition={{ duration: 2.4, ease: [0.22, 0.61, 0.36, 1] }}
-        style={{ y, scale }}
-        className="absolute inset-0"
-      >
-        <img src={heroBeauty} alt={t.hero.heroAlt} className="w-full h-full object-cover" width={1920} height={1280} />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/65" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent" />
-      </motion.div>
-
-      <div className="pointer-events-none absolute inset-0 z-[5]">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-primary/70 to-transparent blur-[1px] animate-hero-scan" />
-        <div className="absolute inset-x-0 top-0 h-[140px] bg-gradient-to-b from-primary/10 to-transparent animate-hero-scan" />
+    <section id="top" className="relative pt-32 md:pt-44 pb-20 md:pb-32 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[400px] bg-accent/5 rounded-full blur-[100px]" />
       </div>
 
-      <div className="pointer-events-none absolute -top-24 -right-32 w-[600px] h-[600px] rounded-full bg-accent/25 blur-[120px] animate-pulse-glow" />
-      <div className="pointer-events-none absolute -bottom-24 -left-24 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[100px] animate-float-slow" />
-
-      <motion.div style={{ opacity }} className="relative z-10 h-full flex items-end pb-24 md:pb-32">
-        <div className="mx-auto max-w-7xl w-full px-6 lg:px-10">
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-3 mb-6"
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="h-px w-12 bg-white/70" />
-            <span className="text-xs uppercase tracking-[0.4em] text-white/90">{t.hero.badge}</span>
-          </motion.div>
-
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl text-white">
-            <span dir="ltr" className="inline-block" style={{ unicodeBidi: "isolate" }}>
-              {t.hero.firstName.split("").map((c, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + i * 0.04, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="inline-block"
-                >
-                  {c === " " ? "\u00A0" : c}
-                </motion.span>
-              ))}
-            </span>
-            <br />
-            <motion.span
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 1 }}
-              className="text-gold-gradient-light italic"
-            >
-              {t.hero.lastName}
-            </motion.span>
-          </h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 1 }}
-            className="mt-8 max-w-xl text-lg text-white/85 leading-relaxed"
-          >
-            {t.hero.subtitle}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 1 }}
-            className="mt-10 flex flex-wrap gap-4"
-          >
-            <a href="#iletisim" className="group inline-flex items-center gap-3 rounded-full bg-primary px-8 py-3.5 text-sm uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all glow-gold">
-              {t.hero.ctaConsult}
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
-            <a href="#hizmetler" className="inline-flex items-center gap-3 rounded-full border border-white/50 px-8 py-3.5 text-sm uppercase tracking-widest text-white/90 hover:bg-white/10 hover:border-white transition-all">
-              {t.hero.ctaServices}
-            </a>
-          </motion.div>
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/80"
-      >
-        <span className="text-[10px] uppercase tracking-[0.4em]">{t.hero.discover}</span>
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-          <ChevronDown className="w-4 h-4" />
-        </motion.div>
-      </motion.div>
-    </section>
-  );
-}
-
-/* ---------------- HERO CTA ---------------- */
-
-function HeroCta() {
-  const { t } = useT();
-  return (
-    <section className="relative z-20 -mt-24 md:-mt-32 pb-8 md:pb-12 pointer-events-none">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-          className="pointer-events-auto flex flex-col sm:flex-row items-center justify-between gap-6 bg-card/85 backdrop-blur-xl border border-primary/30 rounded-sm px-6 py-6 md:px-10 md:py-8 shadow-elegant"
-        >
-          <div className="text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start gap-3 mb-2">
-              <div className="h-px w-8 bg-primary/60" />
-              <span className="text-[10px] uppercase tracking-[0.35em] text-primary">{t.nav.ctaAppointment}</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/70 px-4 py-1.5 text-xs font-medium text-primary mb-6">
+              <Sparkles className="w-3.5 h-3.5" />
+              {t.hero.badge}
             </div>
-            <p className="text-foreground/80 text-sm md:text-base max-w-md leading-relaxed">
-              {t.hero.appointmentCtaDesc}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight whitespace-pre-line">
+              {t.hero.title}
+            </h1>
+            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+              {t.hero.subtitle}
             </p>
-          </div>
-          <a href="#randevu-formu" className="group inline-flex items-center gap-3 rounded-full bg-primary px-7 py-3.5 text-sm uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all glow-gold shrink-0">
-            {t.hero.appointmentCta}
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- MARQUEE ---------------- */
-
-function Marquee() {
-  const { t } = useT();
-  const items = t.marquee;
-  return (
-    <div className="border-y border-border/40 bg-card/80 backdrop-blur overflow-hidden py-6">
-      <div className="flex whitespace-nowrap animate-marquee">
-        {[...items, ...items, ...items].map((it, i) => (
-          <div key={i} className="flex items-center gap-8 px-8">
-            <span className="font-display text-2xl md:text-3xl text-foreground/60">{it}</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ---------------- ABOUT / CENTER ---------------- */
-
-function About() {
-  const { t } = useT();
-  return (
-    <section id="merkez" className="relative py-24 md:py-40 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-accent/10 blur-[160px] pointer-events-none" />
-
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-          <motion.div {...fadeUp} className="lg:col-span-5 relative lg:sticky lg:top-28">
-            <div className="relative aspect-square overflow-hidden rounded-sm">
-              <img src={merkezGercek} alt={t.about.portraitAlt} className="w-full h-full object-cover" width={900} height={900} loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-            </div>
-            <div className="absolute -bottom-6 -right-6 hidden md:block border border-primary/40 bg-background/90 backdrop-blur px-6 py-4 rounded-sm">
-              <div className="text-gold-gradient font-display text-4xl">{t.about.experienceYears}</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
-                {t.about.experienceBadge}
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div {...fadeUp} className="lg:col-span-7">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-px w-10 bg-primary" />
-              <span className="text-xs uppercase tracking-[0.4em] text-primary">{t.about.badge}</span>
-            </div>
-            <h2 className="font-display text-4xl md:text-6xl leading-tight">
-              {t.about.firstName}
-              <br />
-              <span className="italic text-gold-gradient">{t.about.lastName}</span>
-            </h2>
-            <div className="hairline my-8 max-w-md" />
-
-            {t.about.paragraphs.map((p, i) => (
-              <p key={i} className={i === 0 ? "text-foreground/80 leading-relaxed text-lg" : "text-foreground/75 leading-relaxed mt-4"}>
-                {p}
-              </p>
-            ))}
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
-              {t.about.credentials.map((c) => (
-                <div key={c.label} className="border border-border/60 bg-card/30 hover:bg-card/60 transition-colors p-5 rounded-sm">
-                  <Sparkles className="w-5 h-5 text-primary mb-3" strokeWidth={1.2} />
-                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{c.label}</div>
-                  <div className="text-sm text-foreground/90 mt-1 leading-snug">{c.value}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="mt-24">
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-12">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="h-px w-10 bg-primary" />
-              <span className="text-xs uppercase tracking-[0.4em] text-primary">{t.about.careerBadge}</span>
-              <div className="h-px w-10 bg-primary" />
-            </div>
-            <h3 className="font-display text-3xl md:text-5xl">
-              {t.about.careerTitleA} <span className="italic text-gold-gradient">{t.about.careerTitleB}</span>
-            </h3>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {t.about.milestones.map((m, i) => (
-              <motion.div
-                key={m.year + m.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.8 }}
-                className="border border-border/60 bg-card/40 p-6 rounded-sm hover:border-primary/50 transition-colors"
-              >
-                <div className="text-gold-gradient font-display text-3xl">{m.year}</div>
-                <h4 className="font-display text-xl mt-2">{m.title}</h4>
-                <p className="text-sm text-foreground/65 mt-3 leading-relaxed">{m.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        <motion.div {...fadeUp} className="mt-20 border border-primary/20 bg-gradient-to-br from-accent/10 to-transparent rounded-sm p-8 md:p-12 text-center">
-          <h4 className="font-display text-2xl md:text-3xl text-foreground/90">{t.about.quote}</h4>
-          <p className="mt-4 text-foreground/60 text-sm max-w-2xl mx-auto">{t.about.quoteDesc}</p>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- SHARED DETAIL DIALOG ---------------- */
-
-type Detail = {
-  pitch: string;
-  benefits: string[];
-  duration: string;
-  effect: string;
-  interval: string;
-  closing: string;
-  faqs: { q: string; a: string }[];
-  pricing: { label: string; price: string }[];
-};
-
-const DetailDialog = memo(function DetailDialog({
-  open, onOpenChange, title, subtitle, image, items, detail,
-}: {
-  open: boolean;
-  onOpenChange: (v: boolean) => void;
-  title: string;
-  subtitle: string;
-  image: string;
-  items: string[];
-  detail: Detail;
-}) {
-  const { t } = useT();
-  const L = t.detailLabels;
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl w-[95vw] p-0 bg-background border border-primary/30 overflow-hidden max-h-[92vh] overflow-y-auto">
-        <div className="grid md:grid-cols-2">
-          <div className="relative aspect-[4/5] md:aspect-auto md:min-h-full overflow-hidden">
-            <img src={image} alt={title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-background/70" />
-          </div>
-          <div className="p-8 md:p-10">
-            <DialogHeader className="text-left space-y-2">
-              <div className="flex items-center gap-3">
-                <div className="h-px w-8 bg-primary" />
-                <span className="text-[10px] uppercase tracking-[0.4em] text-primary">{L.detail}</span>
-              </div>
-              <DialogTitle className="font-display text-3xl md:text-4xl font-normal">{title}</DialogTitle>
-              <DialogDescription className="text-primary italic font-display text-lg">{subtitle}</DialogDescription>
-            </DialogHeader>
-
-            <p className="mt-5 text-foreground/80 leading-relaxed text-sm">{detail.pitch}</p>
-
-            <div className="mt-6 space-y-2">
-              {detail.benefits.map((b) => (
-                <div key={b} className="flex items-start gap-2.5 text-sm text-foreground/85">
-                  <Check className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" strokeWidth={1.5} />
-                  <span>{b}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="hairline my-6" />
-
-            <div className="grid grid-cols-3 gap-3 text-xs">
-              <div>
-                <Clock className="w-4 h-4 text-primary mb-1.5" strokeWidth={1.2} />
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{L.duration}</div>
-                <div className="text-foreground/90 mt-1">{detail.duration}</div>
-              </div>
-              <div>
-                <Timer className="w-4 h-4 text-primary mb-1.5" strokeWidth={1.2} />
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{L.effect}</div>
-                <div className="text-foreground/90 mt-1">{detail.effect}</div>
-              </div>
-              <div>
-                <Repeat className="w-4 h-4 text-primary mb-1.5" strokeWidth={1.2} />
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{L.interval}</div>
-                <div className="text-foreground/90 mt-1">{detail.interval}</div>
-              </div>
-            </div>
-
-            {detail.pricing?.length > 0 && (
-              <>
-                <div className="hairline my-6" />
-                <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <Tag className="w-4 h-4 text-primary" strokeWidth={1.2} />
-                    <span className="text-[10px] uppercase tracking-[0.35em] text-primary">{L.pricingTitle}</span>
-                  </div>
-                  <div className="divide-y divide-border/40 border border-border/40 rounded-sm bg-card/30">
-                    {detail.pricing.map((p) => (
-                      <div key={p.label} className="flex items-center justify-between gap-4 px-4 py-3 text-sm">
-                        <span className="text-foreground/85">{p.label}</span>
-                        <span className="text-primary font-display whitespace-nowrap">{p.price}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </>
-            )}
-
-            <div className="hairline my-6" />
-
-            <div>
-              <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-3">{L.areas}</div>
-              <div className="flex flex-wrap gap-1.5">
-                {items.map((it) => (
-                  <span key={it} className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-card/50 text-foreground/75">
-                    {it}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <p className="mt-6 text-sm text-foreground/70 italic border-l-2 border-primary/60 pl-4">{detail.closing}</p>
-
-            {detail.faqs?.length > 0 && (
-              <div className="mt-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-px w-8 bg-primary" />
-                  <span className="text-[10px] uppercase tracking-[0.4em] text-primary">{L.faqSection}</span>
-                </div>
-                <Accordion type="single" collapsible className="w-full">
-                  {detail.faqs.map((f, idx) => (
-                    <AccordionItem key={f.q} value={`faq-${idx}`} className="border-b border-border/60">
-                      <AccordionTrigger className="text-left text-sm font-normal text-foreground/90 hover:text-primary hover:no-underline py-3">
-                        {f.q}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-sm text-foreground/70 leading-relaxed pb-4">
-                        {f.a}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            )}
-
-            <div className="mt-7 flex items-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
                 href="#iletisim"
-                onClick={() => onOpenChange(false)}
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-xs uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all glow-gold"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
               >
-                {L.appointmentCta} <ArrowUpRight className="w-3.5 h-3.5" />
+                {t.hero.ctaPrimary} <ArrowRight className="w-4 h-4" />
               </a>
-              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <ShieldCheck className="w-3.5 h-3.5 text-primary" strokeWidth={1.5} />
-                {L.doctorSupervised}
+              <a
+                href="#nasil-calisir"
+                className="inline-flex items-center justify-center rounded-full border border-border/60 bg-card px-6 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                {t.hero.ctaSecondary}
+              </a>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
+          >
+            <div className="widget-mock rounded-2xl p-4 md:p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">{BRAND}</p>
+                  <p className="text-xs text-muted-foreground">Çevrimiçi</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="bg-muted/60 rounded-2xl rounded-tl-none p-3 max-w-[85%]">
+                  <p className="text-sm text-foreground">Merhaba! Size nasıl yardımcı olabilirim? Randevu, ürün veya bilgi almak için yazmanız yeterli.</p>
+                </div>
+                <div className="ml-auto bg-primary text-primary-foreground rounded-2xl rounded-tr-none p-3 max-w-[75%]">
+                  <p className="text-sm">Cuma günü 14:00 için randevu alabilir miyim?</p>
+                </div>
+                <div className="bg-muted/60 rounded-2xl rounded-tl-none p-3 max-w-[85%]">
+                  <p className="text-sm text-foreground">Tabii, 14:00 için boş yerimiz var. Onaylamamı ister misiniz?</p>
+                </div>
+              </div>
+              <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+                <Instagram className="w-3.5 h-3.5" />
+                <Facebook className="w-3.5 h-3.5" />
+                <Phone className="w-3.5 h-3.5" />
+                <span className="ml-auto">Tüm kanallar bağlı</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </section>
   );
-});
+}
 
-/* ---------------- SERVICES ---------------- */
-
-function Services() {
+function Trusted() {
   const { t } = useT();
   return (
-    <section id="hizmetler" className="relative py-24 md:py-40">
+    <section className="py-12 border-y border-border/30 bg-card/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <motion.div {...fadeUp} className="max-w-3xl">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.4em] text-primary">{t.services.badge}</span>
-          </div>
-          <h2 className="font-display text-4xl md:text-6xl leading-tight">
-            {t.services.titleA} <span className="italic text-gold-gradient">{t.services.titleB}</span>
-          </h2>
-          <p className="mt-6 text-foreground/70 text-lg leading-relaxed">{t.services.intro}</p>
-        </motion.div>
-
-        <div className="mt-16 space-y-24">
-          {t.services.items.map((s, i) => (
-            <ServiceRow key={s.key} service={s} reversed={i % 2 === 1} index={i} />
+        <p className="text-center text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8">
+          {t.trusted.title}
+        </p>
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
+          {t.trusted.items.map((item) => (
+            <span key={item} className="text-sm font-medium text-foreground/70">
+              {item}
+            </span>
           ))}
         </div>
       </div>
@@ -687,135 +274,70 @@ function Services() {
   );
 }
 
-type ServiceItem = ReturnType<typeof useT>["t"]["services"]["items"][number];
-
-function ServiceRow({ service, reversed, index }: { service: ServiceItem; reversed: boolean; index: number }) {
+function Features() {
   const { t } = useT();
-  const Icon = SERVICE_ICONS[service.key] ?? Sparkles;
-  const image = SERVICE_IMAGES[service.key] ?? beautyCenter;
-  const [open, setOpen] = useState(false);
-  const detail: Detail = {
-    pitch: service.pitch,
-    benefits: service.benefits,
-    duration: service.duration,
-    effect: service.effect,
-    interval: service.interval,
-    closing: service.closing,
-    faqs: service.faqs,
-    pricing: service.pricing,
-  };
-  const previewPricing = service.pricing.slice(0, 5);
-  const remaining = service.pricing.length - previewPricing.length;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      className={`grid lg:grid-cols-12 gap-8 lg:gap-16 items-center ${reversed ? "lg:[&>div:first-child]:order-2" : ""}`}
-    >
-      <div className="lg:col-span-6 relative group">
-        <div className="relative aspect-[5/4] overflow-hidden rounded-sm">
-          <motion.img
-            src={image}
-            alt={service.imageAlt}
-            className="w-full h-full object-cover"
-            width={1200}
-            height={960}
-            loading="lazy"
-            initial={{ scale: 1.15 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-          <div className="absolute top-6 left-6 flex items-center gap-2 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
-            <span className="font-display text-sm">0{index + 1}</span>
-            <div className="h-px w-8 bg-white/80" />
-          </div>
-        </div>
-      </div>
-      <div className="lg:col-span-6">
-        <Icon className="w-10 h-10 text-primary mb-6" strokeWidth={1} />
-        <h3 className="font-display text-4xl md:text-5xl">{service.title}</h3>
-        <p className="mt-3 text-primary italic font-display text-xl">{service.subtitle}</p>
-        <div className="hairline my-6 max-w-xs" />
-        <p className="text-foreground/75 leading-relaxed text-sm md:text-base">{service.pitch}</p>
+    <section id="ozellikler" className="py-24 md:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.features}</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.features.title}</h2>
+          <p className="mt-4 text-muted-foreground">{t.features.subtitle}</p>
+        </motion.div>
 
-        <div className="mt-6 divide-y divide-border/40 border border-border/40 rounded-sm bg-card/30">
-          {previewPricing.map((p) => (
-            <div key={p.label} className="flex items-center justify-between gap-4 px-4 py-3 text-sm">
-              <span className="text-foreground/85">{p.label}</span>
-              <span className="text-primary font-display whitespace-nowrap">{p.price}</span>
-            </div>
-          ))}
-          {remaining > 0 && (
-            <button
-              onClick={() => setOpen(true)}
-              className="w-full flex items-center justify-between gap-4 px-4 py-3 text-xs uppercase tracking-widest text-primary hover:text-primary hover:bg-card/60 transition-colors"
-            >
-              <span>+{remaining} · {t.detailLabels.moreInfo}</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-
-        <button
-          onClick={() => setOpen(true)}
-          className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/60 px-6 py-2.5 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500"
+        <motion.div
+          variants={stagger}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {t.detailLabels.seeDetails} <ArrowUpRight className="w-3.5 h-3.5" />
-        </button>
+          {t.features.items.map((f) => {
+            const Icon = ICONS[f.icon] ?? Sparkles;
+            return (
+              <motion.div
+                key={f.title}
+                variants={itemFade}
+                className="group rounded-2xl border border-border/40 bg-card p-6 hover:shadow-lg transition-shadow"
+              >
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-105 transition-transform">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
-      {open && (
-        <DetailDialog
-          open={open}
-          onOpenChange={setOpen}
-          title={service.title}
-          subtitle={service.subtitle}
-          image={image}
-          items={service.items}
-          detail={detail}
-        />
-      )}
-    </motion.div>
+    </section>
   );
 }
 
-/* ---------------- JOURNEY ---------------- */
-
-function Journey() {
+function HowItWorks() {
   const { t } = useT();
   return (
-    <section id="deneyim" className="relative py-24 md:py-40 bg-card/30 border-y border-border/40">
+    <section id="nasil-calisir" className="py-24 md:py-32 bg-card/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <motion.div {...fadeUp} className="max-w-3xl mb-16">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.4em] text-primary">{t.journey.badge}</span>
-          </div>
-          <h2 className="font-display text-4xl md:text-6xl leading-tight">
-            {t.journey.titleA} <span className="italic text-gold-gradient">{t.journey.titleB}</span>
-          </h2>
+        <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.howItWorks}</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.howItWorks.title}</h2>
+          <p className="mt-4 text-muted-foreground">{t.howItWorks.subtitle}</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-4 gap-8 md:gap-4 relative">
-          <div className="hidden md:block absolute top-8 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-          {t.journey.steps.map((s, i) => (
+        <div className="grid md:grid-cols-3 gap-8">
+          {t.howItWorks.steps.map((step, i) => (
             <motion.div
-              key={s.n}
-              initial={{ opacity: 0, y: 30 }}
+              key={step.number}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.8 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="relative"
             >
-              <div className="w-16 h-16 rounded-full border border-primary/60 bg-background flex items-center justify-center mb-6 relative z-10">
-                <span className="font-display text-primary text-lg">{s.n}</span>
-              </div>
-              <h4 className="font-display text-2xl">{s.t}</h4>
-              <p className="text-sm text-foreground/65 mt-3 leading-relaxed">{s.d}</p>
+              <span className="text-5xl font-semibold text-primary/10">{step.number}</span>
+              <h3 className="mt-4 text-xl font-semibold">{step.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -824,222 +346,228 @@ function Journey() {
   );
 }
 
-/* ---------------- FAQ ---------------- */
-
-function Faq() {
+function UseCases() {
   const { t } = useT();
   return (
-    <section id="sss" className="relative py-24 md:py-40 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-accent/10 blur-[160px] pointer-events-none" />
-      <div className="relative mx-auto max-w-4xl px-6 lg:px-10">
-        <motion.div {...fadeUp} className="text-center mb-16">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.4em] text-primary">{t.faqSection.badge}</span>
-            <div className="h-px w-10 bg-primary" />
-          </div>
-          <h2 className="font-display text-4xl md:text-6xl leading-tight">
-            {t.faqSection.titleA} <span className="italic text-gold-gradient">{t.faqSection.titleB}</span>
-          </h2>
-          <p className="mt-6 text-foreground/70 max-w-2xl mx-auto">{t.faqSection.intro}</p>
+    <section id="sektorler" className="py-24 md:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.useCases}</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.useCases.title}</h2>
+          <p className="mt-4 text-muted-foreground">{t.useCases.subtitle}</p>
         </motion.div>
 
-        <motion.div {...fadeUp}>
-          <Accordion type="single" collapsible className="w-full">
-            {t.faqSection.items.map((f, idx) => (
-              <AccordionItem key={f.q} value={`faq-${idx}`} className="border-b border-border/60">
-                <AccordionTrigger className="text-left text-base font-normal text-foreground/90 hover:text-primary hover:no-underline py-5">
-                  <span className="flex items-start gap-4">
-                    <HelpCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" strokeWidth={1.2} />
-                    {f.q}
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-foreground/70 leading-relaxed pb-5 pl-9">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </motion.div>
-
-        <motion.div {...fadeUp} className="mt-12 text-center">
-          <a href="#iletisim" className="inline-flex items-center gap-2 rounded-full border border-primary/60 px-6 py-2.5 text-xs uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-500">
-            {t.faqSection.cta} <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
+        <motion.div
+          variants={stagger}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
+          {t.useCases.cases.map((c) => (
+            <motion.div
+              key={c.title}
+              variants={itemFade}
+              className="rounded-2xl border border-border/40 bg-card/50 p-5 hover:bg-card transition-colors"
+            >
+              <h3 className="text-base font-semibold mb-1">{c.title}</h3>
+              <p className="text-sm text-muted-foreground">{c.desc}</p>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
   );
 }
 
-/* ---------------- CONTACT ---------------- */
+function Pricing() {
+  const { t } = useT();
+  return (
+    <section id="fiyatlandirma" className="py-24 md:py-32 bg-card/30">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.pricing}</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.pricing.title}</h2>
+          <p className="mt-4 text-muted-foreground">{t.pricing.subtitle}</p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {t.pricing.tiers.map((tier) => (
+            <motion.div
+              key={tier.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className={`relative rounded-2xl border p-6 ${tier.popular ? "border-primary bg-card shadow-lg" : "border-border/40 bg-card/60"}`}
+            >
+              {tier.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[10px] uppercase tracking-widest text-primary-foreground">
+                  Popüler
+                </span>
+              )}
+              <h3 className="text-lg font-semibold">{tier.name}</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="text-4xl font-semibold">{tier.price}</span>
+                <span className="text-sm text-muted-foreground">{tier.period}</span>
+              </div>
+              <p className="mt-2 text-sm text-muted-foreground">{tier.description}</p>
+              <ul className="mt-6 space-y-3">
+                {tier.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm">
+                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/80">{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#iletisim"
+                className={`mt-6 block w-full text-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${tier.popular ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-border/60 text-foreground hover:bg-accent hover:text-accent-foreground"}`}
+              >
+                {tier.cta}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQ() {
+  const { t } = useT();
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section id="sss" className="py-24 md:py-32">
+      <div className="mx-auto max-w-3xl px-6 lg:px-10">
+        <motion.div {...fadeUp} className="text-center mb-16">
+          <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.faq}</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.faq.title}</h2>
+          <p className="mt-4 text-muted-foreground">{t.faq.subtitle}</p>
+        </motion.div>
+
+        <div className="space-y-4">
+          {t.faq.items.map((item, i) => (
+            <motion.div
+              key={item.q}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className="rounded-2xl border border-border/40 bg-card/50 overflow-hidden"
+            >
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full flex items-center justify-between p-5 text-left"
+              >
+                <span className="text-sm font-medium pr-4">{item.q}</span>
+                <ChevronDown className={`w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
+              </button>
+              {open === i && (
+                <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/30 pt-4">
+                  {item.a}
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function Contact() {
   const { t } = useT();
-  const cards = [
-    { icon: Phone, label: t.contact.cards.phone, value: "+90 501 027 4 777", href: "tel:+905010274777" },
-    { icon: Phone, label: t.contact.cards.phone + " 2", value: "+90 212 223 4 777", href: "tel:+902122234777" },
-    {
-      icon: MapPin,
-      label: t.contact.cards.clinic,
-      value: t.contact.address,
-      href: "https://www.google.com/maps/search/?api=1&query=Maslak+1453+Sarıyer+İstanbul",
-    },
-    { icon: Instagram, label: t.contact.cards.instagram, value: "@gulerayaz_beautycenter", href: "https://www.instagram.com/gulerayaz_beautycenter/" },
-  ];
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", message: "" });
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
-    <section id="iletisim" className="relative py-24 md:py-40 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-accent/15 blur-[130px] animate-pulse-glow" />
-      </div>
+    <section id="iletisim" className="py-24 md:py-32 bg-primary/[0.03]">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <motion.div {...fadeUp}>
+            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.contact}</p>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.contact.title}</h2>
+            <p className="mt-4 text-muted-foreground">{t.contact.subtitle}</p>
+          </motion.div>
 
-      <div className="relative mx-auto max-w-6xl px-6 lg:px-10">
-        <motion.div {...fadeUp} className="text-center mb-16">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.4em] text-primary">{t.contact.badge}</span>
-            <div className="h-px w-10 bg-primary" />
-          </div>
-          <h2 className="font-display text-4xl md:text-6xl leading-tight">
-            {t.contact.titleA} <span className="italic text-gold-gradient">{t.contact.titleB}</span> {t.contact.titleC}
-          </h2>
-          <p className="mt-6 text-foreground/70 max-w-2xl mx-auto">{t.contact.intro}</p>
-        </motion.div>
-
-        <motion.div {...fadeUp} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cards.map((c) => (
-            <a
-              key={c.label + c.value}
-              href={c.href}
-              target={c.href.startsWith("http") ? "_blank" : undefined}
-              rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="group relative bg-card/85 backdrop-blur border border-border/60 hover:border-primary/60 rounded-sm p-8 transition-all duration-500"
-            >
-              <c.icon className="w-8 h-8 text-primary mb-6" strokeWidth={1} />
-              <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">{c.label}</div>
-              <div className="font-display text-lg mt-2 text-foreground/90 group-hover:text-primary transition-colors break-words">
-                {c.value}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-2xl border border-border/40 bg-card p-6 md:p-8 shadow-sm"
+          >
+            {submitted ? (
+              <div className="py-12 text-center">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 mx-auto mb-4">
+                  <Check className="w-6 h-6" />
+                </div>
+                <p className="text-foreground font-medium">{t.contact.form.success}</p>
               </div>
-              <ArrowUpRight className="absolute top-6 right-6 w-4 h-4 text-primary group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
-            </a>
-          ))}
-        </motion.div>
-
-        <motion.div {...fadeUp} id="randevu-formu" className="mt-16 max-w-3xl mx-auto scroll-mt-24">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="h-px w-8 bg-primary/60" />
-              <span className="text-[10px] uppercase tracking-[0.4em] text-primary">{t.contact.formBadge}</span>
-              <div className="h-px w-8 bg-primary/60" />
-            </div>
-            <h3 className="font-display text-2xl md:text-3xl text-foreground">
-              {t.contact.formTitleA} <span className="italic text-gold-gradient">{t.contact.formTitleB}</span>
-            </h3>
-          </div>
-          <AppointmentForm />
-        </motion.div>
+            ) : (
+              <form onSubmit={onSubmit} className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder={t.contact.form.name} className="w-full rounded-xl border border-border/60 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                  <input required value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} placeholder={t.contact.form.company} className="w-full rounded-xl border border-border/60 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder={t.contact.form.email} className="w-full rounded-xl border border-border/60 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                  <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder={t.contact.form.phone} className="w-full rounded-xl border border-border/60 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                </div>
+                <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder={t.contact.form.message} rows={4} className="w-full rounded-xl border border-border/60 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <button type="submit" className="w-full rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">
+                  {t.contact.form.submit}
+                </button>
+              </form>
+            )}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ---------------- FOOTER ---------------- */
-
 function Footer() {
   const { t } = useT();
-  const addressLines = t.footer.address.split("\n");
+  const year = new Date().getFullYear();
   return (
-    <footer className="relative border-t border-border/40 py-12 md:py-16">
+    <footer className="border-t border-border/40 bg-background py-12 md:py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="grid md:grid-cols-3 gap-10 md:gap-8 items-start">
+        <div className="grid md:grid-cols-4 gap-10 mb-12">
+          <div className="md:col-span-2">
+            <div className="flex flex-col leading-none mb-4">
+              <span className="text-xl font-semibold text-foreground">{t.nav.brand}</span>
+              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{t.nav.tagline}</span>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-sm">{t.footer.tagline}</p>
+          </div>
           <div>
-            <span className="text-gold-gradient font-display text-lg tracking-wide whitespace-nowrap block">
-              {t.nav.brand}
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground mt-2 block">
-              {t.footer.tagline}
-            </span>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Sayfalar</p>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#ozellikler" className="text-foreground/70 hover:text-foreground">{t.nav.features}</a></li>
+              <li><a href="#nasil-calisir" className="text-foreground/70 hover:text-foreground">{t.nav.howItWorks}</a></li>
+              <li><a href="#fiyatlandirma" className="text-foreground/70 hover:text-foreground">{t.nav.pricing}</a></li>
+              <li><a href="#sss" className="text-foreground/70 hover:text-foreground">{t.nav.faq}</a></li>
+            </ul>
           </div>
-
-          <div className="space-y-4">
-            <h4 className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">{t.footer.contactHeader}</h4>
-            <a href="tel:+905010274777" className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors">
-              <Phone className="w-4 h-4 text-primary" strokeWidth={1.5} />
-              +90 501 027 4 777
-            </a>
-            <a href="tel:+902122234777" className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors">
-              <Phone className="w-4 h-4 text-primary" strokeWidth={1.5} />
-              +90 212 223 4 777
-            </a>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=Maslak+1453+Sarıyer+İstanbul"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-start gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
-            >
-              <MapPin className="w-4 h-4 text-primary mt-0.5" strokeWidth={1.5} />
-              <span>
-                {addressLines.map((line, i) => (
-                  <span key={i}>
-                    {line}
-                    {i < addressLines.length - 1 && <br />}
-                  </span>
-                ))}
-              </span>
-            </a>
-          </div>
-
-          <div className="md:text-right">
-            <h4 className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-4">{t.footer.socialHeader}</h4>
-            <a
-              href="https://www.instagram.com/gulerayaz_beautycenter/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram: @gulerayaz_beautycenter"
-              className="inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-primary transition-colors"
-            >
-              <Instagram className="w-4 h-4" />
-              @gulerayaz_beautycenter
-            </a>
-            <a
-              href="mailto:info@gulerayazbeauty.com"
-              className="mt-3 inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-primary transition-colors"
-            >
-              <Mail className="w-4 h-4" />
-              info@gulerayazbeauty.com
-            </a>
+          <div>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Yasal</p>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/kvkk" className="text-foreground/70 hover:text-foreground">{t.footer.links.privacy}</Link></li>
+              <li><a href="#iletisim" className="text-foreground/70 hover:text-foreground">{t.footer.links.contact}</a></li>
+            </ul>
           </div>
         </div>
-
-        <div className="mt-12 pt-8 border-t border-border/40">
-          <p className="text-xs text-muted-foreground text-center">
-            © {new Date().getFullYear()} {t.nav.brand}. {t.footer.copyright}
-          </p>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[10px] text-muted-foreground">
-            <Link to="/galeri" className="hover:text-primary transition-colors underline underline-offset-2">
-              {t.footer.galleryLink}
-            </Link>
-            <span className="hidden sm:inline">·</span>
-            <Link to="/kvkk" className="hover:text-primary transition-colors underline underline-offset-2">
-              {t.footer.legalLink}
-            </Link>
-            <span className="hidden sm:inline">·</span>
-            <span>{t.footer.disclaimer}</span>
-          </div>
-          <p className="mt-2 text-[10px] text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
-            {t.footer.resultDisclaimer}
-          </p>
+        <div className="pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-muted-foreground">{t.footer.copyright.replace("{year}", String(year))}</p>
+          <p className="text-xs text-muted-foreground">{BRAND}</p>
         </div>
-        <p className="text-[11px] text-muted-foreground text-center mt-8">
-          Web tasarım &amp; geliştirme:{" "}
-          <a
-            href="https://www.trairx.com"
-            rel="noopener"
-            className="font-medium hover:text-foreground transition-colors"
-          >
-            TrairX Technology
-          </a>
-        </p>
       </div>
     </footer>
   );
