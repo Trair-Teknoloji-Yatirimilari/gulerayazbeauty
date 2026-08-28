@@ -104,9 +104,13 @@ export const login = createServerFn({ method: "POST" })
       const bootPass = process.env.ADMIN_PASSWORD;
       if (count.rows[0].c === 0 && bootEmail && bootPass && email === bootEmail && data.password === bootPass) {
         const hash = await bcrypt.hash(bootPass, 12);
+        const biz = await pool.query(
+          "INSERT INTO businesses (name, slug) VALUES ($1, $2) RETURNING id",
+          ["TrairX", "trairx"],
+        );
         await pool.query(
-          "INSERT INTO admin_users (email, password_hash) VALUES ($1, $2)",
-          [email, hash],
+          "INSERT INTO admin_users (email, password_hash, role, business_id) VALUES ($1, $2, 'superadmin', $3)",
+          [email, hash, biz.rows[0].id],
         );
         res = await pool.query(
           "SELECT email, password_hash FROM admin_users WHERE lower(email) = $1",
