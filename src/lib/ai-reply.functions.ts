@@ -55,7 +55,9 @@ async function buildSystemPrompt(businessId: string): Promise<string> {
   }
   if (hours.rows.length) {
     lines.push("", "ÇALIŞMA SAATLERİ:");
-    for (const h of hours.rows) lines.push(`- ${days[h.weekday] ?? h.weekday}: ${h.open_time}–${h.close_time}`);
+    for (const h of hours.rows)
+      lines.push(`- ${days[h.weekday] ?? h.weekday}: ${h.is_closed ? "Kapalı" : `${h.open_time}–${h.close_time}`}`);
+
   }
   if (knowledge.rows.length) {
     lines.push("", "BİLGİ TABANI:");
