@@ -468,31 +468,27 @@ export function UseCases({ withHeading = true }: { withHeading?: boolean }) {
     <section id="sektorler" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.useCases}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.useCases.title}</h2>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.useCases}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.useCases.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.useCases.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <motion.div
-          variants={stagger}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-        >
-          {t.useCases.cases.map((c) => (
-            <motion.div
-              key={c.title}
-              variants={itemFade}
-              className="rounded-2xl border border-border/40 bg-card/50 p-5 hover:bg-card transition-colors"
-            >
-              <h3 className="text-base font-semibold mb-1">{c.title}</h3>
-              <p className="text-sm text-muted-foreground">{c.desc}</p>
-            </motion.div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {t.useCases.cases.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.06}>
+              <motion.div
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="shine h-full rounded-3xl border border-border/50 bg-secondary/60 p-6 transition-colors hover:bg-card"
+              >
+                <h3 className="mb-1 text-base font-semibold tracking-tight">{c.title}</h3>
+                <p className="text-sm text-muted-foreground">{c.desc}</p>
+              </motion.div>
+            </Reveal>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
