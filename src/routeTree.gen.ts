@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as OzelliklerRouteImport } from './routes/ozellikler'
 import { Route as KvkkRouteImport } from './routes/kvkk'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -25,6 +26,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OzelliklerRoute = OzelliklerRouteImport.update({
+  id: '/ozellikler',
+  path: '/ozellikler',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KvkkRoute = KvkkRouteImport.update({
@@ -56,6 +62,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/kvkk': typeof KvkkRoute
+  '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/kvkk': typeof KvkkRoute
+  '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -74,21 +82,37 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/kvkk': typeof KvkkRoute
+  '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/kvkk' | '/robots.txt' | '/sitemap.xml' | '/admin'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/kvkk'
+    | '/ozellikler'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/kvkk' | '/robots.txt' | '/sitemap.xml' | '/admin'
+  to:
+    | '/'
+    | '/auth'
+    | '/kvkk'
+    | '/ozellikler'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/kvkk'
+    | '/ozellikler'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_authenticated/admin'
@@ -99,6 +123,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   KvkkRoute: typeof KvkkRoute
+  OzelliklerRoute: typeof OzelliklerRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
@@ -117,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/robots.txt'
       fullPath: '/robots.txt'
       preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ozellikler': {
+      id: '/ozellikler'
+      path: '/ozellikler'
+      fullPath: '/ozellikler'
+      preLoaderRoute: typeof OzelliklerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kvkk': {
@@ -173,6 +205,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   KvkkRoute: KvkkRoute,
+  OzelliklerRoute: OzelliklerRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
