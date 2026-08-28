@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, BRAND } from "@/lib/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Shield, Mail, ArrowLeft, Clock, Trash2, Eye, Lock, FileText } from "lucide-react";
@@ -7,10 +7,10 @@ import { useT } from "@/i18n/context";
 export const Route = createFileRoute("/kvkk")({
   head: () => ({
     meta: [
-      { title: "KVKK Aydınlatma Metni | Güler Ayaz Beauty" },
-      { name: "description", content: "Güler Ayaz Beauty Kişisel Verilerin İşlenmesi Aydınlatma Metni." },
+      { title: "Gizlilik ve KVKK Aydınlatma Metni | TrairX Connect" },
+      { name: "description", content: "TrairX Connect Kişisel Verilerin İşlenmesi Aydınlatma Metni." },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "KVKK Aydınlatma Metni | Güler Ayaz Beauty" },
+      { property: "og:title", content: "Gizlilik ve KVKK Aydınlatma Metni | TrairX Connect" },
       { property: "og:description", content: "Kişisel verilerinizin nasıl işlendiği, saklandığı ve haklarınız." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -53,7 +53,7 @@ function KvkkPage() {
             <Shield className="w-8 h-8" strokeWidth={1.5} />
           </div>
           <p className="text-xs uppercase tracking-[0.4em] text-primary mb-4">{legal.heroBadge}</p>
-          <h1 className="font-display text-4xl md:text-5xl leading-tight text-gold-gradient italic">
+          <h1 className="font-display text-4xl md:text-5xl leading-tight text-gradient italic">
             {legal.title}
           </h1>
           <p className="mt-6 text-foreground/60 max-w-2xl mx-auto">
