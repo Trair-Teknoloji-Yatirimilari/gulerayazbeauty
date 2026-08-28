@@ -459,8 +459,9 @@ function LiveChat() {
                 >
                   <ChannelIcon className="h-3.5 w-3.5" />
                 </span>
-                <div className="rounded-2xl rounded-tl-md bg-secondary p-3">
-                  <p className="text-[11px] font-medium text-muted-foreground">{convo.name}</p>
+                <div className="min-w-[190px] rounded-2xl rounded-tl-md bg-secondary p-3">
+                  <p className="mb-1 text-[11px] font-medium text-muted-foreground">{convo.name}</p>
+                  <MediaAttachment media={convo.media} />
                   <p className="text-sm leading-relaxed">{convo.user}</p>
                 </div>
               </motion.div>
