@@ -15,6 +15,7 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as OzelliklerRouteImport } from './routes/ozellikler'
 import { Route as NasilCalisirRouteImport } from './routes/nasil-calisir'
 import { Route as KvkkRouteImport } from './routes/kvkk'
+import { Route as IletisimRouteImport } from './routes/iletisim'
 import { Route as FiyatlandirmaRouteImport } from './routes/fiyatlandirma'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -51,6 +52,11 @@ const KvkkRoute = KvkkRouteImport.update({
   path: '/kvkk',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IletisimRoute = IletisimRouteImport.update({
+  id: '/iletisim',
+  path: '/iletisim',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FiyatlandirmaRoute = FiyatlandirmaRouteImport.update({
   id: '/fiyatlandirma',
   path: '/fiyatlandirma',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/nasil-calisir': typeof NasilCalisirRoute
   '/ozellikler': typeof OzelliklerRoute
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/nasil-calisir': typeof NasilCalisirRoute
   '/ozellikler': typeof OzelliklerRoute
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/fiyatlandirma': typeof FiyatlandirmaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/nasil-calisir': typeof NasilCalisirRoute
   '/ozellikler': typeof OzelliklerRoute
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/fiyatlandirma'
+    | '/iletisim'
     | '/kvkk'
     | '/nasil-calisir'
     | '/ozellikler'
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/fiyatlandirma'
+    | '/iletisim'
     | '/kvkk'
     | '/nasil-calisir'
     | '/ozellikler'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/fiyatlandirma'
+    | '/iletisim'
     | '/kvkk'
     | '/nasil-calisir'
     | '/ozellikler'
@@ -159,6 +171,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   FiyatlandirmaRoute: typeof FiyatlandirmaRoute
+  IletisimRoute: typeof IletisimRoute
   KvkkRoute: typeof KvkkRoute
   NasilCalisirRoute: typeof NasilCalisirRoute
   OzelliklerRoute: typeof OzelliklerRoute
@@ -209,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/kvkk'
       fullPath: '/kvkk'
       preLoaderRoute: typeof KvkkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iletisim': {
+      id: '/iletisim'
+      path: '/iletisim'
+      fullPath: '/iletisim'
+      preLoaderRoute: typeof IletisimRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fiyatlandirma': {
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   FiyatlandirmaRoute: FiyatlandirmaRoute,
+  IletisimRoute: IletisimRoute,
   KvkkRoute: KvkkRoute,
   NasilCalisirRoute: NasilCalisirRoute,
   OzelliklerRoute: OzelliklerRoute,
