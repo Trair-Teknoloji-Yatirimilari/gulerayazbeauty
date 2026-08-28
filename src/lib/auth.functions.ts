@@ -35,12 +35,50 @@ function verifyToken(token: string | undefined): string | null {
   return Buffer.from(emailB64, "base64url").toString();
 }
 
+export type AdminAccount = {
+  email: string;
+  name: string | null;
+  role: "partner" | "superadmin";
+  businessId: string | null;
+  businessName: string | null;
+};
+
+async function loadAccount(email: string): Promise<AdminAccount | null> {
+  const res = await db().query(
+    `SELECT u.email, u.name, u.role, u.business_id, b.name AS business_name
+       FROM admin_users u
+       LEFT JOIN businesses b ON b.id = u.business_id
+      WHERE lower(u.email) = $1`,
+    [email.toLowerCase()],
+  );
+  const r = res.rows[0];
+  if (!r) return null;
+  return {
+    email: r.email,
+    name: r.name ?? null,
+    role: r.role,
+    businessId: r.business_id ?? null,
+    businessName: r.business_name ?? null,
+  };
+}
+
 /** Korumalı server fonksiyonları için middleware */
 export const requireAdmin = createMiddleware({ type: "function" }).server(async ({ next }) => {
   const email = verifyToken(getCookie(COOKIE_NAME));
   if (!email) throw new Error("Yetkisiz erişim. Lütfen giriş yapın.");
-  return next({ context: { adminEmail: email } });
+  const account = await loadAccount(email);
+  if (!account) throw new Error("Hesap bulunamadı.");
+  return next({ context: { adminEmail: account.email, account } });
 });
+
+/** İşletme verisine erişen fonksiyonlar için: business_id zorunlu. */
+export const requireBusiness = createMiddleware({ type: "function" })
+  .middleware([requireAdmin])
+  .server(async ({ next, context }) => {
+    const businessId = context.account.businessId;
+    if (!businessId) throw new Error("Hesabınıza bağlı bir işletme yok.");
+    return next({ context: { businessId } });
+  });
 
 const loginSchema = z.object({
   email: z.string().trim().email(),
