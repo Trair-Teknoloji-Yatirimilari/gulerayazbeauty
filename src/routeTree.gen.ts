@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SektorlerRouteImport } from './routes/sektorler'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as OzelliklerRouteImport } from './routes/ozellikler'
 import { Route as NasilCalisirRouteImport } from './routes/nasil-calisir'
@@ -22,6 +23,11 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SektorlerRoute = SektorlerRouteImport.update({
+  id: '/sektorler',
+  path: '/sektorler',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/nasil-calisir': typeof NasilCalisirRoute
   '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/nasil-calisir': typeof NasilCalisirRoute
   '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
 }
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/nasil-calisir': typeof NasilCalisirRoute
   '/ozellikler': typeof OzelliklerRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sektorler': typeof SektorlerRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
 }
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/nasil-calisir'
     | '/ozellikler'
     | '/robots.txt'
+    | '/sektorler'
     | '/sitemap.xml'
     | '/admin'
   fileRoutesByTo: FileRoutesByTo
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | '/nasil-calisir'
     | '/ozellikler'
     | '/robots.txt'
+    | '/sektorler'
     | '/sitemap.xml'
     | '/admin'
   id:
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '/nasil-calisir'
     | '/ozellikler'
     | '/robots.txt'
+    | '/sektorler'
     | '/sitemap.xml'
     | '/_authenticated/admin'
   fileRoutesById: FileRoutesById
@@ -138,6 +150,7 @@ export interface RootRouteChildren {
   NasilCalisirRoute: typeof NasilCalisirRoute
   OzelliklerRoute: typeof OzelliklerRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SektorlerRoute: typeof SektorlerRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sektorler': {
+      id: '/sektorler'
+      path: '/sektorler'
+      fullPath: '/sektorler'
+      preLoaderRoute: typeof SektorlerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -228,6 +248,7 @@ const rootRouteChildren: RootRouteChildren = {
   NasilCalisirRoute: NasilCalisirRoute,
   OzelliklerRoute: OzelliklerRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
+  SektorlerRoute: SektorlerRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
