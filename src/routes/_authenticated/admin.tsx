@@ -102,12 +102,6 @@ function AdminPage() {
             >
               {t.admin.galleryManagement}
             </Link>
-            <Link
-              to="/admin/blog"
-              className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
-            >
-              {t.admin.blogManagement}
-            </Link>
             <button
               onClick={signOut}
               className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
