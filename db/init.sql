@@ -261,3 +261,46 @@ DROP TRIGGER IF EXISTS orders_updated_at ON orders;
 CREATE TRIGGER orders_updated_at BEFORE UPDATE ON orders FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 DROP TRIGGER IF EXISTS knowledge_updated_at ON knowledge_items;
 CREATE TRIGGER knowledge_updated_at BEFORE UPDATE ON knowledge_items FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- ============================================================
+-- TrairX Connect — CRM (müşteri ilişkileri) modülü
+-- ============================================================
+
+DO $$ BEGIN CREATE TYPE crm_stage AS ENUM ('lead','contacted','qualified','won','lost'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+DO $$ BEGIN CREATE TYPE crm_activity_kind AS ENUM ('ai_chat','note','call','booking','order','handoff'); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+CREATE TABLE IF NOT EXISTS crm_customers (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  business_id uuid NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
+  name text NOT NULL,
+  phone text,
+  email text,
+  source_channel text,
+  stage crm_stage NOT NULL DEFAULT 'lead',
+  tags text[] NOT NULL DEFAULT '{}',
+  notes text,
+  last_contact_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS crm_customers_business_idx ON crm_customers (business_id, updated_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS crm_customers_phone_uq ON crm_customers (business_id, phone) WHERE phone IS NOT NULL;
+
+CREATE TABLE IF NOT EXISTS crm_activities (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  business_id uuid NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
+  customer_id uuid NOT NULL REFERENCES crm_customers(id) ON DELETE CASCADE,
+  kind crm_activity_kind NOT NULL DEFAULT 'note',
+  channel text,
+  summary text NOT NULL,
+  detail text,
+  by_ai boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS crm_activities_customer_idx ON crm_activities (customer_id, created_at DESC);
+
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS customer_id uuid REFERENCES crm_customers(id) ON DELETE SET NULL;
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_id uuid REFERENCES crm_customers(id) ON DELETE SET NULL;
+
+DROP TRIGGER IF EXISTS crm_customers_updated_at ON crm_customers;
+CREATE TRIGGER crm_customers_updated_at BEFORE UPDATE ON crm_customers FOR EACH ROW EXECUTE FUNCTION set_updated_at();
