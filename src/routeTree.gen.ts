@@ -29,6 +29,7 @@ import { Route as LangNasilCalisirRouteImport } from './routes/$lang.nasil-calis
 import { Route as LangKvkkRouteImport } from './routes/$lang.kvkk'
 import { Route as LangIletisimRouteImport } from './routes/$lang.iletisim'
 import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandirma'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -129,6 +130,11 @@ const LangFiyatlandirmaRoute = LangFiyatlandirmaRouteImport.update({
   path: '/fiyatlandirma',
   getParentRoute: () => LangRoute,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -148,8 +154,9 @@ export interface FileRoutesByFullPath {
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -168,8 +175,8 @@ export interface FileRoutesByTo {
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
-  '/admin': typeof AuthenticatedAdminRoute
   '/$lang': typeof LangIndexRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -191,8 +198,9 @@ export interface FileRoutesById {
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/$lang/': typeof LangIndexRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -216,6 +224,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/admin'
     | '/$lang/'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -234,8 +243,8 @@ export interface FileRouteTypes {
     | '/$lang/nasil-calisir'
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
-    | '/admin'
     | '/$lang'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/$lang/sektorler'
     | '/_authenticated/admin'
     | '/$lang/'
+    | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -417,15 +427,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangFiyatlandirmaRouteImport
       parentRoute: typeof LangRoute
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
