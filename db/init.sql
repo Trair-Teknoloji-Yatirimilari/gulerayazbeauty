@@ -304,3 +304,33 @@ ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_id uuid REFERENCES crm_cust
 
 DROP TRIGGER IF EXISTS crm_customers_updated_at ON crm_customers;
 CREATE TRIGGER crm_customers_updated_at BEFORE UPDATE ON crm_customers FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- ============================================================
+-- TrairX Connect — AI konuşma geçmişi (test konsolu + WhatsApp)
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS ai_conversations (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  business_id uuid NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
+  channel text NOT NULL DEFAULT 'web',
+  source text NOT NULL DEFAULT 'test',           -- test | live
+  external_id text,                              -- WhatsApp gönderen numarası vb.
+  customer_name text,
+  title text,
+  last_message_at timestamptz NOT NULL DEFAULT now(),
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ai_conversations_business_idx ON ai_conversations (business_id, last_message_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS ai_conversations_external_uq
+  ON ai_conversations (business_id, channel, external_id) WHERE external_id IS NOT NULL;
+
+CREATE TABLE IF NOT EXISTS ai_messages (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  conversation_id uuid NOT NULL REFERENCES ai_conversations(id) ON DELETE CASCADE,
+  role text NOT NULL CHECK (role IN ('user','assistant')),
+  content text NOT NULL,
+  model text,
+  latency_ms integer,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ai_messages_conversation_idx ON ai_messages (conversation_id, created_at);
