@@ -559,38 +559,52 @@ export function FAQ({ withHeading = true }: { withHeading?: boolean }) {
     <section id="sss" className="py-24 md:py-32">
       <div className="mx-auto max-w-3xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.faq}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.faq.title}</h2>
+          <Reveal className="mb-16 text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.faq}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.faq.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.faq.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {t.faq.items.map((item, i) => (
             <motion.div
               key={item.q}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="rounded-2xl border border-border/40 bg-card/50 overflow-hidden"
+              transition={{ duration: 0.55, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden rounded-2xl border border-border/50 bg-card/70"
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 text-left"
+                className="flex w-full items-center justify-between p-5 text-left"
               >
-                <span className="text-sm font-medium pr-4">{item.q}</span>
-                <ChevronDown className={`w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
+                <span className="pr-4 text-sm font-medium">{item.q}</span>
+                <motion.span animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.35 }}>
+                  <ChevronDown className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                </motion.span>
               </button>
-              {open === i && (
-                <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/30 pt-4">
-                  {item.a}
-                </div>
-              )}
+              <AnimatePresence initial={false}>
+                {open === i && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="border-t border-border/40 px-5 pb-5 pt-4 text-sm leading-relaxed text-muted-foreground">
+                      {item.a}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );
