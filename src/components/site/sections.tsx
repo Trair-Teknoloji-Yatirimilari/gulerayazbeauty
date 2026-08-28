@@ -185,19 +185,33 @@ const CHANNEL_STYLES: Record<string, { icon: typeof Instagram; badge: string }> 
   WhatsApp: { icon: Phone, badge: "bg-[#25D366]/14 text-[#128C4A]" },
 };
 
+const OUTCOME_ICONS: Record<string, React.ElementType> = {
+  booking: Calendar,
+  order: Store,
+  sale: BarChart3,
+};
+
 function LiveChat() {
   const { t } = useT();
   const w = t.hero.widget;
-  const convos = w.conversations;
+  const all = w.conversations;
 
-  // step: 0 = incoming message, 1 = AI typing, 2 = AI reply
+  const [filter, setFilter] = useState<string>("all");
+  const convos = filter === "all" ? all : all.filter((c) => c.channel === filter);
+
+  // step: 0 incoming · 1 AI typing · 2 AI reply · 3 outcome card / handoff
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState(0);
 
   useEffect(() => {
-    const delays = [1500, 1200, 2600];
+    setIndex(0);
+    setStep(0);
+  }, [filter]);
+
+  useEffect(() => {
+    const delays = [1500, 1200, 2200, 2600];
     const timer = setTimeout(() => {
-      if (step < 2) setStep((s) => s + 1);
+      if (step < 3) setStep((s) => s + 1);
       else {
         setStep(0);
         setIndex((i) => (i + 1) % convos.length);
@@ -206,18 +220,53 @@ function LiveChat() {
     return () => clearTimeout(timer);
   }, [step, convos.length]);
 
-  const convo = convos[index];
+  const convo = convos[Math.min(index, convos.length - 1)] ?? all[0];
   const channel = CHANNEL_STYLES[convo.channel] ?? CHANNEL_STYLES.Instagram;
   const ChannelIcon = channel.icon;
+  const OutcomeIcon = OUTCOME_ICONS[convo.kind] ?? Calendar;
+
+  const filters = ["all", "Instagram", "WhatsApp", "Facebook"];
 
   return (
     <div className="widget-mock overflow-hidden rounded-[28px]">
       <div className="grid grid-cols-[112px_1fr] sm:grid-cols-[190px_1fr]">
         {/* Inbox list */}
         <aside className="border-r border-border/50 bg-secondary/40 p-3 sm:p-4">
-          <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+          <p className="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             {w.inbox}
           </p>
+          <div className="mb-3 flex flex-wrap gap-1">
+            {filters.map((f) => {
+              const s = CHANNEL_STYLES[f];
+              const Icon = s?.icon;
+              const active = filter === f;
+              return (
+                <button
+                  key={f}
+                  type="button"
+                  onClick={() => setFilter(f)}
+                  aria-pressed={active}
+                  className={`relative rounded-full px-2 py-1 text-[10px] font-medium transition-colors ${
+                    active ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="inbox-filter"
+                      transition={{ type: "spring", stiffness: 340, damping: 30 }}
+                      className="absolute inset-0 rounded-full bg-primary"
+                    />
+                  )}
+                  <span className="relative flex items-center gap-1">
+                    {Icon ? <Icon className="h-2.5 w-2.5" /> : null}
+                    <span className={Icon ? "hidden sm:inline" : ""}>
+                      {f === "all" ? w.filters.all : f}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
           <div className="space-y-1.5">
             {convos.map((c, i) => {
               const s = CHANNEL_STYLES[c.channel] ?? CHANNEL_STYLES.Instagram;
@@ -262,6 +311,18 @@ function LiveChat() {
               );
             })}
           </div>
+
+          {/* Mini analytics */}
+          <div className="mt-4 hidden gap-2 border-t border-border/50 pt-3 sm:grid">
+            {w.analytics.map((a) => (
+              <div key={a.label} className="flex items-baseline justify-between">
+                <span className="text-[10px] text-muted-foreground">{a.label}</span>
+                <span className="text-xs font-semibold text-foreground">
+                  <CountUp to={a.value} suffix={a.suffix} />
+                </span>
+              </div>
+            ))}
+          </div>
         </aside>
 
         {/* Conversation */}
@@ -289,10 +350,10 @@ function LiveChat() {
             </motion.span>
           </div>
 
-          <div className="min-h-[210px] space-y-3">
+          <div className="min-h-[262px] space-y-3">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
-                key={`u-${index}`}
+                key={`u-${convo.name}`}
                 layout
                 initial={{ opacity: 0, x: -18, scale: 0.96 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -313,7 +374,7 @@ function LiveChat() {
 
               {step === 1 && (
                 <motion.div
-                  key={`typing-${index}`}
+                  key={`typing-${convo.name}`}
                   layout
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -336,9 +397,9 @@ function LiveChat() {
                 </motion.div>
               )}
 
-              {step === 2 && (
+              {step >= 2 && (
                 <motion.div
-                  key={`b-${index}`}
+                  key={`b-${convo.name}`}
                   layout
                   initial={{ opacity: 0, x: 18, scale: 0.96 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -353,12 +414,71 @@ function LiveChat() {
                   <p className="text-sm leading-relaxed">{convo.bot}</p>
                 </motion.div>
               )}
+
+              {step === 3 && (
+                <motion.div
+                  key={`o-${convo.name}`}
+                  layout
+                  initial={{ opacity: 0, y: 14, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="ml-auto w-[92%] rounded-2xl border border-border/60 bg-card p-3 shadow-sm"
+                >
+                  <div className="flex items-start gap-2.5">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <OutcomeIcon className="h-4 w-4" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                        {w.outcomeLabel}
+                      </p>
+                      <p className="truncate text-sm font-medium text-foreground">
+                        {convo.outcomeTitle}
+                      </p>
+                      <p className="text-[11px] text-muted-foreground">{convo.outcomeDetail}</p>
+                    </div>
+                    <motion.span
+                      initial={{ scale: 0, rotate: -30 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: 0.25, type: "spring", stiffness: 320, damping: 18 }}
+                      className="ml-auto text-emerald-600"
+                    >
+                      <CheckCircle2 className="h-4 w-4" />
+                    </motion.span>
+                  </div>
+
+                  {convo.handoff && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.35 }}
+                      className="mt-2.5 flex items-center gap-2 rounded-xl bg-secondary/70 px-2.5 py-2"
+                    >
+                      <span className="relative flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                        <Sparkles className="h-3 w-3" />
+                      </span>
+                      <motion.span
+                        animate={{ x: [0, 6, 0] }}
+                        transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                        className="text-muted-foreground"
+                      >
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </motion.span>
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/12 text-emerald-600">
+                        <UserRound className="h-3 w-3" />
+                      </span>
+                      <span className="text-[11px] font-medium text-foreground">{w.handoff}</span>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
 
           <div className="mt-4 flex items-center gap-2 border-t border-border/50 pt-3 text-[11px] text-muted-foreground">
             <AnimatePresence mode="wait" initial={false}>
-              {step === 2 ? (
+              {step >= 2 ? (
                 <motion.span
                   key="resolved"
                   initial={{ opacity: 0, y: 4 }}
@@ -386,6 +506,7 @@ function LiveChat() {
       </div>
     </div>
   );
+
 }
 
 export function Hero() {
