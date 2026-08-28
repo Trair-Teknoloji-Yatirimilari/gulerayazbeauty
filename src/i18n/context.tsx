@@ -9,7 +9,7 @@ type Ctx = { locale: Locale; setLocale: (l: Locale) => void; t: Dict; dir: "ltr"
 const STORAGE_KEY = "app.locale";
 
 /**
- * Locale is derived from the URL: `/...` = tr (default), `/en/...`, `/fa/...`.
+ * Locale is derived from the URL: `/...` = tr (default), `/en/...`.
  * The URL is the single source of truth so SSR, SEO and hydration always agree.
  */
 export function useT(): Ctx {
