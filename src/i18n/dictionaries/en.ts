@@ -31,6 +31,9 @@ export const en = {
       status: "Online",
       aiLabel: "TrairX AI",
       typing: "is typing",
+      inbox: "Inbox",
+      resolvedBy: "TrairX AI resolved",
+      replyTime: "Avg. reply 2s",
       conversations: [
         {
           channel: "Instagram",
