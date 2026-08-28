@@ -15,6 +15,9 @@ import {
   Instagram,
   Facebook,
   Phone,
+  UserRound,
+  CheckCircle2,
+
 } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useT } from "@/i18n/context";
