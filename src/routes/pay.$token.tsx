@@ -117,9 +117,30 @@ function PayPage() {
                 >
                   <Lock className="w-4 h-4" /> Siparişi tamamla
                 </button>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={async () => {
+                    setBusy(true);
+                    try {
+                      await submitFn({ data: { token, ...form } });
+                      const { url } = await stripeFn({ data: { token } });
+                      if (url) window.location.href = url;
+                      else toast.error("Ödeme sayfası açılamadı.");
+                    } catch (err) {
+                      toast.error(err instanceof Error ? err.message : "Ödeme başlatılamadı.");
+                    } finally {
+                      setBusy(false);
+                    }
+                  }}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-border/70 px-6 py-3 text-sm font-medium hover:bg-muted disabled:opacity-60 transition-colors"
+                >
+                  <CreditCard className="w-4 h-4" /> Kart ile öde (USD)
+                </button>
                 <p className="text-[11px] text-muted-foreground text-center">
-                  Kart ile online ödeme, ödeme sağlayıcısı bağlandığında bu ekranda aktif olur.
+                  Kart ödemeleri Stripe altyapısı ile güvenle alınır; tutarlar USD olarak tahsil edilir.
                 </p>
+
               </form>
             )}
           </section>
