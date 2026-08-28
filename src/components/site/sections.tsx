@@ -27,6 +27,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useT } from "@/i18n/context";
 import { LocaleLink, LanguageSwitcher } from "@/components/site/LocaleLink";
 import { BRAND } from "@/lib/site";
+import { WhatsAppFab } from "@/components/site/WhatsAppFab";
 import {
   Aurora,
   Reveal,
@@ -63,6 +64,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <Header />
       <main>{children}</main>
       <Footer />
+      <WhatsAppFab />
     </div>
   );
 }
