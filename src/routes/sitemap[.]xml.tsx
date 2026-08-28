@@ -20,7 +20,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           "trairxconnect.com";
         const base = `https://${host}`;
 
-        const LOCALES = ["tr", "en", "fa"] as const;
+        const LOCALES = ["tr", "en"] as const;
         const prefixed = (locale: string, path: string) =>
           locale === "tr" ? path : path === "/" ? `/${locale}` : `/${locale}${path}`;
 

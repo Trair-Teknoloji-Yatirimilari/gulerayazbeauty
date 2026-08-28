@@ -32,7 +32,7 @@ export function stripLocale(pathname: string): { locale: Locale; path: string } 
   return { locale: DEFAULT_LOCALE, path: path === "" ? "/" : path };
 }
 
-export const HREFLANG: Record<Locale, string> = { tr: "tr-TR", en: "en", fa: "fa-IR" };
+export const HREFLANG: Record<Locale, string> = { tr: "tr-TR", en: "en" };
 
 /** canonical + hreflang alternates for a canonical path. */
 export function localeLinks(siteUrl: string, locale: Locale, path: string) {

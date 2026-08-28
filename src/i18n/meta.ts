@@ -16,11 +16,6 @@ const META: Record<PageKey, Record<Locale, Entry>> = {
       description:
         "Embed it on your website and connect Instagram, Facebook and WhatsApp. TrairX Connect works 24/7 as your support agent, sales consultant and booking assistant.",
     },
-    fa: {
-      title: "TrairX Connect — دستیار هوش مصنوعی پشتیبانی و رزرو",
-      description:
-        "آن را در وب‌سایت خود جاسازی کنید و اینستاگرام، فیسبوک و واتساپ را متصل کنید. TrairX Connect به‌صورت ۲۴ ساعته پشتیبان، مشاور فروش و دستیار رزرو شماست.",
-    },
   },
   features: {
     tr: {
@@ -32,11 +27,6 @@ const META: Record<PageKey, Record<Locale, Entry>> = {
       title: "Features — TrairX Connect AI Assistant Capabilities",
       description:
         "24/7 AI chat, booking management, Instagram/Facebook/WhatsApp integration, partner pages and live analytics in one platform.",
-    },
-    fa: {
-      title: "امکانات — قابلیت‌های دستیار هوشمند TrairX Connect",
-      description:
-        "گفتگوی هوشمند ۲۴ ساعته، مدیریت رزرو، اتصال اینستاگرام/فیسبوک/واتساپ، صفحات شرکا و تحلیل لحظه‌ای در یک پلتفرم.",
     },
   },
   howItWorks: {
@@ -50,11 +40,6 @@ const META: Record<PageKey, Record<Locale, Entry>> = {
       description:
         "Add the snippet, connect your channels, train the AI. An assistant live on your website in minutes.",
     },
-    fa: {
-      title: "چگونه کار می‌کند — راه‌اندازی TrairX Connect در ۳ گام",
-      description:
-        "کد را اضافه کنید، کانال‌ها را متصل کنید و هوش مصنوعی را آموزش دهید. دستیار شما در چند دقیقه فعال می‌شود.",
-    },
   },
   useCases: {
     tr: {
@@ -67,11 +52,6 @@ const META: Record<PageKey, Record<Locale, Entry>> = {
       description:
         "TrairX Connect scenarios tailored for beauty, restaurants, education, travel, e-commerce and healthcare businesses.",
     },
-    fa: {
-      title: "صنایع — دستیار هوشمند برای هر مدل کسب‌وکار",
-      description:
-        "سناریوهای TrairX Connect برای زیبایی، رستوران، آموزش، گردشگری، فروشگاه اینترنتی و مراکز درمانی.",
-    },
   },
   pricing: {
     tr: {
@@ -81,10 +61,6 @@ const META: Record<PageKey, Record<Locale, Entry>> = {
     en: {
       title: "Pricing — TrairX Connect Plans",
       description: "Start free and upgrade as you grow. Starter, Pro and Enterprise plan details.",
-    },
-    fa: {
-      title: "قیمت‌گذاری — پلن‌های TrairX Connect",
-      description: "رایگان شروع کنید و با رشد کسب‌وکار ارتقا دهید. جزئیات پلن‌های Starter، Pro و Enterprise.",
     },
   },
   contact: {
@@ -96,10 +72,6 @@ const META: Record<PageKey, Record<Locale, Entry>> = {
       title: "Contact — Request a TrairX Connect Demo",
       description: "Request a free demo and let our team plan a setup tailored to your business.",
     },
-    fa: {
-      title: "تماس — درخواست دموی TrairX Connect",
-      description: "دموی رایگان درخواست کنید تا تیم ما راه‌اندازی متناسب با کسب‌وکار شما را برنامه‌ریزی کند.",
-    },
   },
   legal: {
     tr: {
@@ -109,10 +81,6 @@ const META: Record<PageKey, Record<Locale, Entry>> = {
     en: {
       title: "Privacy & Data Protection Notice | TrairX Connect",
       description: "How TrairX Connect collects, processes and protects your personal data.",
-    },
-    fa: {
-      title: "حریم خصوصی و حفاظت از داده‌ها | TrairX Connect",
-      description: "نحوه جمع‌آوری، پردازش و حفاظت از داده‌های شخصی شما در TrairX Connect.",
     },
   },
 };
@@ -127,7 +95,7 @@ export function pageHead(key: PageKey, locale: Locale = DEFAULT_LOCALE) {
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:locale", content: locale === "tr" ? "tr_TR" : locale === "fa" ? "fa_IR" : "en_US" },
+      { property: "og:locale", content: locale === "tr" ? "tr_TR" : "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: localeLinks(SITE_URL, locale, PAGE_PATHS[key]),
