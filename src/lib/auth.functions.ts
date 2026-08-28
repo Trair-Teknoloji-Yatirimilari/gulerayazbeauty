@@ -140,7 +140,8 @@ export const logout = createServerFn({ method: "POST" }).handler(async () => {
 
 export const getAdminSession = createServerFn({ method: "GET" }).handler(async () => {
   const email = verifyToken(getCookie(COOKIE_NAME));
-  return email ? { email } : null;
+  if (!email) return null;
+  return await loadAccount(email);
 });
 
 const changePasswordSchema = z.object({
