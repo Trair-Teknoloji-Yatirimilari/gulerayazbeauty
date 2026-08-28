@@ -22,6 +22,7 @@ import { Route as LangRouteImport } from './routes/$lang'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang.index'
+import { Route as PayTokenRouteImport } from './routes/pay.$token'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as LangSektorlerRouteImport } from './routes/$lang.sektorler'
 import { Route as LangOzelliklerRouteImport } from './routes/$lang.ozellikler'
@@ -29,6 +30,16 @@ import { Route as LangNasilCalisirRouteImport } from './routes/$lang.nasil-calis
 import { Route as LangKvkkRouteImport } from './routes/$lang.kvkk'
 import { Route as LangIletisimRouteImport } from './routes/$lang.iletisim'
 import { Route as LangFiyatlandirmaRouteImport } from './routes/$lang.fiyatlandirma'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminUrunlerRouteImport } from './routes/_authenticated/admin.urunler'
+import { Route as AuthenticatedAdminSiparislerRouteImport } from './routes/_authenticated/admin.siparisler'
+import { Route as AuthenticatedAdminSaatlerRouteImport } from './routes/_authenticated/admin.saatler'
+import { Route as AuthenticatedAdminRezervasyonlarRouteImport } from './routes/_authenticated/admin.rezervasyonlar'
+import { Route as AuthenticatedAdminKanallarRouteImport } from './routes/_authenticated/admin.kanallar'
+import { Route as AuthenticatedAdminIsletmeRouteImport } from './routes/_authenticated/admin.isletme'
+import { Route as AuthenticatedAdminHizmetlerRouteImport } from './routes/_authenticated/admin.hizmetler'
+import { Route as AuthenticatedAdminAyarlarRouteImport } from './routes/_authenticated/admin.ayarlar'
+import { Route as AuthenticatedAdminAiRouteImport } from './routes/_authenticated/admin.ai'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -94,6 +105,11 @@ const LangIndexRoute = LangIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LangRoute,
 } as any)
+const PayTokenRoute = PayTokenRouteImport.update({
+  id: '/pay/$token',
+  path: '/pay/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -129,6 +145,64 @@ const LangFiyatlandirmaRoute = LangFiyatlandirmaRouteImport.update({
   path: '/fiyatlandirma',
   getParentRoute: () => LangRoute,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminUrunlerRoute =
+  AuthenticatedAdminUrunlerRouteImport.update({
+    id: '/urunler',
+    path: '/urunler',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSiparislerRoute =
+  AuthenticatedAdminSiparislerRouteImport.update({
+    id: '/siparisler',
+    path: '/siparisler',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSaatlerRoute =
+  AuthenticatedAdminSaatlerRouteImport.update({
+    id: '/saatler',
+    path: '/saatler',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminRezervasyonlarRoute =
+  AuthenticatedAdminRezervasyonlarRouteImport.update({
+    id: '/rezervasyonlar',
+    path: '/rezervasyonlar',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminKanallarRoute =
+  AuthenticatedAdminKanallarRouteImport.update({
+    id: '/kanallar',
+    path: '/kanallar',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminIsletmeRoute =
+  AuthenticatedAdminIsletmeRouteImport.update({
+    id: '/isletme',
+    path: '/isletme',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminHizmetlerRoute =
+  AuthenticatedAdminHizmetlerRouteImport.update({
+    id: '/hizmetler',
+    path: '/hizmetler',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAyarlarRoute =
+  AuthenticatedAdminAyarlarRouteImport.update({
+    id: '/ayarlar',
+    path: '/ayarlar',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAiRoute = AuthenticatedAdminAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -148,8 +222,19 @@ export interface FileRoutesByFullPath {
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/pay/$token': typeof PayTokenRoute
   '/$lang/': typeof LangIndexRoute
+  '/admin/ai': typeof AuthenticatedAdminAiRoute
+  '/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
+  '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
+  '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
+  '/admin/kanallar': typeof AuthenticatedAdminKanallarRoute
+  '/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
+  '/admin/saatler': typeof AuthenticatedAdminSaatlerRoute
+  '/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
+  '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -168,8 +253,18 @@ export interface FileRoutesByTo {
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/pay/$token': typeof PayTokenRoute
   '/$lang': typeof LangIndexRoute
+  '/admin/ai': typeof AuthenticatedAdminAiRoute
+  '/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
+  '/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
+  '/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
+  '/admin/kanallar': typeof AuthenticatedAdminKanallarRoute
+  '/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
+  '/admin/saatler': typeof AuthenticatedAdminSaatlerRoute
+  '/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
+  '/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -191,8 +286,19 @@ export interface FileRoutesById {
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/pay/$token': typeof PayTokenRoute
   '/$lang/': typeof LangIndexRoute
+  '/_authenticated/admin/ai': typeof AuthenticatedAdminAiRoute
+  '/_authenticated/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
+  '/_authenticated/admin/hizmetler': typeof AuthenticatedAdminHizmetlerRoute
+  '/_authenticated/admin/isletme': typeof AuthenticatedAdminIsletmeRoute
+  '/_authenticated/admin/kanallar': typeof AuthenticatedAdminKanallarRoute
+  '/_authenticated/admin/rezervasyonlar': typeof AuthenticatedAdminRezervasyonlarRoute
+  '/_authenticated/admin/saatler': typeof AuthenticatedAdminSaatlerRoute
+  '/_authenticated/admin/siparisler': typeof AuthenticatedAdminSiparislerRoute
+  '/_authenticated/admin/urunler': typeof AuthenticatedAdminUrunlerRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -215,7 +321,18 @@ export interface FileRouteTypes {
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
     | '/admin'
+    | '/pay/$token'
     | '/$lang/'
+    | '/admin/ai'
+    | '/admin/ayarlar'
+    | '/admin/hizmetler'
+    | '/admin/isletme'
+    | '/admin/kanallar'
+    | '/admin/rezervasyonlar'
+    | '/admin/saatler'
+    | '/admin/siparisler'
+    | '/admin/urunler'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -234,8 +351,18 @@ export interface FileRouteTypes {
     | '/$lang/nasil-calisir'
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
-    | '/admin'
+    | '/pay/$token'
     | '/$lang'
+    | '/admin/ai'
+    | '/admin/ayarlar'
+    | '/admin/hizmetler'
+    | '/admin/isletme'
+    | '/admin/kanallar'
+    | '/admin/rezervasyonlar'
+    | '/admin/saatler'
+    | '/admin/siparisler'
+    | '/admin/urunler'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -257,7 +384,18 @@ export interface FileRouteTypes {
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
     | '/_authenticated/admin'
+    | '/pay/$token'
     | '/$lang/'
+    | '/_authenticated/admin/ai'
+    | '/_authenticated/admin/ayarlar'
+    | '/_authenticated/admin/hizmetler'
+    | '/_authenticated/admin/isletme'
+    | '/_authenticated/admin/kanallar'
+    | '/_authenticated/admin/rezervasyonlar'
+    | '/_authenticated/admin/saatler'
+    | '/_authenticated/admin/siparisler'
+    | '/_authenticated/admin/urunler'
+    | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -273,6 +411,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SektorlerRoute: typeof SektorlerRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  PayTokenRoute: typeof PayTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -368,6 +507,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangIndexRouteImport
       parentRoute: typeof LangRoute
     }
+    '/pay/$token': {
+      id: '/pay/$token'
+      path: '/pay/$token'
+      fullPath: '/pay/$token'
+      preLoaderRoute: typeof PayTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -417,15 +563,114 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangFiyatlandirmaRouteImport
       parentRoute: typeof LangRoute
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/urunler': {
+      id: '/_authenticated/admin/urunler'
+      path: '/urunler'
+      fullPath: '/admin/urunler'
+      preLoaderRoute: typeof AuthenticatedAdminUrunlerRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/siparisler': {
+      id: '/_authenticated/admin/siparisler'
+      path: '/siparisler'
+      fullPath: '/admin/siparisler'
+      preLoaderRoute: typeof AuthenticatedAdminSiparislerRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/saatler': {
+      id: '/_authenticated/admin/saatler'
+      path: '/saatler'
+      fullPath: '/admin/saatler'
+      preLoaderRoute: typeof AuthenticatedAdminSaatlerRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/rezervasyonlar': {
+      id: '/_authenticated/admin/rezervasyonlar'
+      path: '/rezervasyonlar'
+      fullPath: '/admin/rezervasyonlar'
+      preLoaderRoute: typeof AuthenticatedAdminRezervasyonlarRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/kanallar': {
+      id: '/_authenticated/admin/kanallar'
+      path: '/kanallar'
+      fullPath: '/admin/kanallar'
+      preLoaderRoute: typeof AuthenticatedAdminKanallarRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/isletme': {
+      id: '/_authenticated/admin/isletme'
+      path: '/isletme'
+      fullPath: '/admin/isletme'
+      preLoaderRoute: typeof AuthenticatedAdminIsletmeRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/hizmetler': {
+      id: '/_authenticated/admin/hizmetler'
+      path: '/hizmetler'
+      fullPath: '/admin/hizmetler'
+      preLoaderRoute: typeof AuthenticatedAdminHizmetlerRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/ayarlar': {
+      id: '/_authenticated/admin/ayarlar'
+      path: '/ayarlar'
+      fullPath: '/admin/ayarlar'
+      preLoaderRoute: typeof AuthenticatedAdminAyarlarRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/ai': {
+      id: '/_authenticated/admin/ai'
+      path: '/ai'
+      fullPath: '/admin/ai'
+      preLoaderRoute: typeof AuthenticatedAdminAiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAiRoute: typeof AuthenticatedAdminAiRoute
+  AuthenticatedAdminAyarlarRoute: typeof AuthenticatedAdminAyarlarRoute
+  AuthenticatedAdminHizmetlerRoute: typeof AuthenticatedAdminHizmetlerRoute
+  AuthenticatedAdminIsletmeRoute: typeof AuthenticatedAdminIsletmeRoute
+  AuthenticatedAdminKanallarRoute: typeof AuthenticatedAdminKanallarRoute
+  AuthenticatedAdminRezervasyonlarRoute: typeof AuthenticatedAdminRezervasyonlarRoute
+  AuthenticatedAdminSaatlerRoute: typeof AuthenticatedAdminSaatlerRoute
+  AuthenticatedAdminSiparislerRoute: typeof AuthenticatedAdminSiparislerRoute
+  AuthenticatedAdminUrunlerRoute: typeof AuthenticatedAdminUrunlerRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAiRoute: AuthenticatedAdminAiRoute,
+  AuthenticatedAdminAyarlarRoute: AuthenticatedAdminAyarlarRoute,
+  AuthenticatedAdminHizmetlerRoute: AuthenticatedAdminHizmetlerRoute,
+  AuthenticatedAdminIsletmeRoute: AuthenticatedAdminIsletmeRoute,
+  AuthenticatedAdminKanallarRoute: AuthenticatedAdminKanallarRoute,
+  AuthenticatedAdminRezervasyonlarRoute: AuthenticatedAdminRezervasyonlarRoute,
+  AuthenticatedAdminSaatlerRoute: AuthenticatedAdminSaatlerRoute,
+  AuthenticatedAdminSiparislerRoute: AuthenticatedAdminSiparislerRoute,
+  AuthenticatedAdminUrunlerRoute: AuthenticatedAdminUrunlerRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -466,6 +711,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SektorlerRoute: SektorlerRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  PayTokenRoute: PayTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
