@@ -1,14 +1,14 @@
 import { Pool } from "pg";
 
-let _pool: Pool | undefined;
+let pool: Pool | null = null;
 
 export function db(): Pool {
-  if (!_pool) {
+  if (!pool) {
     const connectionString = process.env.DATABASE_URL;
     if (!connectionString) {
-      throw new Error("DATABASE_URL ortam değişkeni tanımlı değil.");
+      throw new Error("DATABASE_URL environment variable is not set.");
     }
-    _pool = new Pool({ connectionString, max: 10 });
+    pool = new Pool({ connectionString });
   }
-  return _pool;
+  return pool;
 }

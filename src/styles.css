@@ -10,7 +10,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
@@ -32,44 +32,35 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-gold: var(--gold);
-  --color-gold-soft: var(--gold-soft);
-  --color-ivory: var(--ivory);
-  --color-onyx: var(--onyx);
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  --background: oklch(0.96 0.015 305);
-  --foreground: oklch(0.25 0.06 310);
-  --card: oklch(0.985 0.008 305);
-  --card-foreground: oklch(0.25 0.06 310);
-  --popover: oklch(0.985 0.008 305);
-  --popover-foreground: oklch(0.25 0.06 310);
-  --primary: oklch(0.58 0.11 45);
-  --primary-foreground: oklch(0.98 0.005 305);
-  --secondary: oklch(0.90 0.045 305);
-  --secondary-foreground: oklch(0.25 0.06 310);
-  --muted: oklch(0.92 0.03 305);
-  --muted-foreground: oklch(0.45 0.05 308);
-  --accent: oklch(0.58 0.11 45);
-  --accent-foreground: oklch(0.98 0.005 305);
+  --background: oklch(0.99 0.002 260);
+  --foreground: oklch(0.20 0.03 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.20 0.03 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.20 0.03 260);
+  --primary: oklch(0.45 0.18 260);
+  --primary-foreground: oklch(0.99 0.005 260);
+  --secondary: oklch(0.95 0.02 260);
+  --secondary-foreground: oklch(0.25 0.03 260);
+  --muted: oklch(0.95 0.01 260);
+  --muted-foreground: oklch(0.50 0.03 260);
+  --accent: oklch(0.55 0.18 260);
+  --accent-foreground: oklch(0.99 0.005 260);
   --destructive: oklch(0.60 0.22 25);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.85 0.04 305 / 70%);
-  --input: oklch(0.90 0.03 305);
-  --ring: oklch(0.58 0.11 45);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.88 0.02 260 / 60%);
+  --input: oklch(0.92 0.01 260);
+  --ring: oklch(0.45 0.18 260);
 
-  --gold: oklch(0.62 0.11 48);
-  --gold-soft: oklch(0.70 0.08 45);
-  --ivory: oklch(0.98 0.008 305);
-  --onyx: oklch(0.22 0.05 310);
-
-  --gradient-gold: linear-gradient(135deg, oklch(0.68 0.11 52), oklch(0.48 0.10 35));
-  --gradient-radial-gold: radial-gradient(circle at 50% 0%, oklch(0.58 0.11 45 / 0.15), transparent 60%);
-  --shadow-gold: 0 20px 60px -20px oklch(0.58 0.11 45 / 0.25);
-  --shadow-elegant: 0 40px 80px -30px oklch(0.30 0.06 310 / 0.25);
+  --gradient-primary: linear-gradient(135deg, oklch(0.50 0.18 260), oklch(0.35 0.16 260));
+  --gradient-radial: radial-gradient(circle at 50% 0%, oklch(0.45 0.18 260 / 0.12), transparent 60%);
+  --shadow-soft: 0 20px 60px -20px oklch(0.20 0.05 260 / 0.12);
+  --shadow-card: 0 4px 24px -8px oklch(0.20 0.05 260 / 0.10);
 }
 
 @layer base {
@@ -86,28 +77,18 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    font-feature-settings: "ss01", "cv11";
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 }
 
-@utility text-gold-gradient {
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Görsel üstünde kullanılacak açık rose gold gradyan. Sayfa geneli açık
-   temaya geçtiği için --gradient-gold koyulaştırıldı; koyu overlay'li
-   görsellerin üstünde okunmuyor. Bu varyant yalnızca oraya. */
-@utility text-gold-gradient-light {
-  background: linear-gradient(135deg, oklch(0.92 0.07 60), oklch(0.78 0.10 42));
+@utility text-gradient {
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -115,197 +96,30 @@
 
 @utility hairline {
   height: 1px;
-  background: linear-gradient(90deg, transparent, oklch(0.58 0.11 45 / 0.6), transparent);
+  background: linear-gradient(90deg, transparent, oklch(0.45 0.18 260 / 0.25), transparent);
 }
 
-@utility glow-gold {
-  box-shadow: var(--shadow-gold);
+@utility glow {
+  box-shadow: 0 0 80px -20px oklch(0.45 0.18 260 / 0.25);
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+@utility card-shadow {
+  box-shadow: var(--shadow-card);
 }
 
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-20px) translateX(10px); }
+/* Widget preview mockup */
+@utility widget-mock {
+  background: linear-gradient(180deg, oklch(1 0 0), oklch(0.98 0.005 260));
+  border: 1px solid oklch(0.88 0.02 260 / 60%);
+  box-shadow: 0 24px 80px -24px oklch(0.20 0.05 260 / 0.20);
 }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.15); }
+/* Smooth section reveal */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-
-/* ---- Cinematic hero entrance: clinical light sweep ---- */
-@keyframes hero-scan-sweep {
-  0% {
-    transform: translateY(-8%);
-    opacity: 0;
-  }
-  8% {
-    opacity: 0.35;
-  }
-  92% {
-    opacity: 0.22;
-  }
-  100% {
-    transform: translateY(108%);
-    opacity: 0;
-  }
-}
-
-@keyframes hero-particle-drift {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0;
-  }
-  15% {
-    opacity: var(--particle-opacity, 0.4);
-  }
-  85% {
-    opacity: var(--particle-opacity, 0.4);
-  }
-  100% {
-    transform: translate3d(var(--particle-drift-x, 12px), -120px, 0) scale(0.7);
-    opacity: 0;
-  }
-}
-
-@keyframes hero-heartbeat {
-  0%, 100% {
-    opacity: 0.25;
-    transform: scaleX(1);
-  }
-  15% {
-    opacity: 0.55;
-    transform: scaleX(1.02);
-  }
-  30% {
-    opacity: 0.25;
-    transform: scaleX(1);
-  }
-  45% {
-    opacity: 0.45;
-    transform: scaleX(1.01);
-  }
-  60% {
-    opacity: 0.25;
-    transform: scaleX(1);
-  }
-}
-
-@utility animate-shimmer {
-  background: linear-gradient(90deg, transparent, oklch(0.58 0.11 45 / 0.4), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
-}
-
-@utility animate-float-slow {
-  animation: float-slow 8s ease-in-out infinite;
-}
-
-@utility animate-pulse-glow {
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-
-@utility animate-marquee {
-  animation: marquee 40s linear infinite;
-}
-
-@utility animate-hero-scan {
-  animation: hero-scan-sweep 3.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-  will-change: transform, opacity;
-}
-
-@utility animate-hero-particle {
-  animation: hero-particle-drift var(--particle-duration, 10s) cubic-bezier(0.22, 1, 0.36, 1) var(--particle-delay, 0s) infinite;
-  will-change: transform, opacity;
-}
-
-@utility animate-hero-heartbeat {
-  animation: hero-heartbeat 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-  transform-origin: center;
-  will-change: opacity, transform;
-}
-
-/* ---- Cinematic accordion ----
-   Perf notes:
-   - Container animates only height + opacity → no blur/transform reflow, no
-     visible jump on close.
-   - Inner reveal uses transform + opacity (compositor only) so it never
-     shifts sibling FAQ rows.
-   - Trigger no longer animates letter-spacing (that reflows text metrics
-     and pushes surrounding rows every open/close). */
-@keyframes accordion-down-cinematic {
-  from { height: 0; opacity: 0; }
-  to   { height: var(--radix-accordion-content-height); opacity: 1; }
-}
-
-@keyframes accordion-up-cinematic {
-  from { height: var(--radix-accordion-content-height); opacity: 1; }
-  to   { height: 0; opacity: 0; }
-}
-
-@keyframes accordion-inner-reveal {
-  from { opacity: 0; transform: translate3d(0, 6px, 0); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-
-@utility accordion-content-cinematic {
-  overflow: hidden;
-  contain: layout paint;
-  &[data-state="open"] {
-    animation: accordion-down-cinematic 480ms cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: height;
-  }
-  &[data-state="closed"] {
-    animation: accordion-up-cinematic 360ms cubic-bezier(0.7, 0, 0.84, 0);
-    will-change: height;
-  }
-}
-
-@utility accordion-inner-cinematic {
-  animation: accordion-inner-reveal 520ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
-  will-change: transform, opacity;
-}
-
-@utility accordion-trigger-cinematic {
-  transition: color 400ms cubic-bezier(0.22, 1, 0.36, 1);
-  & > svg {
-    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-  }
-  &[data-state="open"] > svg {
-    transform: rotate(180deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .accordion-content-cinematic,
-  .accordion-content-cinematic[data-state="open"],
-  .accordion-content-cinematic[data-state="closed"],
-  .accordion-inner-cinematic {
-    animation: none !important;
-  }
-}
-
-
-/* Blog yazı içeriği */
-.blog-content { max-width: none; color: color-mix(in oklab, var(--foreground) 85%, transparent); line-height: 1.8; }
-.blog-content h2, .blog-content h3, .blog-content h4 { font-family: var(--font-display, inherit); color: var(--foreground); margin: 1.6em 0 0.6em; line-height: 1.3; }
-.blog-content h2 { font-size: 1.5rem; }
-.blog-content h3 { font-size: 1.25rem; }
-.blog-content p { margin: 0.9em 0; }
-.blog-content a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
-.blog-content strong { color: var(--foreground); }
-.blog-content ul, .blog-content ol { margin: 0.9em 0; padding-inline-start: 1.4em; }
-.blog-content li { margin: 0.35em 0; }
-.blog-content li::marker { color: var(--primary); }
-.blog-content blockquote { border-inline-start: 3px solid var(--primary); padding-inline-start: 1em; margin: 1.2em 0; color: color-mix(in oklab, var(--foreground) 75%, transparent); font-style: italic; }
-.blog-content img { border-radius: 0.75rem; margin: 1.2em 0; max-width: 100%; height: auto; }

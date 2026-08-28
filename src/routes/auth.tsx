@@ -5,12 +5,13 @@ import { login } from "@/lib/auth.functions";
 import { toast } from "sonner";
 import { Loader2, Lock } from "lucide-react";
 import { useT } from "@/i18n/context";
+import { BRAND } from "@/lib/site";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Yönetici Girişi | Güler Ayaz Beauty" },
-      { name: "description", content: "Klinik yönetici paneli girişi." },
+      { title: `Yönetici Girişi | ${BRAND}` },
+      { name: "description", content: "TrairX Connect yönetici paneli girişi." },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -45,12 +46,12 @@ function AuthPage() {
         <Link to="/" className="block text-center mb-8 text-xs uppercase tracking-[0.4em] text-muted-foreground hover:text-primary">
           {t.auth.backHome}
         </Link>
-        <div className="bg-card/85 backdrop-blur border border-border/60 rounded-sm p-8 md:p-10">
+        <div className="bg-card border border-border/60 rounded-2xl p-8 md:p-10 shadow-sm">
           <div className="flex flex-col items-center text-center mb-8">
             <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
               <Lock className="w-6 h-6" strokeWidth={1.2} />
             </div>
-            <h1 className="font-display text-2xl md:text-3xl text-gold-gradient">{t.auth.badge}</h1>
+            <h1 className="font-display text-2xl md:text-3xl text-gradient">{t.auth.badge}</h1>
             <p className="mt-2 text-sm text-muted-foreground">{t.auth.subtitleSignin}</p>
           </div>
 
@@ -62,7 +63,7 @@ function AuthPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-background/70 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm outline-none"
+                className="w-full bg-background/70 border border-border/60 focus:border-primary/70 rounded-xl px-4 py-3 text-sm outline-none"
               />
             </div>
             <div>
@@ -73,13 +74,13 @@ function AuthPage() {
                 minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-background/70 border border-border/60 focus:border-primary/70 rounded-sm px-4 py-3 text-sm outline-none"
+                className="w-full bg-background/70 border border-border/60 focus:border-primary/70 rounded-xl px-4 py-3 text-sm outline-none"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm uppercase tracking-widest text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-60 transition-colors"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               {t.auth.signIn}

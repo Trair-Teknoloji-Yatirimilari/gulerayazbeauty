@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 const STATIC_PAGES = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/galeri", changefreq: "weekly", priority: "0.7" },
   { path: "/kvkk", changefreq: "yearly", priority: "0.3" },
 ];
 
@@ -13,7 +12,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const host =
           request.headers.get("x-forwarded-host") ??
           request.headers.get("host") ??
-          "gulerayazbeauty.com";
+          "trairxconnect.com";
         const base = `https://${host}`;
 
         const urls = STATIC_PAGES.map(
