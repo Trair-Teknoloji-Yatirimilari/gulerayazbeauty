@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageCircle, X } from "lucide-react";
 
-export const WHATSAPP_NUMBER = "905346408888";
-export const WHATSAPP_DISPLAY = "+90 534 640 88 88";
+export const WHATSAPP_NUMBER = "37253561157";
+export const WHATSAPP_DISPLAY = "+372 5356 1157";
 
 const DEFAULT_TEXT = "Merhaba, TrairX Connect hakkında bilgi almak istiyorum.";
 
