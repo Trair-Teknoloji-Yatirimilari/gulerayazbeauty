@@ -22,6 +22,7 @@ import { Route as LangRouteImport } from './routes/$lang'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang.index'
+import { Route as PayTokenRouteImport } from './routes/pay.$token'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as LangSektorlerRouteImport } from './routes/$lang.sektorler'
 import { Route as LangOzelliklerRouteImport } from './routes/$lang.ozellikler'
@@ -103,6 +104,11 @@ const LangIndexRoute = LangIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LangRoute,
+} as any)
+const PayTokenRoute = PayTokenRouteImport.update({
+  id: '/pay/$token',
+  path: '/pay/$token',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
@@ -217,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/pay/$token': typeof PayTokenRoute
   '/$lang/': typeof LangIndexRoute
   '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
@@ -246,6 +253,7 @@ export interface FileRoutesByTo {
   '/$lang/nasil-calisir': typeof LangNasilCalisirRoute
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
+  '/pay/$token': typeof PayTokenRoute
   '/$lang': typeof LangIndexRoute
   '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
@@ -279,6 +287,7 @@ export interface FileRoutesById {
   '/$lang/ozellikler': typeof LangOzelliklerRoute
   '/$lang/sektorler': typeof LangSektorlerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/pay/$token': typeof PayTokenRoute
   '/$lang/': typeof LangIndexRoute
   '/_authenticated/admin/ai': typeof AuthenticatedAdminAiRoute
   '/_authenticated/admin/ayarlar': typeof AuthenticatedAdminAyarlarRoute
@@ -312,6 +321,7 @@ export interface FileRouteTypes {
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
     | '/admin'
+    | '/pay/$token'
     | '/$lang/'
     | '/admin/ai'
     | '/admin/ayarlar'
@@ -341,6 +351,7 @@ export interface FileRouteTypes {
     | '/$lang/nasil-calisir'
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
+    | '/pay/$token'
     | '/$lang'
     | '/admin/ai'
     | '/admin/ayarlar'
@@ -373,6 +384,7 @@ export interface FileRouteTypes {
     | '/$lang/ozellikler'
     | '/$lang/sektorler'
     | '/_authenticated/admin'
+    | '/pay/$token'
     | '/$lang/'
     | '/_authenticated/admin/ai'
     | '/_authenticated/admin/ayarlar'
@@ -399,6 +411,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SektorlerRoute: typeof SektorlerRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  PayTokenRoute: typeof PayTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -493,6 +506,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$lang/'
       preLoaderRoute: typeof LangIndexRouteImport
       parentRoute: typeof LangRoute
+    }
+    '/pay/$token': {
+      id: '/pay/$token'
+      path: '/pay/$token'
+      fullPath: '/pay/$token'
+      preLoaderRoute: typeof PayTokenRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -691,6 +711,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SektorlerRoute: SektorlerRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  PayTokenRoute: PayTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
