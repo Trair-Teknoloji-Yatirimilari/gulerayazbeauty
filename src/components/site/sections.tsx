@@ -17,7 +17,11 @@ import {
   Phone,
   UserRound,
   CheckCircle2,
-
+  Mic,
+  Play,
+  ImageIcon,
+  Paperclip,
+  FileText,
 } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useT } from "@/i18n/context";
