@@ -497,26 +497,28 @@ export function UseCases({ withHeading = true }: { withHeading?: boolean }) {
 export function Pricing({ withHeading = true }: { withHeading?: boolean }) {
   const { t } = useT();
   return (
-    <section id="fiyatlandirma" className="py-24 md:py-32 bg-card/30">
+    <section id="fiyatlandirma" className="bg-secondary/50 py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {withHeading && (
-          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary mb-4">{t.nav.pricing}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.pricing.title}</h2>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary">{t.nav.pricing}</p>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] md:text-5xl">{t.pricing.title}</h2>
             <p className="mt-4 text-muted-foreground">{t.pricing.subtitle}</p>
-          </motion.div>
+          </Reveal>
         )}
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {t.pricing.tiers.map((tier) => (
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
+          {t.pricing.tiers.map((tier, i) => (
             <motion.div
               key={tier.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              whileHover={{ y: -8 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative rounded-2xl border p-6 ${tier.popular ? "border-primary bg-card shadow-lg" : "border-border/40 bg-card/60"}`}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className={`relative rounded-3xl border p-7 ${tier.popular ? "border-primary/50 bg-card shadow-[var(--shadow-soft)] md:scale-[1.03]" : "border-border/50 bg-card/70"}`}
             >
+
               {tier.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[10px] uppercase tracking-widest text-primary-foreground">
                   {t.pricing.popular}
