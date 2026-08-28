@@ -7,6 +7,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { AdminShell, Card, Field, inputClass, PrimaryButton, GhostButton } from "@/components/admin/shell";
 import { getAiSettings, updateAiSettings } from "@/lib/business.functions";
 import { listKnowledge, saveKnowledge, deleteKnowledge, type KnowledgeItem } from "@/lib/knowledge.functions";
+import { AiTestConsole } from "@/components/admin/AiTestConsole";
 
 export const Route = createFileRoute("/_authenticated/admin/ai")({
   component: AiPage,
@@ -68,6 +69,8 @@ function AiPage() {
   return (
     <AdminShell title="AI eğitimi" description="Yapay zekânın nasıl konuşacağını ve neleri bileceğini burada belirlersiniz.">
       <div className="space-y-6">
+        <AiTestConsole />
+
         <Card>
           <form onSubmit={saveSettings} className="grid md:grid-cols-2 gap-5">
             <Field label="Ton">
